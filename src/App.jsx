@@ -70,6 +70,8 @@ const icons={
   info:'<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
   map:'<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>',
   star:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  fb:'<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
+  help:'<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
   heart:'<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
   award:'<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>',
   cal:'<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
@@ -81,35 +83,35 @@ const css = `@import url('https://fonts.googleapis.com/css2?family=Playfair+Disp
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:${F.b};color:${C.blk};background:${C.bg};-webkit-font-smoothing:antialiased}
 .H{background:${C.blk};color:#fff;padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .H-logo{font-family:${F.d};font-size:19px;display:flex;align-items:center;gap:8px;cursor:pointer}.H-logo .g{color:${C.gold}}
-.H-nav{display:flex;gap:1px}.H-nav button{background:none;border:none;color:rgba(255,255,255,.5);font-family:${F.b};font-size:13px;font-weight:500;padding:7px 12px;border-radius:7px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:5px}
+.H-nav{display:flex;gap:1px}.H-nav button{background:none;border:none;color:rgba(255,255,255,.5);font-family:${F.b};font-size:14px;font-weight:500;padding:7px 12px;border-radius:7px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:5px}
 .H-nav button:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.8)}.H-nav button.on{background:rgba(197,160,78,.15);color:${C.gold}}
 .hbadge{background:${C.gold};color:${C.blk};font-size:10px;font-weight:700;padding:1px 6px;border-radius:9px}
 .pg{max-width:1080px;margin:0 auto;padding:28px 20px}.pgn{max-width:680px;margin:0 auto}
-.hero{background:${C.blk};color:#fff;padding:64px 28px 88px;text-align:center;position:relative;overflow:hidden}
+.hero{background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.68)),url('/static/home-top-background.jpg') center/cover no-repeat;color:#fff;padding:64px 28px 88px;text-align:center;position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,${C.gold},transparent)}
 .hero h1{font-family:${F.d};font-size:42px;font-weight:700;margin-bottom:6px}.hero h1 .g{color:${C.gold}}
 .hero p{font-size:16px;opacity:.55;max-width:440px;margin:0 auto 32px;line-height:1.6}
 .hcta{display:inline-flex;align-items:center;gap:7px;background:${C.gold};color:${C.blk};border:none;padding:13px 28px;font-family:${F.b};font-size:15px;font-weight:600;border-radius:7px;cursor:pointer;transition:.2s}
 .hcta:hover{background:${C.goldLt};transform:translateY(-1px);box-shadow:0 4px 16px rgba(197,160,78,.3)}
 .sb{background:#fff;border:1px solid ${C.bdrLt};border-radius:12px;padding:20px 24px;margin:-44px auto 24px;max-width:600px;position:relative;z-index:10;box-shadow:0 3px 20px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:space-between}
-.sb h3{font-family:${F.d};font-size:17px}.sb p{font-size:12px;color:${C.gray};margin-top:2px}
+.sb h3{font-family:${F.d};font-size:17px}.sb p{font-size:13px;color:${C.gray};margin-top:2px}
 .sbb{background:${C.goldFaint};color:${C.goldDk};font-size:11px;font-weight:600;padding:4px 12px;border-radius:16px;border:1px solid ${C.goldPale}}
 .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:16px}
 .pcard{background:#fff;border:1px solid ${C.bdrLt};border-radius:10px;padding:18px;transition:.15s}.pcard:hover{border-color:${C.gold}}
 .pcard-l{font-size:10px;color:${C.gray};text-transform:uppercase;letter-spacing:.7px;font-weight:600}
 .pcard h4{font-family:${F.d};font-size:16px;margin:2px 0 6px}.pcard-m{display:flex;justify-content:space-between;align-items:center}
 .pcard-a{font-size:11px;color:${C.gray};background:${C.off};padding:2px 7px;border-radius:3px}.pcard-f{font-size:13px;font-weight:700;color:${C.goldDk}}
-.sh h3{font-family:${F.d};font-size:20px}.sh p{font-size:12px;color:${C.gray};margin-top:2px}
+.sh h3{font-family:${F.d};font-size:20px}.sh p{font-size:13px;color:${C.gray};margin-top:2px}
 .steps{display:flex;align-items:center;justify-content:center;margin-bottom:28px}
 .st{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:${C.grayLt}}.st.on{color:${C.blk}}.st.dn{color:${C.gold}}
 .stn{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:2px solid ${C.bdr};background:#fff;flex-shrink:0}
 .st.on .stn{border-color:${C.blk};background:${C.blk};color:#fff}.st.dn .stn{border-color:${C.gold};background:${C.gold};color:${C.blk}}
 .stl{width:32px;height:2px;background:${C.bdrLt};margin:0 5px}.stl.dn{background:${C.gold}}
 .cd{background:#fff;border:1px solid ${C.bdrLt};border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.02)}
-.cd h2{font-family:${F.d};font-size:21px;margin-bottom:2px}.cd-s{font-size:13px;color:${C.gray};margin-bottom:18px}
+.cd h2{font-family:${F.d};font-size:21px;margin-bottom:2px}.cd-s{font-size:14px;color:${C.gray};margin-bottom:18px}
 .opt{border:2px solid ${C.bdrLt};border-radius:9px;padding:12px 16px;margin-bottom:7px;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:space-between}
 .opt:hover{border-color:${C.gold};background:${C.goldFaint}}.opt.sl{border-color:${C.goldDk};background:${C.goldFaint}}
-.opt-i h4{font-size:14px;font-weight:600}.opt-i p{font-size:12px;color:${C.gray};margin-top:1px}
+.opt-i h4{font-size:14px;font-weight:600}.opt-i p{font-size:13px;color:${C.gray};margin-top:1px}
 .opt-c{width:20px;height:20px;border-radius:50%;border:2px solid ${C.bdr};display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .opt.sl .opt-c{border-color:${C.gold};background:${C.gold};color:${C.blk}}
 .opt-f{font-size:14px;font-weight:700;color:${C.goldDk}}
@@ -119,42 +121,42 @@ const css = `@import url('https://fonts.googleapis.com/css2?family=Playfair+Disp
 .wv-hd{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:2px 0;border-radius:5px;transition:.12s}
 .wv-hd:hover{opacity:.8}
 .wv-chev{font-size:14px;color:${C.grayLt}}
-.wv-b{font-size:12px;color:${C.gray};line-height:1.6;margin:10px 0;padding:8px;background:${C.off};border-radius:5px}
-.wv-a{display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;font-weight:500}
+.wv-b{font-size:14px;color:${C.gray};line-height:1.6;margin:10px 0;padding:8px;background:${C.off};border-radius:5px}
+.wv-a{display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;font-weight:500}
 .reg-for{text-align:center;font-size:11px;color:${C.gray};margin-top:-18px;margin-bottom:18px;font-weight:500}
 .col-picker{position:absolute;top:100%;right:0;margin-top:4px;background:#fff;border:1px solid ${C.bdrLt};border-radius:8px;padding:8px 0;box-shadow:0 4px 16px rgba(0,0,0,.1);z-index:50;min-width:160px}
 .col-picker-item{display:flex;align-items:center;gap:7px;padding:5px 14px;font-size:12px;font-weight:500;cursor:pointer;transition:.1s}.col-picker-item:hover{background:${C.goldFaint}}
 .col-picker-item input{accent-color:${C.gold}}
 .wck{width:16px;height:16px;border:2px solid ${C.bdr};border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .wck.on{background:${C.gold};border-color:${C.gold};color:${C.blk}}
-.szr{display:flex;align-items:center;gap:10px;margin-bottom:12px}.szr label{font-size:12px;font-weight:600;color:${C.char};min-width:90px}
+.szr{display:flex;align-items:center;gap:10px;margin-bottom:12px}.szr label{font-size:13px;font-weight:600;color:${C.char};min-width:90px}
 .szp{display:flex;gap:5px;flex-wrap:wrap}
-.sz{padding:5px 12px;border:1px solid ${C.bdr};border-radius:5px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;font-family:${F.b};color:${C.char};transition:.15s}
+.sz{padding:5px 12px;border:1px solid ${C.bdr};border-radius:5px;font-size:13px;font-weight:500;cursor:pointer;background:#fff;font-family:${F.b};color:${C.char};transition:.15s}
 .sz:hover{border-color:${C.gold}}.sz.sl{border-color:${C.gold};background:${C.goldFaint};color:${C.goldDk};font-weight:600}
-.rt{width:100%;border-collapse:collapse;margin:12px 0}.rt td{padding:8px 0;font-size:13px;border-bottom:1px solid ${C.bdrLt}}
+.rt{width:100%;border-collapse:collapse;margin:12px 0}.rt td{padding:8px 0;font-size:14px;border-bottom:1px solid ${C.bdrLt}}
 .rt td:first-child{color:${C.gray};width:120px}.rt td:last-child{font-weight:500}
 .rf{font-size:20px;font-weight:700;color:${C.goldDk};font-family:${F.d}}
 .br{display:flex;gap:9px;margin-top:20px;justify-content:flex-end}
-.b{padding:9px 20px;border-radius:7px;font-family:${F.b};font-size:13px;font-weight:600;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:5px;border:none}
+.b{padding:9px 20px;border-radius:7px;font-family:${F.b};font-size:14px;font-weight:600;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:5px;border:none}
 .bp{background:${C.blk};color:#fff}.bp:hover{background:${C.blkSoft}}
 .bg{background:${C.gold};color:${C.blk}}.bg:hover{background:${C.goldLt}}
 .bs{background:${C.off};color:${C.char};border:1px solid ${C.bdr}}.bs:hover{background:${C.bdrLt}}
 .bgh{background:none;color:${C.gray};border:none}.bgh:hover{color:${C.blk}}
 .bd{background:none;color:${C.red};border:none}.bd:hover{background:${C.redBg}}
-.bsm{padding:6px 12px;font-size:12px}
+.bsm{padding:6px 12px;font-size:13px}
 .b:disabled{opacity:.35;cursor:not-allowed}
 .ci{background:#fff;border:1px solid ${C.bdrLt};border-radius:10px;padding:16px 20px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between}
-.ci-i h4{font-size:14px;font-weight:600}.ci-i p{font-size:12px;color:${C.gray};margin-top:1px}
+.ci-i h4{font-size:14px;font-weight:600}.ci-i p{font-size:13px;color:${C.gray};margin-top:1px}
 .ci-r{display:flex;align-items:center;gap:12px}.ci-f{font-size:15px;font-weight:700;color:${C.goldDk}}
 .ct{background:${C.goldFaint};border:1px solid ${C.goldPale};border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;margin-top:12px}
 .ct-l{font-size:14px;font-weight:600}.ct-a{font-size:22px;font-weight:700;color:${C.goldDk};font-family:${F.d}}
 .cfm{background:#fff;border:1px solid ${C.bdrLt};border-radius:12px;padding:44px 24px;text-align:center;max-width:520px;margin:0 auto}
 .cfm-ic{width:56px;height:56px;border-radius:50%;background:${C.goldFaint};display:flex;align-items:center;justify-content:center;margin:0 auto 14px;color:${C.gold}}
-.cfm h2{font-family:${F.d};font-size:24px;margin-bottom:5px}.cfm p{color:${C.gray};font-size:13px;line-height:1.6;max-width:380px;margin:0 auto}
+.cfm h2{font-family:${F.d};font-size:24px;margin-bottom:5px}.cfm p{color:${C.gray};font-size:14px;line-height:1.6;max-width:380px;margin:0 auto}
 .adm{display:grid;grid-template-columns:190px 1fr;min-height:calc(100vh - 56px)}
 .asd{background:#fff;border-right:1px solid ${C.bdrLt};padding:18px 0}
 .asd-l{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:${C.grayLt};padding:16px 18px 5px;font-weight:600}
-.asd-i{display:flex;align-items:center;gap:7px;padding:8px 18px;font-size:12px;font-weight:500;color:${C.gray};cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:${F.b};transition:.12s}
+.asd-i{display:flex;align-items:center;gap:7px;padding:8px 18px;font-size:13px;font-weight:500;color:${C.gray};cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:${F.b};transition:.12s}
 .asd-i:hover{background:${C.goldFaint};color:${C.blk}}.asd-i.on{background:${C.goldFaint};color:${C.goldDk};font-weight:600;border-right:3px solid ${C.gold}}
 .am{padding:24px}.amh{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .amh h1{font-family:${F.d};font-size:24px}
@@ -174,14 +176,14 @@ const css = `@import url('https://fonts.googleapis.com/css2?family=Playfair+Disp
 .bdg-ok{background:${C.grnBg};color:${C.grn}}.bdg-pn{background:#fef3c7;color:#92400e}
 .btag{background:${C.off};color:${C.char};font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px}
 .cp h1{font-family:${F.d};font-size:30px;margin-bottom:6px}.cp h2{font-family:${F.d};font-size:20px;margin:24px 0 6px}
-.cp p{font-size:14px;color:${C.char};line-height:1.7;margin-bottom:12px}
+.cp p{font-size:15px;color:${C.char};line-height:1.7;margin-bottom:12px}
 .cp .gl{width:44px;height:3px;background:${C.gold};border-radius:2px;margin-bottom:16px}
 .bgrd{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px}
 .bcrd{background:#fff;border:1px solid ${C.bdrLt};border-radius:9px;padding:18px;text-align:center}
 .bcrd-av{width:48px;height:48px;border-radius:50%;background:${C.goldFaint};display:flex;align-items:center;justify-content:center;margin:0 auto 8px;color:${C.gold}}
 .bcrd h4{font-size:14px;font-weight:600}.bcrd p{font-size:11px;color:${C.gray}}
 .ic{background:#fff;border:1px solid ${C.bdrLt};border-radius:10px;padding:20px;margin-bottom:12px}
-.ic h3{font-family:${F.d};font-size:16px;margin-bottom:4px}.ic p{font-size:13px;color:${C.gray};line-height:1.6;margin:0}
+.ic h3{font-family:${F.d};font-size:16px;margin-bottom:4px}.ic p{font-size:14px;color:${C.gray};line-height:1.6;margin:0}
 .spt{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:14px}
 .spc{background:#fff;border:1px solid ${C.bdrLt};border-radius:10px;padding:22px;text-align:center;transition:.15s}.spc:hover{border-color:${C.gold}}
 .spc h3{font-family:${F.d};font-size:18px;margin-bottom:2px}
@@ -190,20 +192,36 @@ const css = `@import url('https://fonts.googleapis.com/css2?family=Playfair+Disp
 .mo{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:200}
 .md{background:#fff;border-radius:12px;padding:24px;width:400px;max-width:90vw;box-shadow:0 16px 48px rgba(0,0,0,.15)}
 .md h3{font-family:${F.d};font-size:18px;margin-bottom:14px}
-.fr{margin-bottom:12px}.fr label{display:block;font-size:12px;font-weight:600;color:${C.char};margin-bottom:3px}
-.fr input,.fr select{width:100%;padding:8px 10px;border:1px solid ${C.bdr};border-radius:5px;font-family:${F.b};font-size:13px}
+.fr{margin-bottom:12px}.fr label{display:block;font-size:13px;font-weight:600;color:${C.char};margin-bottom:3px}
+.fr input,.fr select{width:100%;padding:8px 10px;border:1px solid ${C.bdr};border-radius:5px;font-family:${F.b};font-size:14px}
 .fr input:focus,.fr select:focus{outline:none;border-color:${C.gold};box-shadow:0 0 0 2px rgba(197,160,78,.1)}
 .fc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:768px){.hero h1{font-size:28px}.sts{grid-template-columns:repeat(2,1fr)}.adm{grid-template-columns:1fr}.asd{display:none}.pgrid{grid-template-columns:1fr}.sb{flex-direction:column;gap:8px;text-align:center}.st span{display:none}.bgrd{grid-template-columns:1fr}.spt{grid-template-columns:1fr}}`;
 
 // ─── Pages ───
-function HomePage({go}){return(<div><div className="hero"><h1>Meadow <span className="g">Athletic</span> Association</h1><p>Youth recreational sports for the Meadow community. Building character, teamwork, and lifelong memories.</p><button className="hcta" onClick={()=>go("register")}>Register Now <Ic d={icons.chev} s={15}/></button></div><div className="pg"><div className="sb"><div><h3>{SEASON.name}</h3><p>Registration open Feb 1 – Mar 15, 2026</p></div><span className="sbb">Open Now</span></div><div className="sh"><h3>Available Programs</h3><p>{SEASON.programs.length} programs for ages 3–12</p></div><div className="pgrid">{SEASON.programs.map(p=>(<div className="pcard" key={p.id}><div className="pcard-l">{p.gender}</div><h4>{p.name}</h4><div className="pcard-m"><span className="pcard-a">Ages {p.min}–{p.max}</span><span className="pcard-f">${p.fee}</span></div></div>))}</div></div></div>)}
+function HomePage({go}){return(<div><div className="hero"><h1><span className="g">M</span>eadow <span className="g">A</span>thletic <span className="g">A</span>ssociation</h1><p>Youth recreational sports for the Meadow community. Building character, teamwork, and lifelong memories.</p><button className="hcta" onClick={()=>go("register")}>Register Now <Ic d={icons.chev} s={15}/></button></div><div className="pg"><div className="sb"><div><h3>{SEASON.name}</h3><p>Registration open Jan 20 – Feb 28, 2026</p></div><span className="sbb">Open Now</span></div><div className="sh"><h3>Available Programs</h3><p>{SEASON.programs.length} programs for ages 3–12</p></div><div className="pgrid">{SEASON.programs.map(p=>(<div className="pcard" key={p.id}><div className="pcard-l">{p.gender}</div><h4>{p.name}</h4><div className="pcard-m"><span className="pcard-a">Ages {p.min}–{p.max}</span><span className="pcard-f">${p.fee}</span></div></div>))}</div></div></div>)}
 
-function AboutPage(){const board=[{n:"Mike Reynolds",r:"President"},{n:"Sarah Chen",r:"Vice President"},{n:"Tom Diaz",r:"Treasurer"},{n:"Amy Patel",r:"Secretary"},{n:"Chris Foster",r:"Baseball Commissioner"},{n:"Jen Sullivan",r:"Softball Commissioner"}];return(<div className="pg cp"><h1>About MAA</h1><div className="gl"/><p>The Meadow Athletic Association has been serving the youth of our community since 2004. We are a volunteer-run, non-profit organization dedicated to providing affordable, inclusive recreational sports programs for children ages 3 through 15.</p><p>Each year, MAA offers three seasonal programs — Spring (baseball, softball, t-ball, t-shirt), Fall (baseball, softball, soccer), and Winter (basketball). We serve over 300 players annually across all age groups.</p><h2>Our Board</h2><p>MAA is governed by a volunteer board of directors elected by the membership.</p><div className="bgrd">{board.map(b=>(<div className="bcrd" key={b.n}><div className="bcrd-av"><Ic d={icons.user} s={22}/></div><h4>{b.n}</h4><p>{b.r}</p></div>))}</div><h2>Contact & Location</h2><div className="ic"><div style={{display:"flex",gap:28,flexWrap:"wrap"}}><div><h3>Meadow Community Park</h3><p>1234 Meadow Drive, Meadow, PA 15001</p></div><div><h3>Get in Touch</h3><p>info@meadowathletics.org</p><p>(555) 123-4567</p></div></div></div></div>)}
+function AboutPage(){const board=[{n:"Karla Parnell",r:"President"},{n:"Justin Massengill",r:"Vice President"},{n:"Parker Johnson",r:"Secretary"},{n:"Tiffany Adams",r:"Treasurer"}];return(<div className="pg cp"><h1>About the Meadow Athletic Association</h1><div className="gl"/><p>We are a multiple sport athletic association, serving the Meadow community. We are a non-profit organization and a part of our area since 1976. We are run by all volunteers, currently consisting of 21 members and a Treasurer.</p><h2>Our Board</h2><p>MAA is governed by a volunteer board of directors elected by the membership.</p><div className="bgrd">{board.map(b=>(<div className="bcrd" key={b.n}><div className="bcrd-av"><Ic d={icons.user} s={22}/></div><h4>{b.n}</h4><p>{b.r}</p></div>))}</div><h2>Contact</h2><div className="ic"><div style={{display:"flex",gap:28,flexWrap:"wrap",alignItems:"flex-start"}}><div><h3>Get in Touch</h3><p>meadowathleticassociation@gmail.com</p><a href="https://www.facebook.com/groups/169287900378142" target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:6,color:C.gold,fontWeight:600,fontSize:13,textDecoration:"none",marginTop:8}}><Ic d={icons.fb} s={16}/>Join us on Facebook</a></div></div></div></div>)}
 
-function FieldsPage(){const flds=[{n:"Field 1 — Main Diamond",d:"Full-size diamond with dugouts and scoreboard. Home to 10U and 12U games.",a:"Weekdays 5–9 PM, Weekends 8 AM–6 PM"},{n:"Field 2 — South Diamond",d:"Regulation diamond for 8U games and practices.",a:"Weekdays 5–9 PM, Weekends 8 AM–6 PM"},{n:"Field 3 — T-Ball Field",d:"Smaller field for T-Ball and T-Shirt divisions. Reduced base paths.",a:"Weekdays 5–8 PM, Saturdays 9 AM–2 PM"},{n:"Multi-Purpose Field",d:"Open grass field for soccer and overflow practices.",a:"Weekdays 5–9 PM, Weekends 8 AM–6 PM"}];const rates=[{l:"2 Hours",p:"$50"},{l:"Half Day",p:"$90"},{l:"Full Day",p:"$150"},{l:"Tournament",p:"$200"}];return(<div className="pg cp"><h1>Field Rentals</h1><div className="gl"/><p>MAA maintains four playing fields at Meadow Community Park, available for rental during non-game hours.</p>{flds.map(f=>(<div className="ic" key={f.n}><h3>{f.n}</h3><p>{f.d}</p><p style={{fontSize:12,color:C.gold,fontWeight:600,marginTop:6}}>{f.a}</p></div>))}<h2>Rental Rates</h2><div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(180px,1fr))",gap:10}}>{rates.map(r=>(<div key={r.l} style={{background:"#fff",border:`1px solid ${C.bdrLt}`,borderRadius:8,padding:16,textAlign:"center"}}><div style={{fontSize:12,color:C.gray,fontWeight:600}}>{r.l}</div><div style={{fontFamily:F.d,fontSize:22,color:C.goldDk,marginTop:3}}>{r.p}</div></div>))}</div><p style={{marginTop:14,fontSize:12,color:C.gray}}>Contact info@meadowathletics.org to reserve.</p></div>)}
+function FieldsPage(){return(<div className="pg cp"><h1>Field Rentals</h1><div className="gl"/><p>MAA has two fields available for rental when not in use for games or practices.</p><div style={{borderRadius:10,overflow:"hidden",margin:"16px 0",border:`1px solid ${C.bdrLt}`,position:"relative"}}><img src="/static/fields-aerial.jpg" alt="Aerial view of MAA fields" style={{width:"100%",display:"block",maxHeight:420,objectFit:"cover",objectPosition:"center"}}/><div style={{position:"absolute",left:"38%",top:"49%",transform:"translate(-50%,-50%)",background:"rgba(0,0,0,.68)",color:"#fff",padding:"5px 14px",borderRadius:6,fontFamily:F.b,fontWeight:700,fontSize:13,letterSpacing:".5px",border:`1px solid ${C.gold}`,pointerEvents:"none"}}>Field 1</div><div style={{position:"absolute",left:"61%",top:"76%",transform:"translate(-50%,-50%)",background:"rgba(0,0,0,.68)",color:"#fff",padding:"5px 14px",borderRadius:6,fontFamily:F.b,fontWeight:700,fontSize:13,letterSpacing:".5px",border:`1px solid ${C.gold}`,pointerEvents:"none"}}>Field 2</div></div><div className="ic"><h3>MAA Field 1</h3><p>Supports T-Ball, T-Shirt, 8U, 10U, and 12U baseball and softball.</p></div><div className="ic"><h3>MAA Field 2</h3><p>Supports T-Ball, T-Shirt, 8U and 10U baseball, and 8U, 10U, and 12U softball.</p></div><h2>Rental Rates</h2><div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,maxWidth:360}}><div style={{background:"#fff",border:`1px solid ${C.bdrLt}`,borderRadius:8,padding:16,textAlign:"center"}}><div style={{fontSize:12,color:C.gray,fontWeight:600,marginBottom:4}}>Without Lights</div><div style={{fontFamily:F.d,fontSize:26,color:C.goldDk}}>$15<span style={{fontSize:14,fontWeight:400}}>/hr</span></div></div><div style={{background:"#fff",border:`1px solid ${C.bdrLt}`,borderRadius:8,padding:16,textAlign:"center"}}><div style={{fontSize:12,color:C.gray,fontWeight:600,marginBottom:4}}>With Lights</div><div style={{fontFamily:F.d,fontSize:26,color:C.goldDk}}>$35<span style={{fontSize:14,fontWeight:400}}>/hr</span></div><div style={{fontSize:11,color:C.grayLt,marginTop:2}}>+$20/hr for lights</div></div></div><p style={{marginTop:12,fontSize:13,color:C.gray}}>Example: 1 hr without lights + 1 hr with lights = $15 + $35 = $50</p><p style={{marginTop:16,fontSize:13,color:C.gray}}>To reserve, contact meadowathleticassociation@gmail.com.</p></div>)}
 
-function SponsorsPage(){return(<div className="pg cp"><h1>Become a Sponsor</h1><div className="gl"/><p>MAA relies on local businesses and families to keep fees affordable and maintain our fields. Sponsorships fund equipment, uniforms, field maintenance, and end-of-season events.</p><div className="spt"><div className="spc"><Ic d={icons.heart} s={24} style={{color:C.gold,margin:"0 auto 6px",display:"block"}}/><h3>Bronze</h3><div className="pr">$150</div><ul><li>Name on MAA website</li><li>Social media recognition</li><li>Season program listing</li></ul></div><div className="spc" style={{borderColor:C.gold}}><Ic d={icons.star} s={24} style={{color:C.gold,margin:"0 auto 6px",display:"block"}}/><h3>Gold</h3><div className="pr">$500</div><ul><li>Everything in Bronze</li><li>Banner at home field</li><li>Logo on team jerseys</li><li>Opening day mention</li></ul></div><div className="spc"><Ic d={icons.award} s={24} style={{color:C.gold,margin:"0 auto 6px",display:"block"}}/><h3>Platinum</h3><div className="pr">$1,000</div><ul><li>Everything in Gold</li><li>Team naming rights</li><li>Dedicated field signage</li><li>Featured in all communications</li></ul></div></div><p style={{marginTop:20,fontSize:13,color:C.gray}}>Contact sponsors@meadowathletics.org to get started.</p></div>)}
+function SponsorsPage(){return(<div className="pg cp"><h1>Become a Sponsor</h1><div className="gl"/><p>MAA relies on local businesses and families to keep registration fees affordable and our fields well-maintained. There are two ways to get involved.</p><div className="spt"><div className="spc" style={{borderColor:C.gold}}><Ic d={icons.star} s={24} style={{color:C.gold,margin:"0 auto 6px",display:"block"}}/><h3>Field Banner</h3><div style={{display:"flex",gap:16,justifyContent:"center",alignItems:"flex-end",margin:"8px 0 4px"}}><div style={{textAlign:"center"}}><div className="pr" style={{margin:0}}>$175<span style={{fontSize:16,fontWeight:600}}>/yr</span></div><div style={{fontSize:11,color:C.gray,marginTop:2}}>for 3 years</div></div><div style={{color:C.grayLt,fontSize:13,paddingBottom:18}}>or</div><div style={{textAlign:"center"}}><div className="pr" style={{margin:0}}>$500</div><div style={{fontSize:11,color:C.gray,marginTop:2}}>one-time</div></div></div><ul style={{marginTop:10,marginBottom:0}}><li>Two banners — one on an MAA field, one on a school field</li><li>Seen by players, families &amp; fans all season</li><li>Covers three full seasons</li></ul><a href="/static/sponsorship-form.pdf" target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:5,marginTop:14,color:C.goldDk,fontWeight:600,fontSize:13,textDecoration:"none"}}><Ic d={icons.dl} s={13}/> Download Sponsorship Form</a></div><div className="spc" style={{borderColor:C.gold}}><Ic d={icons.heart} s={24} style={{color:C.gold,margin:"0 auto 6px",display:"block"}}/><h3>Team Sponsor</h3><div className="pr">$250</div><div style={{fontSize:12,color:C.gray,marginBottom:10}}>per team · per season</div><ul><li>Sponsor a specific team for one season</li><li>Sponsor name on team jersey</li><li>Available for any sport or age group</li></ul></div></div><p style={{marginTop:20,fontSize:13,color:C.gray}}>To get started, contact us at meadowathleticassociation@gmail.com.</p></div>)}
+
+function FaqPage({go}){
+  const Sh=({l,first})=><div style={{fontWeight:700,color:C.goldDk,fontSize:11,textTransform:"uppercase",letterSpacing:".7px",marginTop:first?0:10,marginBottom:3}}>{l}</div>;
+  const faqs=[
+    {q:"What sports does MAA typically offer?",a:<><Sh l="Spring" first/><ul style={{paddingLeft:16,marginTop:3,lineHeight:1.9}}><li>T-Ball (Coed, ages 3–4)</li><li>T-Shirt (Coed, ages 5–6)</li><li>Baseball (8U, 10U, 12U — boys)</li><li>Softball (8U, 10U, 12U — girls)</li></ul><Sh l="Fall"/><ul style={{paddingLeft:16,marginTop:3,lineHeight:1.9}}><li>Soccer (6U Coed, 8U Boys, 8U Girls)</li><li>Baseball (8U, 10U, 12U — boys)</li><li>Softball (8U, 10U, 12U — girls)</li></ul><Sh l="Winter"/><ul style={{paddingLeft:16,marginTop:3,lineHeight:1.9}}><li>Basketball (6U Coed, 8U/10U/12U/15U boys, 8U/10U/12U girls)</li><li>Volleyball (8U, 10U, 12U)</li></ul></>},
+    {q:"When does registration open?",a:<><Sh l="Spring" first/>Typically opens mid-January and runs through February.<Sh l="Fall"/>Opens early July through early August.<Sh l="Winter"/>Opens early October through early November.<div style={{marginTop:6,fontSize:11,color:C.gray}}>Deadlines may close earlier if an age group fills.</div></>},
+    {q:"When does each season start?",a:<><Sh l="Spring" first/>Practices begin in March; games start in April.<Sh l="Fall"/>Practices begin in late August; games start mid-September.<Sh l="Winter"/>Practices begin in early December; games start in early January.</>},
+    {q:"When do practices start?",a:<><Sh l="Spring" first/>Baseball, softball, T-Ball, and T-Shirt practices begin in March.<Sh l="Fall"/>Soccer practices begin in late August.<Sh l="Winter"/>Volleyball practices begin in early December.</>},
+    {q:"When are games scheduled?",a:<><Sh l="Spring" first/>Baseball and softball games are mostly Monday, Tuesday, and Thursday evenings. T-Ball games start at 6:30 PM; T-Shirt games start at 7:15–7:30 PM.<Sh l="Fall"/>Soccer games are mostly Monday, Tuesday, and Thursday.<Sh l="Winter"/>Volleyball games are mostly Saturday with some Tuesday and Thursday.</>},
+    {q:"How do I volunteer to coach?",a:"Indicate your interest during registration. The board will follow up with details before the season starts."},
+    {q:"How do coaches communicate with families?",a:"Coaches coordinate with families via group text message."},
+    {q:"How do I become a sponsor?",a:"MAA offers field banner sponsorships and per-team seasonal sponsorships.",link:{l:"View sponsorship options",p:"sponsors"}},
+    {q:"Is MAA a non-profit?",a:"Yes. MAA has been a volunteer-run, non-profit organization serving the Meadow community since 1976, governed by 21 members and a Treasurer.",link:{l:"Learn more about MAA",p:"about"}}
+  ];
+  const[open,setOpen]=useState(null);
+  return(<div className="pg cp"><h1>Frequently Asked Questions</h1><div className="gl"/>{faqs.map((f,i)=>(<div className="wv" key={i}><div className="wv-hd" onClick={()=>setOpen(open===i?null:i)}><h4 style={{fontWeight:600,fontSize:14}}>{f.q}</h4><span className="wv-chev">{open===i?"▾":"▸"}</span></div>{open===i&&<div className="wv-b">{f.a}{f.link&&<button className="b bgh bsm" style={{marginTop:8,display:"inline-flex"}} onClick={()=>go(f.link.p)}>{f.link.l} →</button>}</div>}</div>))}</div>)}
 
 function AddModal({onAdd,onClose}){const[f,sF]=useState({fn:"",mn:"",ln:"",dob:"",g:""});const ok=f.fn&&f.ln&&f.dob&&f.g;return(<div className="mo" onClick={onClose}><div className="md" onClick={e=>e.stopPropagation()}><h3>Add Child</h3><div className="fc"><div className="fr"><label>First Name</label><input value={f.fn} onChange={e=>sF({...f,fn:e.target.value})}/></div><div className="fr"><label>Middle Name</label><input value={f.mn} onChange={e=>sF({...f,mn:e.target.value})}/></div></div><div className="fc"><div className="fr"><label>Last Name</label><input value={f.ln} onChange={e=>sF({...f,ln:e.target.value})}/></div><div className="fr"><label>Gender</label><select value={f.g} onChange={e=>sF({...f,g:e.target.value})}><option value="">Select...</option><option value="Male">Male</option><option value="Female">Female</option></select></div></div><div className="fr"><label>Date of Birth</label><input type="date" value={f.dob} onChange={e=>sF({...f,dob:e.target.value})}/></div><div className="br"><button className="b bgh" onClick={onClose}>Cancel</button><button className="b bg" disabled={!ok} onClick={()=>{onAdd({id:`p-${Date.now()}`,firstName:f.fn,middleName:f.mn,lastName:f.ln,dob:f.dob,gender:f.g});onClose()}}><Ic d={icons.plus} s={13}/> Add</button></div></div></div>)}
 
@@ -469,7 +487,7 @@ function AdminPage(){
       </div></div>}
     </>}
     {tab==="seasons"&&<><div className="amh"><h1>Season Management</h1><button className="b bp bsm"><Ic d={icons.plus} s={13}/> New Season</button></div>
-      <div className="cd"><div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><div><h2 style={{marginBottom:0}}>{SEASON.name}</h2><p style={{fontSize:12,color:C.gray,marginTop:2}}>Registration: Feb 1 – Mar 15, 2026</p></div><div style={{display:"flex",gap:6,alignItems:"center"}}><span className="sbb">Active</span><button className="b bs bsm">Edit</button><button className="b bs bsm">Clone</button></div></div><p style={{fontSize:13,marginTop:10}}><strong>{SEASON.programs.length}</strong> programs · <strong>{SEASON.waivers.length}</strong> waivers · <strong>{REGS.length}</strong> registrations</p></div></>}
+      <div className="cd"><div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><div><h2 style={{marginBottom:0}}>{SEASON.name}</h2><p style={{fontSize:12,color:C.gray,marginTop:2}}>Registration: Jan 20 – Feb 28, 2026</p></div><div style={{display:"flex",gap:6,alignItems:"center"}}><span className="sbb">Active</span><button className="b bs bsm">Edit</button><button className="b bs bsm">Clone</button></div></div><p style={{fontSize:13,marginTop:10}}><strong>{SEASON.programs.length}</strong> programs · <strong>{SEASON.waivers.length}</strong> waivers · <strong>{REGS.length}</strong> registrations</p></div></>}
     {tab==="users"&&<><div className="amh"><h1>User Management</h1></div><p style={{color:C.gray}}>Assign Admin and Registrar roles here. Coming soon.</p></>}
   </main></div>)}
 
@@ -477,12 +495,13 @@ function AdminPage(){
 export default function App(){
   const[pg,sPg]=useState("home");const[cart,sCart]=useState([]);const[players,sPlayers]=useState(INIT_PLAYERS);
   const add=i=>sCart(p=>[...p,i]);const rm=id=>sCart(p=>p.filter(i=>i.id!==id));const clr=()=>sCart([]);const addP=p=>sPlayers(prev=>[...prev,p]);
-  const nav=[{id:"home",ic:icons.home,l:"Home"},{id:"about",ic:icons.info,l:"About"},{id:"fields",ic:icons.map,l:"Fields"},{id:"sponsors",ic:icons.star,l:"Sponsors"},{id:"register",ic:icons.clip,l:"Register"},{id:"cart",ic:icons.cart,l:"Cart",badge:cart.length},{id:"admin",ic:icons.gear,l:"Admin"}];
+  const nav=[{id:"about",ic:icons.info,l:"About"},{id:"faq",ic:icons.help,l:"FAQ"},{id:"fields",ic:icons.map,l:"Field Rentals"},{id:"sponsors",ic:icons.star,l:"Sponsorship"},{id:"register",ic:icons.clip,l:"Register"},{id:"cart",ic:icons.cart,l:"Cart",badge:cart.length},{id:"admin",ic:icons.gear,l:"Admin"}];
   return(<div><style>{css}</style>
-    <header className="H"><div className="H-logo" onClick={()=>sPg("home")}><Ic d={icons.ball} s={20}/><span className="g">MAA</span> Sports</div>
+    <header className="H"><div className="H-logo" onClick={()=>sPg("home")}><img src="/static/maa-large.jpg" alt="MAA" style={{height:30,width:"auto",borderRadius:3}}/><span className="g">MAA</span> Meadow Athletic Association</div>
     <nav className="H-nav">{nav.map(n=>(<button key={n.id} className={pg===n.id?"on":""} onClick={()=>sPg(n.id)}><Ic d={n.ic} s={14}/>{n.l}{n.badge>0&&<span className="hbadge">{n.badge}</span>}</button>))}<button><Ic d={icons.user} s={14}/>Sarah C.</button></nav></header>
     {pg==="home"&&<HomePage go={sPg}/>}
     {pg==="about"&&<AboutPage/>}
+    {pg==="faq"&&<FaqPage go={sPg}/>}
     {pg==="fields"&&<FieldsPage/>}
     {pg==="sponsors"&&<SponsorsPage/>}
     {pg==="register"&&<RegPage players={players} addPlayer={addP} addToCart={add} go={sPg}/>}
