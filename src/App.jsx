@@ -124,7 +124,7 @@ const css = `@import url('https://fonts.googleapis.com/css2?family=Playfair+Disp
 .wv-chev{font-size:14px;color:${C.grayLt}}
 .wv-b{font-size:14px;color:${C.gray};line-height:1.6;margin:10px 0;padding:8px;background:${C.off};border-radius:5px}
 .wv-a{display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;font-weight:500}
-.reg-for{text-align:center;font-size:11px;color:${C.gray};margin-top:-18px;margin-bottom:18px;font-weight:500}
+.reg-for{text-align:center;font-size:15px;color:${C.gray};margin-top:-18px;margin-bottom:18px;font-weight:500}
 .col-picker{position:absolute;top:100%;right:0;margin-top:4px;background:#fff;border:1px solid ${C.bdrLt};border-radius:8px;padding:8px 0;box-shadow:0 4px 16px rgba(0,0,0,.1);z-index:50;min-width:160px}
 .col-picker-item{display:flex;align-items:center;gap:7px;padding:5px 14px;font-size:12px;font-weight:500;cursor:pointer;transition:.1s}.col-picker-item:hover{background:${C.goldFaint}}
 .col-picker-item input{accent-color:${C.gold}}
@@ -177,7 +177,7 @@ const css = `@import url('https://fonts.googleapis.com/css2?family=Playfair+Disp
 .bdg-ok{background:${C.grnBg};color:${C.grn}}.bdg-pn{background:#fef3c7;color:#92400e}
 .btag{background:${C.off};color:${C.char};font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px}
 .cp h1{font-family:${F.d};font-size:30px;margin-bottom:6px}.cp h2{font-family:${F.d};font-size:20px;margin:24px 0 6px}
-.cp p{font-size:15px;color:${C.char};line-height:1.7;margin-bottom:12px}
+.cp p{font-size:17px;color:${C.char};line-height:1.7;margin-bottom:12px}
 .cp .gl{width:44px;height:3px;background:${C.gold};border-radius:2px;margin-bottom:16px}
 .bgrd{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px}
 .bcrd{background:#fff;border:1px solid ${C.bdrLt};border-radius:9px;padding:18px;text-align:center}
@@ -193,7 +193,7 @@ const css = `@import url('https://fonts.googleapis.com/css2?family=Playfair+Disp
 .mo{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:200}
 .md{background:#fff;border-radius:12px;padding:24px;width:400px;max-width:90vw;box-shadow:0 16px 48px rgba(0,0,0,.15)}
 .md h3{font-family:${F.d};font-size:18px;margin-bottom:14px}
-.fr{margin-bottom:12px}.fr label{display:block;font-size:13px;font-weight:600;color:${C.char};margin-bottom:3px}
+.fr{margin-bottom:12px}.fr label{display:block;font-size:15px;font-weight:600;color:${C.char};margin-bottom:3px}
 .fr input,.fr select{width:100%;padding:8px 10px;border:1px solid ${C.bdr};border-radius:5px;font-family:${F.b};font-size:14px}
 .fr input:focus,.fr select:focus{outline:none;border-color:${C.gold};box-shadow:0 0 0 2px rgba(197,160,78,.1)}
 .fc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -209,7 +209,7 @@ function FieldsPage(){return(<div className="pg cp"><h1>Field Rentals</h1><div c
 function SponsorsPage(){return(<div className="pg cp"><h1>Become a Sponsor</h1><div className="gl"/><p>MAA relies on local businesses and families to keep registration fees affordable and our fields well-maintained. There are two ways to get involved.</p><div className="spt"><div className="spc" style={{borderColor:C.gold}}><Ic d={icons.star} s={24} style={{color:C.gold,margin:"0 auto 6px",display:"block"}}/><h3>Field Banner</h3><div style={{display:"flex",gap:16,justifyContent:"center",alignItems:"flex-end",margin:"8px 0 4px"}}><div style={{textAlign:"center"}}><div className="pr" style={{margin:0}}>$175<span style={{fontSize:16,fontWeight:600}}>/yr</span></div><div style={{fontSize:11,color:C.gray,marginTop:2}}>for 3 years</div></div><div style={{color:C.grayLt,fontSize:13,paddingBottom:18}}>or</div><div style={{textAlign:"center"}}><div className="pr" style={{margin:0}}>$500</div><div style={{fontSize:11,color:C.gray,marginTop:2}}>one-time</div></div></div><ul style={{marginTop:10,marginBottom:0}}><li>Two banners — one on an MAA field, one on a school field</li><li>Seen by players, families &amp; fans all season</li><li>Covers three full seasons</li></ul><a href={B_URL+"static/sponsorship-form.pdf"} target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:5,marginTop:14,color:C.goldDk,fontWeight:600,fontSize:13,textDecoration:"none"}}><Ic d={icons.dl} s={13}/> Download Sponsorship Form</a></div><div className="spc" style={{borderColor:C.gold}}><Ic d={icons.heart} s={24} style={{color:C.gold,margin:"0 auto 6px",display:"block"}}/><h3>Team Sponsor</h3><div className="pr">$250</div><div style={{fontSize:12,color:C.gray,marginBottom:10}}>per team · per season</div><ul><li>Sponsor a specific team for one season</li><li>Sponsor name on team jersey</li><li>Available for any sport or age group</li></ul></div></div><p style={{marginTop:20,fontSize:13,color:C.gray}}>To get started, contact us at meadowathleticassociation@gmail.com.</p></div>)}
 
 function FaqPage({go}){
-  const Sh=({l,first})=><div style={{fontWeight:700,color:C.goldDk,fontSize:11,textTransform:"uppercase",letterSpacing:".7px",marginTop:first?0:10,marginBottom:3}}>{l}</div>;
+  const Sh=({l,first})=><div style={{fontWeight:700,color:C.goldDk,fontSize:18,textTransform:"uppercase",letterSpacing:".7px",marginTop:first?0:10,marginBottom:3}}>{l}</div>;
   const faqs=[
     {q:"What sports does MAA typically offer?",a:<><Sh l="Spring" first/><ul style={{paddingLeft:16,marginTop:3,lineHeight:1.9}}><li>T-Ball (Coed, ages 3–4)</li><li>T-Shirt (Coed, ages 5–6)</li><li>Baseball (8U, 10U, 12U — boys)</li><li>Softball (8U, 10U, 12U — girls)</li></ul><Sh l="Fall"/><ul style={{paddingLeft:16,marginTop:3,lineHeight:1.9}}><li>Soccer (6U Coed, 8U Boys, 8U Girls)</li><li>Baseball (8U, 10U, 12U — boys)</li><li>Softball (8U, 10U, 12U — girls)</li></ul><Sh l="Winter"/><ul style={{paddingLeft:16,marginTop:3,lineHeight:1.9}}><li>Basketball (6U Coed, 8U/10U/12U/15U boys, 8U/10U/12U girls)</li><li>Volleyball (8U, 10U, 12U)</li></ul></>},
     {q:"When does registration open?",a:<><Sh l="Spring" first/>Typically opens mid-January and runs through February.<Sh l="Fall"/>Opens early July through early August.<Sh l="Winter"/>Opens early October through early November.<div style={{marginTop:6,fontSize:11,color:C.gray}}>Deadlines may close earlier if an age group fills.</div></>},
@@ -222,7 +222,7 @@ function FaqPage({go}){
     {q:"Is MAA a non-profit?",a:"Yes. MAA has been a volunteer-run, non-profit organization serving the Meadow community since 1976, governed by 21 members and a Treasurer.",link:{l:"Learn more about MAA",p:"about"}}
   ];
   const[open,setOpen]=useState(null);
-  return(<div className="pg cp"><h1>Frequently Asked Questions</h1><div className="gl"/>{faqs.map((f,i)=>(<div className="wv" key={i}><div className="wv-hd" onClick={()=>setOpen(open===i?null:i)}><h4 style={{fontWeight:600,fontSize:14}}>{f.q}</h4><span className="wv-chev">{open===i?"▾":"▸"}</span></div>{open===i&&<div className="wv-b">{f.a}{f.link&&<button className="b bgh bsm" style={{marginTop:8,display:"inline-flex"}} onClick={()=>go(f.link.p)}>{f.link.l} →</button>}</div>}</div>))}</div>)}
+  return(<div className="pg cp"><h1>Frequently Asked Questions</h1><div className="gl"/>{faqs.map((f,i)=>(<div className="wv" key={i}><div className="wv-hd" onClick={()=>setOpen(open===i?null:i)}><h4 style={{fontWeight:600,fontSize:18}}>{f.q}</h4><span className="wv-chev">{open===i?"▾":"▸"}</span></div>{open===i&&<div className="wv-b">{f.a}{f.link&&<button className="b bgh bsm" style={{marginTop:8,display:"inline-flex"}} onClick={()=>go(f.link.p)}>{f.link.l} →</button>}</div>}</div>))}</div>)}
 
 function AddModal({onAdd,onClose}){const[f,sF]=useState({fn:"",mn:"",ln:"",dob:"",g:""});const ok=f.fn&&f.ln&&f.dob&&f.g;return(<div className="mo" onClick={onClose}><div className="md" onClick={e=>e.stopPropagation()}><h3>Add Child</h3><div className="fc"><div className="fr"><label>First Name</label><input value={f.fn} onChange={e=>sF({...f,fn:e.target.value})}/></div><div className="fr"><label>Middle Name</label><input value={f.mn} onChange={e=>sF({...f,mn:e.target.value})}/></div></div><div className="fc"><div className="fr"><label>Last Name</label><input value={f.ln} onChange={e=>sF({...f,ln:e.target.value})}/></div><div className="fr"><label>Gender</label><select value={f.g} onChange={e=>sF({...f,g:e.target.value})}><option value="">Select...</option><option value="Male">Male</option><option value="Female">Female</option></select></div></div><div className="fr"><label>Date of Birth</label><input type="date" value={f.dob} onChange={e=>sF({...f,dob:e.target.value})}/></div><div className="br"><button className="b bgh" onClick={onClose}>Cancel</button><button className="b bg" disabled={!ok} onClick={()=>{onAdd({id:`p-${Date.now()}`,firstName:f.fn,middleName:f.mn,lastName:f.ln,dob:f.dob,gender:f.g});onClose()}}><Ic d={icons.plus} s={13}/> Add</button></div></div></div>)}
 
@@ -262,7 +262,7 @@ function RegPage({players,addPlayer,addToCart,go}){
   }
   return(<div className="pg"><div className="pgn">
     <div className="steps">{labels.map((l,i)=>(<div key={i} style={{display:"flex",alignItems:"center"}}><div className={`st ${step===i+1?"on":step>i+1?"dn":""}`}><div className="stn">{step>i+1?<Ic d={icons.chk} s={12}/>:i+1}</div><span>{l}</span></div>{i<labels.length-1&&<div className={`stl ${step>i+1?"dn":""}`}/>}</div>))}</div>
-    {pl&&step>1&&<div className="reg-for">Registering: {fullName(pl)}</div>}
+    {pl&&step>1&&<div className="reg-for">Registering: {fullName(pl)} &ndash; Age: {age(pl.dob,null)}</div>}
     {step===1&&<div className="cd"><h2>Select Player</h2><p className="cd-s">Choose which child to register for {SEASON.name}.</p>
       {players.map(p=>(<div key={p.id} className={`opt ${pl?.id===p.id?"sl":""}`} onClick={()=>sPl(p)}><div className="opt-i"><h4>{fullName(p)}</h4><p>DOB: {new Date(p.dob).toLocaleDateString()} · Age: {age(p.dob,null)} · {p.gender}</p></div><div className={`opt-c`}>{pl?.id===p.id&&<Ic d={icons.chk} s={12}/>}</div></div>))}
       <button className="b bs bsm" style={{marginTop:10}} onClick={()=>sShowAdd(true)}><Ic d={icons.plus} s={13}/> Add Child</button>
