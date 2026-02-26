@@ -10,6 +10,7 @@ Future features and enhancements beyond the current proof-of-concept.
 - **Mobile-responsive design**
 - **CI/CD pipeline**
 - **Cloud deployment (AWS)**
+  - look into AWS Amplify for hosting
 - **Password reset / account management** — handled by Auth0
 
 > **Not planned:** Team/roster management

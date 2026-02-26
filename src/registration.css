@@ -1,0 +1,103 @@
+/* -- Registration Layout -- */
+.reg-pg { max-width: 960px }
+.reg-wrap { display: grid; grid-template-columns: 180px 1fr; gap: 28px; align-items: start }
+.reg-ct { max-width: 680px }
+
+/* -- Vertical Step Sidebar -- */
+.steps-v { position: sticky; top: 84px; padding: 4px 0 }
+.stv { display: flex; align-items: flex-start; gap: 10px }
+.stv span { font-size: 13px; font-weight: 500; color: var(--gray-lt); padding-top: 3px; line-height: 1 }
+.stv.on span { color: var(--blk); font-weight: 600 }
+.stv.dn span { color: var(--gold-dk) }
+.stv-r { display: flex; flex-direction: column; align-items: center; flex-shrink: 0 }
+
+/* -- Step Circle (shared desktop + mobile) -- */
+.stn { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; border: 2px solid var(--bdr); background: #fff; flex-shrink: 0 }
+.stv.on .stn, .stn.on { border-color: var(--blk); background: var(--blk); color: #fff }
+.stv.dn .stn, .stn.dn { border-color: var(--gold); background: var(--gold); color: var(--blk) }
+
+/* -- Vertical Connector -- */
+.stl-v { width: 2px; height: 20px; background: var(--bdr-lt); margin: 4px 0 }
+.stv.dn .stl-v { background: var(--gold) }
+
+/* -- Mobile Compact Indicator (hidden on desktop) -- */
+.steps-m { display: none }
+
+/* -- Registration Card -- */
+.cd { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,.02) }
+.cd h2 { font-family: var(--font-display); font-size: 21px; margin-bottom: 2px }
+.cd-s { font-size: 14px; color: var(--gray); margin-bottom: 18px }
+.reg-for { font-size: 15px; color: var(--gray); margin-bottom: 18px; font-weight: 500 }
+
+/* -- Option Selectors -- */
+.opt { border: 2px solid var(--bdr-lt); border-radius: 9px; padding: 12px 16px; margin-bottom: 7px; cursor: pointer; transition: .15s; display: flex; align-items: center; justify-content: space-between }
+.opt:hover { border-color: var(--gold); background: var(--gold-faint) }
+.opt.sl { border-color: var(--gold-dk); background: var(--gold-faint) }
+.opt-i h4 { font-size: 14px; font-weight: 600 }
+.opt-i p { font-size: 13px; color: var(--gray); margin-top: 1px }
+.opt-c { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--bdr); display: flex; align-items: center; justify-content: center; flex-shrink: 0 }
+.opt.sl .opt-c { border-color: var(--gold); background: var(--gold); color: var(--blk) }
+.opt-f { font-size: 14px; font-weight: 700; color: var(--gold-dk) }
+.opt-sg { font-size: 10px; background: var(--grn-bg); color: var(--grn); padding: 1px 7px; border-radius: 3px; font-weight: 600; margin-left: 6px }
+
+/* -- Size Selectors -- */
+.szg { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--bdr-lt) }
+.szg-l { font-size: 13px; font-weight: 600; color: var(--char); margin-bottom: 2px }
+.szg-d { font-size: 12px; color: var(--gray); margin-bottom: 8px }
+.szr { display: flex; align-items: center; gap: 10px; margin-bottom: 12px }
+.szr label { font-size: 13px; font-weight: 600; color: var(--char); min-width: 90px }
+.szp { display: flex; gap: 5px; flex-wrap: wrap }
+.sz { padding: 5px 12px; border: 1px solid var(--bdr); border-radius: 5px; font-size: 13px; font-weight: 500; cursor: pointer; background: #fff; font-family: var(--font-body); color: var(--char); transition: .15s }
+.sz:hover { border-color: var(--gold) }
+.sz.sl { border-color: var(--gold); background: var(--gold-faint); color: var(--gold-dk); font-weight: 600 }
+
+/* -- Waivers -- */
+.wv { border: 1px solid var(--gold-dk); border-radius: 9px; padding: 16px; margin-bottom: 9px }
+.wv h4 { font-size: 13px; font-weight: 600; margin-bottom: 0 }
+.wv .rq { color: var(--red); font-size: 10px; margin-left: 4px }
+.wv-hd { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 2px 0; border-radius: 5px; transition: .12s }
+.wv-hd:hover { opacity: .8 }
+.wv-chev { font-size: 14px; color: var(--gray-lt) }
+.wv-b { font-size: 14px; color: var(--gray); line-height: 1.6; margin: 10px 0; padding: 8px; background: var(--off); border-radius: 5px; max-height: 280px; overflow-y: auto }
+.wv-b h3 { font-size: 14px; font-weight: 700; color: var(--char); margin: 0 0 2px }
+.wv-b h4 { font-size: 13px; font-weight: 600; color: var(--char); margin: 8px 0 4px }
+.wv-b p { margin: 6px 0 }
+.wv-b ul { padding-left: 20px; margin: 6px 0 }
+.wv-b li { margin-bottom: 4px }
+.wv-a { display: flex; align-items: center; gap: 7px; cursor: pointer; font-size: 13px; font-weight: 500 }
+.wck { width: 16px; height: 16px; border: 2px solid var(--bdr); border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0 }
+.wck.on { background: var(--gold); border-color: var(--gold); color: var(--blk) }
+.wv-init { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13px; font-weight: 500 }
+.wv-init input { width: 80px; padding: 6px 10px; border: 1px solid var(--bdr); border-radius: 5px; font-family: var(--font-body); font-size: 14px; font-weight: 600; text-transform: uppercase; text-align: center }
+.wv-init input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 2px rgba(197,160,78,.1) }
+.wv-chk { width: 22px; height: 22px; border-radius: 50%; background: var(--gold); color: var(--blk); display: flex; align-items: center; justify-content: center; flex-shrink: 0 }
+.wv-copy { background: none; border: none; color: var(--gold-dk); font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--font-body); padding: 2px 6px; text-decoration: underline; text-underline-offset: 2px }
+.wv-copy:hover { color: var(--gold) }
+
+/* -- Review Table -- */
+.rt { width: 100%; border-collapse: collapse; margin: 12px 0 }
+.rt td { padding: 8px 0; font-size: 14px; border-bottom: 1px solid var(--bdr-lt) }
+.rt td:first-child { color: var(--gray); width: 120px }
+.rt td:last-child { font-weight: 500 }
+.rf { font-size: 20px; font-weight: 700; color: var(--gold-dk); font-family: var(--font-display) }
+
+/* -- Button Row -- */
+.br { display: flex; gap: 9px; margin-top: 20px; justify-content: flex-end }
+
+/* -- Cart Items -- */
+.ci { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 10px; padding: 16px 20px; margin-bottom: 9px; display: flex; align-items: center; justify-content: space-between }
+.ci-i h4 { font-size: 14px; font-weight: 600 }
+.ci-i p { font-size: 13px; color: var(--gray); margin-top: 1px }
+.ci-r { display: flex; align-items: center; gap: 12px }
+.ci-f { font-size: 15px; font-weight: 700; color: var(--gold-dk) }
+
+/* -- Cart Total -- */
+.ct { background: var(--gold-faint); border: 1px solid var(--gold-pale); border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-top: 12px }
+.ct-l { font-size: 14px; font-weight: 600 }
+.ct-a { font-size: 22px; font-weight: 700; color: var(--gold-dk); font-family: var(--font-display) }
+
+/* -- Confirmation -- */
+.cfm { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 12px; padding: 44px 24px; text-align: center; max-width: 520px; margin: 0 auto }
+.cfm-ic { width: 56px; height: 56px; border-radius: 50%; background: var(--gold-faint); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; color: var(--gold) }
+.cfm h2 { font-family: var(--font-display); font-size: 24px; margin-bottom: 5px }
+.cfm p { color: var(--gray); font-size: 14px; line-height: 1.6; max-width: 380px; margin: 0 auto }

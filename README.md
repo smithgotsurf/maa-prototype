@@ -4,6 +4,10 @@ A registration and information web app prototype for the **Meadow Athletic Assoc
 
 Built with React + Vite. All app code lives in `src/App.jsx`.
 
+✨Vibe✨ coded with Claude
+
+Hosted at: [https://smithgotsurf.github.io/maa-prototype/](https://smithgotsurf.github.io/maa-prototype/)
+
 ---
 
 ## Organization

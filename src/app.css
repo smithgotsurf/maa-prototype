@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --gold: #C5A04E;
+  --gold-dk: #A68636;
+  --gold-lt: #D4B86A;
+  --gold-pale: #F5EDD5;
+  --gold-faint: #FBF7EC;
+  --blk: #1A1A1A;
+  --blk-soft: #2D2D2D;
+  --char: #404040;
+  --gray: #6B6B6B;
+  --gray-lt: #9A9A9A;
+  --bdr: #E0E0E0;
+  --bdr-lt: #EEEEEE;
+  --wht: #FFFFFF;
+  --off: #FAFAF8;
+  --bg: #F5F4F0;
+  --red: #C23B22;
+  --red-bg: #FCECEA;
+  --grn: #2E7D4F;
+  --grn-bg: #E8F5E9;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Source Sans 3', -apple-system, sans-serif;
+}
+
+/* -- Reset & Base -- */
+* { margin: 0; padding: 0; box-sizing: border-box }
+body { font-family: var(--font-body); color: var(--blk); background: var(--bg); -webkit-font-smoothing: antialiased }
+
+/* -- Header -- */
+.H { background: var(--blk); color: #fff; padding: 0 28px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100 }
+.H-logo { font-family: var(--font-display); font-size: 19px; display: flex; align-items: center; gap: 8px; cursor: pointer }
+.H-logo .g { color: var(--gold) }
+.H-nav { display: flex; gap: 1px }
+.H-nav button { background: none; border: none; color: rgba(255,255,255,.5); font-family: var(--font-body); font-size: 14px; font-weight: 500; padding: 7px 12px; border-radius: 7px; cursor: pointer; transition: .15s; display: flex; align-items: center; gap: 5px }
+.H-nav button:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.8) }
+.H-nav button.on { background: rgba(197,160,78,.15); color: var(--gold) }
+.hbadge { background: var(--gold); color: var(--blk); font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 9px }
+
+/* -- Hero & Home -- */
+.pg { max-width: 900px; margin: 0 auto; padding: 28px 20px }
+.pgn { max-width: 680px; margin: 0 auto }
+.hero { color: #fff; padding: 64px 28px 180px; text-align: center; position: relative; overflow: hidden; background-size: cover; background-position: center; background-repeat: no-repeat }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent) }
+.hero h1 { font-family: var(--font-display); font-size: 42px; font-weight: 700; margin-bottom: 6px }
+.hero h1 .g { color: var(--gold) }
+.hero p { font-size: 16px; opacity: .55; max-width: 440px; margin: 0 auto 32px; line-height: 1.6 }
+.hcta { display: inline-flex; align-items: center; gap: 7px; background: var(--gold); color: var(--blk); border: none; padding: 13px 28px; font-family: var(--font-body); font-size: 15px; font-weight: 600; border-radius: 7px; cursor: pointer; transition: .2s }
+.hcta:hover { background: var(--gold-lt); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(197,160,78,.3) }
+.sb { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 12px; padding: 20px 24px; margin: -136px auto 24px; max-width: 600px; position: relative; z-index: 10; box-shadow: 0 3px 20px rgba(0,0,0,.05); display: flex; align-items: center; justify-content: space-between }
+.sb h3 { font-family: var(--font-display); font-size: 17px }
+.sb p { font-size: 13px; color: var(--gray); margin-top: 2px }
+.sbb { background: var(--gold-faint); color: var(--gold-dk); font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 16px; border: 1px solid var(--gold-pale) }
+.pgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px }
+.pcol { display: flex; flex-direction: column; gap: 10px }
+.pcol-h { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: .7px; font-weight: 600; padding: 0 2px }
+.pcard { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 10px; padding: 18px; transition: .15s }
+.pcard:hover { border-color: var(--gold) }
+.pcard h4 { font-family: var(--font-display); font-size: 16px; margin: 2px 0 6px }
+.pcard-m { display: flex; justify-content: space-between; align-items: center }
+.pcard-a { font-size: 11px; color: var(--gray); background: var(--off); padding: 2px 7px; border-radius: 3px }
+.pcard-f { font-size: 13px; font-weight: 700; color: var(--gold-dk) }
+.sh h3 { font-family: var(--font-display); font-size: 20px }
+.sh p { font-size: 13px; color: var(--gray); margin-top: 2px }
+
+/* -- Content Pages -- */
+.cp h1 { font-family: var(--font-display); font-size: 30px; margin-bottom: 6px }
+.cp h2 { font-family: var(--font-display); font-size: 20px; margin: 24px 0 6px }
+.cp p { font-size: 17px; color: var(--char); line-height: 1.7; margin-bottom: 12px }
+.cp .gl { width: 44px; height: 3px; background: var(--gold); border-radius: 2px; margin-bottom: 16px }
+.bgrd { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 12px }
+.bcrd { background: #fff; border: 1px solid var(--gold-dk); border-radius: 9px; padding: 18px; text-align: center }
+.bcrd-av { width: 48px; height: 48px; border-radius: 50%; background: var(--gold-faint); display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: var(--gold) }
+.bcrd h4 { font-size: 14px; font-weight: 600 }
+.bcrd p { font-size: 11px; color: var(--gray) }
+.ic { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 10px; padding: 20px; margin-bottom: 12px }
+.ic h3 { font-family: var(--font-display); font-size: 16px; margin-bottom: 4px }
+.ic p { font-size: 14px; color: var(--gray); line-height: 1.6; margin: 0 }
+
+/* -- Sponsors -- */
+.spt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px }
+.spc { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 10px; padding: 22px; text-align: center; transition: .15s }
+.spc:hover { border-color: var(--gold) }
+.spc h3 { font-family: var(--font-display); font-size: 18px; margin-bottom: 2px }
+.spc .pr { font-size: 26px; font-weight: 700; color: var(--gold-dk); font-family: var(--font-display); margin: 6px 0 }
+.spc ul { text-align: left; font-size: 13px; color: var(--char); line-height: 2; list-style: none; padding: 0 }
+.spc ul li::before { content: "\2713 "; color: var(--gold); font-weight: 700 }
+
+/* -- Admin -- */
+.adm { display: grid; grid-template-columns: 190px 1fr; min-height: calc(100vh - 56px) }
+.asd { background: #fff; border-right: 1px solid var(--bdr-lt); padding: 18px 0 }
+.asd-l { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-lt); padding: 16px 18px 5px; font-weight: 600 }
+.asd-i { display: flex; align-items: center; gap: 7px; padding: 8px 18px; font-size: 13px; font-weight: 500; color: var(--gray); cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-family: var(--font-body); transition: .12s }
+.asd-i:hover { background: var(--gold-faint); color: var(--blk) }
+.asd-i.on { background: var(--gold-faint); color: var(--gold-dk); font-weight: 600; border-right: 3px solid var(--gold) }
+.am { padding: 24px }
+.amh { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px }
+.amh h1 { font-family: var(--font-display); font-size: 24px }
+.sts { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px }
+.stt { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 10px; padding: 14px }
+.stt-l { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: var(--gray); font-weight: 600 }
+.stt-v { font-family: var(--font-display); font-size: 26px; margin-top: 2px }
+.stt-v.gd { color: var(--gold-dk) }
+.stt-s { font-size: 10px; color: var(--gray-lt); margin-top: 1px }
+.flt { display: flex; gap: 8px; margin-bottom: 14px; align-items: center }
+.fsl { padding: 6px 10px; border: 1px solid var(--bdr); border-radius: 5px; font-family: var(--font-body); font-size: 12px; background: #fff; cursor: pointer }
+.fin { padding: 6px 10px; border: 1px solid var(--bdr); border-radius: 5px; font-family: var(--font-body); font-size: 12px; flex: 1; max-width: 220px }
+.fsl:focus, .fin:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 2px rgba(197,160,78,.1) }
+.dt { width: 100%; border-collapse: separate; border-spacing: 0; background: #fff; border: 1px solid var(--bdr-lt); border-radius: 10px; overflow: hidden }
+.dt th { text-align: left; padding: 10px 12px; font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: var(--gray); font-weight: 600; background: var(--off); border-bottom: 1px solid var(--bdr-lt) }
+.dt td { padding: 10px 12px; font-size: 12px; border-bottom: 1px solid var(--bdr-lt) }
+.dt tr:last-child td { border-bottom: none }
+.dt tr:hover td { background: var(--gold-faint) }
+.bdg { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; display: inline-block }
+.bdg-ok { background: var(--grn-bg); color: var(--grn) }
+.bdg-pn { background: #fef3c7; color: #92400e }
+.btag { background: var(--off); color: var(--char); font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 3px }
+
+/* -- Buttons -- */
+.b { padding: 9px 20px; border-radius: 7px; font-family: var(--font-body); font-size: 14px; font-weight: 600; cursor: pointer; transition: .15s; display: inline-flex; align-items: center; gap: 5px; border: none }
+.bp { background: var(--blk); color: #fff }
+.bp:hover { background: var(--blk-soft) }
+.bg { background: var(--gold); color: var(--blk) }
+.bg:hover { background: var(--gold-lt) }
+.bs { background: var(--off); color: var(--char); border: 1px solid var(--bdr) }
+.bs:hover { background: var(--bdr-lt) }
+.bgh { background: none; color: var(--gray); border: none }
+.bgh:hover { color: var(--blk) }
+.bd { background: none; color: var(--red); border: none }
+.bd:hover { background: var(--red-bg) }
+.bsm { padding: 6px 12px; font-size: 13px }
+.b:disabled { opacity: .35; cursor: not-allowed }
+
+/* -- Forms & Modal -- */
+.mo { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.4); display: flex; align-items: center; justify-content: center; z-index: 200 }
+.md { background: #fff; border-radius: 12px; padding: 24px; width: 400px; max-width: 90vw; box-shadow: 0 16px 48px rgba(0,0,0,.15) }
+.md h3 { font-family: var(--font-display); font-size: 18px; margin-bottom: 14px }
+.fr { margin-bottom: 12px }
+.fr label { display: block; font-size: 15px; font-weight: 600; color: var(--char); margin-bottom: 3px }
+.fr input, .fr select, .fr textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--bdr); border-radius: 5px; font-family: var(--font-body); font-size: 14px; box-sizing: border-box }
+.fr input:focus, .fr select:focus, .fr textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 2px rgba(197,160,78,.1) }
+.fr textarea { resize: vertical }
+.fc { display: grid; grid-template-columns: 1fr 1fr; gap: 10px }
+.col-picker { position: absolute; top: 100%; right: 0; margin-top: 4px; background: #fff; border: 1px solid var(--bdr-lt); border-radius: 8px; padding: 8px 0; box-shadow: 0 4px 16px rgba(0,0,0,.1); z-index: 50; min-width: 160px }
+.col-picker-item { display: flex; align-items: center; gap: 7px; padding: 5px 14px; font-size: 12px; font-weight: 500; cursor: pointer; transition: .1s }
+.col-picker-item:hover { background: var(--gold-faint) }
+.col-picker-item input { accent-color: var(--gold) }
+
+/* -- Responsive -- */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 28px }
+  .sts { grid-template-columns: repeat(2, 1fr) }
+  .adm { grid-template-columns: 1fr }
+  .asd { display: none }
+  .pgrid { grid-template-columns: 1fr }
+  .sb { flex-direction: column; gap: 8px; text-align: center }
+  .steps-v { display: none }
+  .steps-m { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding: 10px 14px; background: #fff; border: 1px solid var(--bdr-lt); border-radius: 8px }
+  .steps-m span { font-size: 14px; font-weight: 600; color: var(--char) }
+  .reg-wrap { grid-template-columns: 1fr; gap: 0 }
+  .bgrd { grid-template-columns: 1fr }
+  .spt { grid-template-columns: 1fr }
+  .H-full { display: none }
+  .ic-grid { grid-template-columns: 1fr }
+}
