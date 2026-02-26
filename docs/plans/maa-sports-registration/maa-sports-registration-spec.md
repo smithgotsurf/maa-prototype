@@ -651,7 +651,7 @@ On first run (or via an admin API endpoint / CLI command), seed the database wit
 ## Out of Scope for PoC
 - Payment processing (structure the code for future integration)
 - Email notifications
-- Team/roster management
+- Team/roster management. We will not build this.
 - Reporting beyond basic counts and CSV export
 - Mobile-responsive design (nice to have, not required)
 - CI/CD pipeline
@@ -665,7 +665,7 @@ On first run (or via an admin API endpoint / CLI command), seed the database wit
 ### Phase 0: Frontend Prototype (GitHub Pages)
 Before building the full stack, deploy a standalone frontend prototype for stakeholder feedback.
 
-- **Repo:** Separate repo (e.g., `maa-web-prototype`)
+- **Repo:** Separate repo (e.g., `maa-prototype`)
 - **Stack:** Vite + React + TypeScript + Ant Design (same frontend stack as the full app)
 - **Data:** All mock data, no API calls. Hardcode seasons, programs, and sample registrations.
 - **Hosting:** GitHub Pages (Vite builds to static files, simple to deploy)
