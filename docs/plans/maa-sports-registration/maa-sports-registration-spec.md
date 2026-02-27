@@ -118,7 +118,7 @@ The system supports three seasonal registration periods per year (Spring, Fall, 
       _id: string (GUID),
       name: string,             // e.g., "8U Baseball", "T-Ball", "10U Softball"
       gender: Gender,           // enum: Male, Female, Coed (serialized as string) — SUGGESTION filter, not hard gate
-      ageCutoffDate: Date?,     // optional — if set, displayed on program card for context; age recommendation still based on age at registration time
+      ageAsOfDate: Date?,        // optional — the date used to calculate a player's age for program eligibility; if not set, today's date is used
       minAge: number,           // inclusive
       maxAge: number,           // inclusive
       fee: number               // in dollars, e.g., 85.00
@@ -140,7 +140,7 @@ The system supports three seasonal registration periods per year (Spring, Fall, 
 **Program model notes:**
 - Each program is a single registerable unit (e.g., "8U Baseball" not "Baseball → 8U").
 - Gender is a **soft filter**: the UI suggests programs matching the player's gender but does NOT prevent cross-gender registration (e.g., a girl can register for 8U Baseball).
-- **`ageCutoffDate` is optional.** If set, it is used to calculate the player's age for recommendations AND displayed on the program card (e.g., "Age determined as of May 1, 2026"). If not set (e.g., T-Ball, T-Shirt), the player's age at registration time is used instead. Either way, it does NOT gate registration.
+- **`ageAsOfDate` is optional.** If set, it is used to calculate the player's age for recommendations AND displayed on the program card (e.g., "Age determined as of May 1, 2026"). If not set (e.g., T-Ball, T-Shirt), the player's age at registration time is used instead. Either way, it does NOT gate registration.
 - **Age is a soft recommendation, not a hard gate.** Programs are displayed in tiers (Recommended vs. Other Programs) but parents can register for any program. Pre-season assessments handle borderline/edge cases.
 
 ### Registration
@@ -217,7 +217,7 @@ All enums should be serialized as strings in MongoDB (not integers) for readabil
 - **Player middle name:** Optional field on the player model. Displayed where player names appear but not required.
 - **Cart persistence:** The cart is stored in `localStorage` so it survives browser refreshes and accidental tab closures. The cart context hydrates from `localStorage` on mount and syncs on every change.
 - **DOB display:** Player date of birth is stored as a full date (needed for precise age calculation). **Parent/guardian-facing UI shows the full date** (e.g., "6/15/2016") — registration flow, profile, cart. **Admin/registrar-facing UI shows Month/Year only** (e.g., "Jun 2016") — registration dashboard, CSV export. Admins don't need the exact day; parents see it for verification.
-- **Age calculation:** `ageAtCutoff = cutoffDate.Year - player.dateOfBirth.Year`, adjusted if the player hasn't had their birthday yet by the cutoff date. The API should auto-determine eligibility based on the player's age at the program's cutoff date.
+- **Age calculation:** `playerAge = ageAsOfDate.Year - player.dateOfBirth.Year`, adjusted if the player hasn't had their birthday yet by the as-of date. The API should auto-determine eligibility based on the player's age as of the program's `ageAsOfDate`.
 
 ---
 
@@ -261,12 +261,12 @@ All enums should be serialized as strings in MongoDB (not integers) for readabil
 
 **Step 3: Select Program**
 - Show the currently active season.
-- For each program, calculate the player's age using `ageCutoffDate` if set, otherwise use today's date.
+- For each program, calculate the player's age using `ageAsOfDate` if set, otherwise use today's date.
 - Display programs in two tiers:
   - **Recommended:** Programs where the player's calculated age falls within `minAge`–`maxAge` and matches the player's gender. These are the 1-2 most appropriate options (e.g., a 4-year-old sees T-Ball and T-Shirt; an 8-year-old sees 8U and 10U).
   - **Other Programs:** All remaining programs in the season. Shown below under a separate header. Parents can still register for these (e.g., playing up an age group, cross-gender registration).
 - Gender and age are both **soft filters** — used for recommendations only, not hard gates. Pre-season assessments handle borderline cases.
-- If a program has an `ageCutoffDate`, display it on the program card as informational context (e.g., "Age determined as of May 1, 2026").
+- If a program has an `ageAsOfDate`, display it on the program card as informational context (e.g., "Age determined as of May 1, 2026").
 
 **Step 4: Parent/Guardian & Contact**
 - Pre-fill primary guardian info (first name, last name, phone) from user profile.
@@ -320,7 +320,7 @@ All enums should be serialized as strings in MongoDB (not integers) for readabil
 
 **Program Configuration**
 - Add/edit/remove programs within a season.
-- Configure gender (suggestion filter), age cutoff date, min/max age, and fee per program.
+- Configure gender (suggestion filter), age-as-of date, min/max age, and fee per program.
 
 **Waiver Management**
 - Add/edit/remove waivers per season.
@@ -386,7 +386,7 @@ All enums should be serialized as strings in MongoDB (not integers) for readabil
 This is the real-world MAA configuration. Use this as seed data and for testing. Each row is one program entry in the season.
 
 ### Spring Programs
-| Program Name | Gender | Age Cutoff Date | Min Age | Max Age | Fee |
+| Program Name | Gender | Age As-Of Date | Min Age | Max Age | Fee |
 |-------------|--------|-----------------|---------|---------|-----|
 | T-Ball | Coed | — | 3 | 4 | $65 |
 | T-Shirt | Coed | — | 5 | 6 | $65 |
@@ -398,7 +398,7 @@ This is the real-world MAA configuration. Use this as seed data and for testing.
 | 12U Softball | Female | Jan 1 of season year | 11 | 12 | $80 |
 
 ### Fall Programs
-| Program Name | Gender | Age Cutoff Date | Min Age | Max Age | Fee |
+| Program Name | Gender | Age As-Of Date | Min Age | Max Age | Fee |
 |-------------|--------|-----------------|---------|---------|-----|
 | 8U Baseball | Male | May 1 of season year | 7 | 8 | $80 |
 | 10U Baseball | Male | May 1 of season year | 9 | 10 | $80 |
@@ -409,7 +409,7 @@ This is the real-world MAA configuration. Use this as seed data and for testing.
 | 6U Soccer | Coed | Jan 1 of season year | 5 | 6 | $75 |
 
 ### Winter Programs
-| Program Name | Gender | Age Cutoff Date | Min Age | Max Age | Fee |
+| Program Name | Gender | Age As-Of Date | Min Age | Max Age | Fee |
 |-------------|--------|-----------------|---------|---------|-----|
 | 6U Basketball | Coed | Jan 1 of season year | 5 | 6 | $75 |
 | 8U Boys Basketball | Male | Jan 1 of season year | 7 | 8 | $75 |
@@ -422,9 +422,9 @@ This is the real-world MAA configuration. Use this as seed data and for testing.
 
 ### Age Calculation & Program Recommendation Logic
 ```
-Given: player DOB, program ageCutoffDate (optional)
+Given: player DOB, program ageAsOfDate (optional)
 
-referenceDate = ageCutoffDate ?? today
+referenceDate = ageAsOfDate ?? today
 playerAge = referenceDate.Year - dob.Year
 if (dob.Month > referenceDate.Month || (dob.Month == referenceDate.Month && dob.Day > referenceDate.Day))
     playerAge -= 1
@@ -432,8 +432,8 @@ if (dob.Month > referenceDate.Month || (dob.Month == referenceDate.Month && dob.
 Recommended if: minAge <= playerAge <= maxAge (and gender matches)
 Other Programs: everything else in the season
 ```
-- If `ageCutoffDate` is set on a program, use it as the reference date for age calculation. If not set, use the registration date (today).
-- `ageCutoffDate`, when present, is also displayed on the program card as informational context.
+- If `ageAsOfDate` is set on a program, use it as the reference date for age calculation. If not set, use the registration date (today).
+- `ageAsOfDate`, when present, is also displayed on the program card as informational context.
 - No hard gate — parents can register for any program. Pre-season assessments evaluate borderline players for skill and fair team composition.
 
 ---
@@ -619,12 +619,12 @@ volumes:
 
 ### Age Calculation Service
 - Centralize age calculation logic in `AgeCalculationService`.
-- Given a player DOB and a reference date (program's `ageCutoffDate` if set, otherwise today), calculate the player's age and determine which program(s) to recommend.
+- Given a player DOB and a reference date (program's `ageAsOfDate` if set, otherwise today), calculate the player's age and determine which program(s) to recommend.
 - Used in the UI to sort programs into "Recommended" vs. "Other Programs" tiers. No hard validation — any program can be selected.
 
 ### CSV Export
 - Use `CsvHelper` NuGet package.
-- Export columns: Player First Name, Player Middle Name, Player Last Name, Player DOB (Month/Year only), Player Age (at cutoff), Player Gender, Program, Hat Size, Jersey Size, Digital Picture, Extra Hat Size, Primary Guardian Name, Primary Guardian Phone, Secondary Guardian Name, Secondary Guardian Phone, Primary Contact Phone, Coaching Interest, Sponsorship Interest, Parent Email, Registration Date, Payment Status, Total Fee.
+- Export columns: Player First Name, Player Middle Name, Player Last Name, Player DOB (Month/Year only), Player Age (as of date), Player Gender, Program, Hat Size, Jersey Size, Digital Picture, Extra Hat Size, Primary Guardian Name, Primary Guardian Phone, Secondary Guardian Name, Secondary Guardian Phone, Primary Contact Phone, Coaching Interest, Sponsorship Interest, Parent Email, Registration Date, Payment Status, Total Fee.
 - Filterable by program before export.
 
 ### Validation Rules
@@ -697,7 +697,7 @@ Before building the full stack, deploy a standalone frontend prototype for stake
 - Backend: `SeasonsController` — full CRUD, clone endpoint.
 - Backend: `SeasonService` — program and waiver management within a season.
 - Frontend: Admin season management page — create, edit, clone, activate/deactivate.
-- Frontend: Program editor — add/edit/remove programs with gender, cutoff date, age range, fee.
+- Frontend: Program editor — add/edit/remove programs with gender, age-as-of date, age range, fee.
 - Frontend: Waiver editor — add/edit/remove waivers.
 - Seed data: "2026 Spring Sports" with all 8 programs and 2 waivers.
 - Verify: Can create a season, add programs, activate it. Seed data loads on first run.
@@ -705,7 +705,7 @@ Before building the full stack, deploy a standalone frontend prototype for stake
 ### Phase 4: Registration Flow (Core Feature)
 - Backend: `RegistrationsController` — create, list mine, cancel.
 - Backend: `RegistrationService` — age calculation, eligibility validation, duplicate prevention.
-- Backend: `AgeCalculationService` — shared age-at-cutoff logic.
+- Backend: `AgeCalculationService` — shared age-as-of-date logic.
 - Frontend: Full registration wizard — player selection (with Add Child inline), program selection (suggested vs. other eligible), hat/jersey sizing, waiver acknowledgment, review, add to cart.
 - Frontend: CartContext with `localStorage` persistence.
 - Frontend: Cart page — view items, remove, complete registration (batch POST to API).

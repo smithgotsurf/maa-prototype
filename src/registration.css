@@ -27,7 +27,7 @@
 .cd { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,.02) }
 .cd h2 { font-family: var(--font-display); font-size: 21px; margin-bottom: 2px }
 .cd-s { font-size: 14px; color: var(--gray); margin-bottom: 18px }
-.reg-for { font-size: 15px; color: var(--gray); margin-bottom: 18px; font-weight: 500 }
+.reg-for { font-family: var(--font-display); font-size: 20px; color: var(--char); margin-bottom: 18px; font-weight: 600 }
 
 /* -- Option Selectors -- */
 .opt { border: 2px solid var(--bdr-lt); border-radius: 9px; padding: 12px 16px; margin-bottom: 7px; cursor: pointer; transition: .15s; display: flex; align-items: center; justify-content: space-between }
@@ -37,6 +37,7 @@
 .opt-i p { font-size: 13px; color: var(--gray); margin-top: 1px }
 .opt-c { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--bdr); display: flex; align-items: center; justify-content: center; flex-shrink: 0 }
 .opt.sl .opt-c { border-color: var(--gold); background: var(--gold); color: var(--blk) }
+.opt-r { display: flex; align-items: center; gap: 10px; flex-shrink: 0 }
 .opt-f { font-size: 14px; font-weight: 700; color: var(--gold-dk) }
 .opt-sg { font-size: 10px; background: var(--grn-bg); color: var(--grn); padding: 1px 7px; border-radius: 3px; font-weight: 600; margin-left: 6px }
 

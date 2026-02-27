@@ -5,8 +5,10 @@ import { SEASON, HATS, JERSEYS, INIT_PLAYERS, REGS, ADMIN_COLS } from './data';
 
 export const B_URL = import.meta.env.BASE_URL;
 
-export function age(dob,cutoff){const d=new Date(dob);const c=cutoff?new Date(cutoff):new Date();let a=c.getFullYear()-d.getFullYear();if(d.getMonth()>c.getMonth()||(d.getMonth()===c.getMonth()&&d.getDate()>c.getDate()))a--;return a}
-export function recommended(p,progs){return progs.filter(pr=>{const a2=age(p.dob,pr.cutoff);return a2>=pr.min&&a2<=pr.max&&(pr.gender==="Coed"||pr.gender===p.gender)})}
+function ld(s){const[y,m,d]=s.split('-');return new Date(y,m-1,d)}
+export function age(dob,asOf){const d=ld(dob);const c=asOf?ld(asOf):new Date();let a=c.getFullYear()-d.getFullYear();if(d.getMonth()>c.getMonth()||(d.getMonth()===c.getMonth()&&d.getDate()>c.getDate()))a--;return a}
+export function fmtDate(s){return ld(s).toLocaleDateString()}
+export function recommended(p,progs){return progs.filter(pr=>{const a2=age(p.dob,pr.ageAsOfDate);return a2>=pr.min&&a2<=pr.max&&(pr.gender==="Coed"||pr.gender===p.gender)})}
 export function otherPrograms(p,progs){const rec=recommended(p,progs);return progs.filter(pr=>!rec.find(r=>r.id===pr.id))}
 export function fullName(p){return[p.firstName,p.middleName,p.lastName].filter(Boolean).join(' ')}
 export function calcTotal(pr,digitalPic,extraHat){let total=pr.fee;if(digitalPic)total+=10;if(extraHat)total+=30;return total}

@@ -5,14 +5,14 @@ import coachesCodeHtml from './waivers/coaches-code.html?raw';
 
 export const SEASON = {
   name:"2026 Spring Sports", programs:[
-    {id:"pg1",name:"T-Ball",gender:"Coed",cutoff:null,min:3,max:4,fee:65},
-    {id:"pg2",name:"T-Shirt",gender:"Coed",cutoff:null,min:5,max:6,fee:65},
-    {id:"pg3",name:"8U Baseball",gender:"Male",cutoff:"2026-05-01",min:7,max:8,fee:80},
-    {id:"pg4",name:"10U Baseball",gender:"Male",cutoff:"2026-05-01",min:9,max:10,fee:80},
-    {id:"pg5",name:"12U Baseball",gender:"Male",cutoff:"2026-05-01",min:11,max:12,fee:80},
-    {id:"pg6",name:"8U Softball",gender:"Female",cutoff:"2026-01-01",min:7,max:8,fee:80},
-    {id:"pg7",name:"10U Softball",gender:"Female",cutoff:"2026-01-01",min:9,max:10,fee:80},
-    {id:"pg8",name:"12U Softball",gender:"Female",cutoff:"2026-01-01",min:11,max:12,fee:80},
+    {id:"pg1",name:"T-Ball",gender:"Coed",ageAsOfDate:null,min:3,max:4,fee:65},
+    {id:"pg2",name:"T-Shirt",gender:"Coed",ageAsOfDate:null,min:5,max:6,fee:65},
+    {id:"pg3",name:"8U Baseball",gender:"Male",ageAsOfDate:"2026-05-01",min:7,max:8,fee:80},
+    {id:"pg4",name:"10U Baseball",gender:"Male",ageAsOfDate:"2026-05-01",min:9,max:10,fee:80},
+    {id:"pg5",name:"12U Baseball",gender:"Male",ageAsOfDate:"2026-05-01",min:11,max:12,fee:80},
+    {id:"pg6",name:"8U Softball",gender:"Female",ageAsOfDate:"2026-01-01",min:7,max:8,fee:80},
+    {id:"pg7",name:"10U Softball",gender:"Female",ageAsOfDate:"2026-01-01",min:9,max:10,fee:80},
+    {id:"pg8",name:"12U Softball",gender:"Female",ageAsOfDate:"2026-01-01",min:11,max:12,fee:80},
   ],
   waivers:[
     {id:"w2",title:"Parents Code of Conduct",required:true,content:parentsCodeHtml},

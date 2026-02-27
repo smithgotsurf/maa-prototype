@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SEASON, HATS, JERSEYS, COACH_SHIRTS, CURRENT_USER } from './data';
-import { fullName, age, recommended, otherPrograms, calcTotal, Ic, icons } from './App';
+import { fullName, age, fmtDate, recommended, otherPrograms, calcTotal, Ic, icons } from './App';
 import './registration.css';
 
 function AddModal({onAdd,onClose}){const[f,sF]=useState({fn:"",mn:"",ln:"",dob:"",g:""});const ok=f.fn&&f.ln&&f.dob&&f.g;return(<div className="mo" onClick={onClose}><div className="md" onClick={e=>e.stopPropagation()}><h3>Add Child</h3><div className="fc"><div className="fr"><label>First Name</label><input value={f.fn} onChange={e=>sF({...f,fn:e.target.value})}/></div><div className="fr"><label>Middle Name</label><input value={f.mn} onChange={e=>sF({...f,mn:e.target.value})}/></div></div><div className="fc"><div className="fr"><label>Last Name</label><input value={f.ln} onChange={e=>sF({...f,ln:e.target.value})}/></div><div className="fr"><label>Gender</label><select value={f.g} onChange={e=>sF({...f,g:e.target.value})}><option value="">Select...</option><option value="Male">Male</option><option value="Female">Female</option></select></div></div><div className="fr"><label>Date of Birth</label><input type="date" value={f.dob} onChange={e=>sF({...f,dob:e.target.value})}/></div><div className="br"><button className="b bgh" onClick={onClose}>Cancel</button><button className="b bg" disabled={!ok} onClick={()=>{onAdd({id:`p-${Date.now()}`,firstName:f.fn,middleName:f.mn,lastName:f.ln,dob:f.dob,gender:f.g});onClose()}}><Ic d={icons.plus} s={13}/> Add</button></div></div></div>)}
@@ -47,18 +47,18 @@ export function RegPage({players,addPlayer,addToCart,go}){
     <div className="reg-wrap">
       <aside className="steps-v">{labels.map((l,i)=>(<div key={i} className={`stv ${step===i+1?"on":step>i+1?"dn":""}`}><div className="stv-r"><div className="stn">{step>i+1?<Ic d={icons.chk} s={12}/>:i+1}</div>{i<labels.length-1&&<div className="stl-v"/>}</div><span>{l}</span></div>))}</aside>
       <div className="reg-ct">
-    {pl&&step>1&&<div className="reg-for">Registering: {fullName(pl)} &ndash; Age: {age(pl.dob,null)}</div>}
+    {pl&&step>1&&<h2 className="reg-for">Registering: {fullName(pl)} &ndash; Age: {age(pl.dob,null)}</h2>}
     {step===1&&<div className="cd"><h2>Select Player</h2><p className="cd-s">Choose which child to register for {SEASON.name}.</p>
-      {players.map(p=>(<div key={p.id} className={`opt ${pl?.id===p.id?"sl":""}`} onClick={()=>sPl(p)}><div className="opt-i"><h4>{fullName(p)}</h4><p>DOB: {new Date(p.dob).toLocaleDateString()} · Age: {age(p.dob,null)} · {p.gender}</p></div><div className={`opt-c`}>{pl?.id===p.id&&<Ic d={icons.chk} s={12}/>}</div></div>))}
+      {players.map(p=>(<div key={p.id} className={`opt ${pl?.id===p.id?"sl":""}`} onClick={()=>sPl(p)}><div className="opt-i"><h4>{fullName(p)}</h4><p>DOB: {fmtDate(p.dob)} · Age: {age(p.dob,null)} · {p.gender}</p></div><div className={`opt-c`}>{pl?.id===p.id&&<Ic d={icons.chk} s={12}/>}</div></div>))}
       <button className="b bs bsm" style={{marginTop:10}} onClick={()=>sShowAdd(true)}><Ic d={icons.plus} s={13}/> Add Child</button>
       <div className="br"><button className="b bp" disabled={!pl} onClick={()=>{sPr(null);sStep(2)}}>Continue <Ic d={icons.chev} s={13}/></button></div>
       {showAdd&&<AddModal onAdd={addPlayer} onClose={()=>sShowAdd(false)}/>}
     </div>}
     {step===2&&<div className="cd"><h2>Select Program</h2><p className="cd-s">Programs for {pl.firstName} ({pl.gender}).</p>
       {rec.length>0&&<><div style={{fontSize:11,fontWeight:600,color:'var(--grn)',textTransform:"uppercase",letterSpacing:".7px",marginBottom:6}}>Recommended for {pl.firstName}</div>
-      {rec.map(p=>(<div key={p.id} className={`opt ${pr?.id===p.id?"sl":""}`} onClick={()=>sPr(p)}><div className="opt-i"><h4>{p.name}<span className="opt-sg">Recommended</span></h4><p>Ages {p.min}–{p.max} · {p.cutoff?`${pl.firstName} is ${age(pl.dob,p.cutoff)} as of ${new Date(p.cutoff).toLocaleDateString()}`:`${pl.firstName} is ${age(pl.dob,p.cutoff)} years old`}</p></div><span className="opt-f">${p.fee}</span></div>))}</>}
+      {rec.map(p=>(<div key={p.id} className={`opt ${pr?.id===p.id?"sl":""}`} onClick={()=>sPr(p)}><div className="opt-i"><h4>{p.name}<span className="opt-sg">Recommended</span></h4><p>Ages {p.min}–{p.max} · {p.ageAsOfDate?`${pl.firstName} is ${age(pl.dob,p.ageAsOfDate)} as of ${fmtDate(p.ageAsOfDate)}`:`${pl.firstName} is ${age(pl.dob,p.ageAsOfDate)} years old`}</p></div><div className="opt-r"><span className="opt-f">${p.fee}</span><div className="opt-c">{pr?.id===p.id&&<Ic d={icons.chk} s={12}/>}</div></div></div>))}</>}
       {other.length>0&&<><div style={{fontSize:11,fontWeight:600,color:'var(--gray)',textTransform:"uppercase",letterSpacing:".7px",marginTop:14,marginBottom:6}}>Other Programs</div>
-      {other.map(p=>(<div key={p.id} className={`opt ${pr?.id===p.id?"sl":""}`} onClick={()=>sPr(p)}><div className="opt-i"><h4>{p.name}</h4><p>Ages {p.min}–{p.max} · {p.cutoff?`${pl.firstName} is ${age(pl.dob,p.cutoff)} as of ${new Date(p.cutoff).toLocaleDateString()}`:`${pl.firstName} is ${age(pl.dob,p.cutoff)} years old`}</p></div><span className="opt-f">${p.fee}</span></div>))}</>}
+      {other.map(p=>(<div key={p.id} className={`opt ${pr?.id===p.id?"sl":""}`} onClick={()=>sPr(p)}><div className="opt-i"><h4>{p.name}</h4><p>Ages {p.min}–{p.max} · {p.ageAsOfDate?`${pl.firstName} is ${age(pl.dob,p.ageAsOfDate)} as of ${fmtDate(p.ageAsOfDate)}`:`${pl.firstName} is ${age(pl.dob,p.ageAsOfDate)} years old`}</p></div><div className="opt-r"><span className="opt-f">${p.fee}</span><div className="opt-c">{pr?.id===p.id&&<Ic d={icons.chk} s={12}/>}</div></div></div>))}</>}
       {SEASON.programs.length===0&&<p style={{color:'var(--red)',padding:14}}>No programs available this season.</p>}
       <div className="br"><button className="b bgh" onClick={()=>sStep(1)}>Back</button><button className="b bp" disabled={!pr} onClick={()=>sStep(3)}>Continue <Ic d={icons.chev} s={13}/></button></div>
     </div>}
@@ -175,9 +175,9 @@ export function RegPage({players,addPlayer,addToCart,go}){
     {step===8&&<div className="cd"><h2>Review Registration</h2><p className="cd-s">Confirm details before adding to cart.</p>
   <table className="rt"><tbody>
     <tr><td>Player</td><td>{fullName(pl)}</td></tr>
-    <tr><td>Date of Birth</td><td>{new Date(pl.dob).toLocaleDateString()}</td></tr>
+    <tr><td>Date of Birth</td><td>{fmtDate(pl.dob)}</td></tr>
     <tr><td>Program</td><td>{pr.name}</td></tr>
-    <tr><td>Age</td><td>{age(pl.dob,pr.cutoff)} years old{pr.cutoff?` (as of ${new Date(pr.cutoff).toLocaleDateString()})`:""}</td></tr>
+    <tr><td>Age</td><td>{age(pl.dob,pr.ageAsOfDate)} years old{pr.ageAsOfDate?` (as of ${fmtDate(pr.ageAsOfDate)})`:""}</td></tr>
     <tr><td>Primary Guardian</td><td>{gPri.fn} {gPri.ln} — {gPri.ph}</td></tr>
     {hasSec&&<tr><td>Secondary Guardian</td><td>{gSec.fn} {gSec.ln} — {gSec.ph}</td></tr>}
     <tr><td>Primary Contact</td><td>{priContact==="primary"?gPri.ph:gSec.ph}</td></tr>
