@@ -105,10 +105,10 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
 .am { padding: 24px }
 .amh { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px }
 .amh h1 { font-family: var(--font-display); font-size: 24px }
-.sts { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px }
-.stt { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 10px; padding: 14px }
+.sts { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-bottom: 20px }
+.stt { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 10px; padding: 10px 12px; text-align: center }
 .stt-l { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: var(--gray); font-weight: 600 }
-.stt-v { font-family: var(--font-display); font-size: 26px; margin-top: 2px }
+.stt-v { font-family: var(--font-display); font-size: 22px; margin-top: 2px }
 .stt-v.gd { color: var(--gold-dk) }
 .stt-s { font-size: 10px; color: var(--gray-lt); margin-top: 1px }
 .flt { display: flex; gap: 8px; margin-bottom: 14px; align-items: center }
