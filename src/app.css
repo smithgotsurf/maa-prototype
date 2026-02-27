@@ -78,6 +78,8 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
 .bcrd-av { width: 48px; height: 48px; border-radius: 50%; background: var(--gold-faint); display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: var(--gold) }
 .bcrd h4 { font-size: 14px; font-weight: 600 }
 .bcrd p { font-size: 11px; color: var(--gray) }
+.mem-list { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 10px }
+.mem { font-size: 13px; color: var(--char); background: var(--off); border: 1px solid var(--bdr-lt); padding: 6px; border-radius: 5px; text-align: center }
 .ic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px }
 .rate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: calc(50% - 6px) }
 .ic { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 10px; padding: 20px; margin-bottom: 12px }
@@ -177,5 +179,6 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
   .H-mob button.on { background: rgba(197,160,78,.15); color: var(--gold) }
   .ic-grid { grid-template-columns: 1fr }
   .rate-grid { max-width: 100% }
+  .mem-list { grid-template-columns: repeat(3, 1fr) }
   html, body { overflow-x: hidden }
 }
