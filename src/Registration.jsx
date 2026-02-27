@@ -5,6 +5,13 @@ import './registration.css';
 
 function AddModal({onAdd,onClose}){const[f,sF]=useState({fn:"",mn:"",ln:"",dob:"",g:""});const ok=f.fn&&f.ln&&f.dob&&f.g;return(<div className="mo" onClick={onClose}><div className="md" onClick={e=>e.stopPropagation()}><h3>Add Child</h3><div className="fc"><div className="fr"><label>First Name</label><input value={f.fn} onChange={e=>sF({...f,fn:e.target.value})}/></div><div className="fr"><label>Middle Name</label><input value={f.mn} onChange={e=>sF({...f,mn:e.target.value})}/></div></div><div className="fc"><div className="fr"><label>Last Name</label><input value={f.ln} onChange={e=>sF({...f,ln:e.target.value})}/></div><div className="fr"><label>Gender</label><select value={f.g} onChange={e=>sF({...f,g:e.target.value})}><option value="">Select...</option><option value="Male">Male</option><option value="Female">Female</option></select></div></div><div className="fr"><label>Date of Birth</label><input type="date" value={f.dob} onChange={e=>sF({...f,dob:e.target.value})}/></div><div className="br"><button className="b bgh" onClick={onClose}>Cancel</button><button className="b bg" disabled={!ok} onClick={()=>{onAdd({id:`p-${Date.now()}`,firstName:f.fn,middleName:f.mn,lastName:f.ln,dob:f.dob,gender:f.g});onClose()}}><Ic d={icons.plus} s={13}/> Add</button></div></div></div>)}
 
+function ProgCard({p,pl,isRec,selected,onSelect}){
+  const ageText=p.ageAsOfDate?`${pl.firstName} is ${age(pl.dob,p.ageAsOfDate)} as of ${fmtDate(p.ageAsOfDate)}`:`${pl.firstName} is ${age(pl.dob,null)} years old`;
+  const nameCell=<><h4>{p.name}{isRec&&<span className="opt-sg">Recommended</span>}{p.closed&&<span style={{marginLeft:6,fontSize:10,fontWeight:700,color:'#fff',background:'#c0392b',borderRadius:3,padding:'1px 5px',textTransform:'uppercase',letterSpacing:'.5px'}}>CLOSED</span>}</h4><p>Ages {p.min}–{p.max} · {ageText}</p></>;
+  if(p.closed)return(<div className="opt" style={{opacity:.4,cursor:'not-allowed',pointerEvents:'none',position:'relative',overflow:'hidden'}}><div className="opt-i">{nameCell}</div><div className="opt-r"><span className="opt-f">${p.fee}</span><div className="opt-c"/></div><div style={{position:'absolute',top:14,right:-28,width:96,background:'#c0392b',color:'#fff',fontSize:10,fontWeight:800,textAlign:'center',padding:'4px 0',transform:'rotate(45deg)',letterSpacing:'1px',textTransform:'uppercase',boxShadow:'0 1px 3px rgba(0,0,0,.3)'}}>FULL</div></div>);
+  return(<div className={`opt ${selected?"sl":""}`} onClick={()=>onSelect(p)}><div className="opt-i">{nameCell}</div><div className="opt-r"><span className="opt-f">${p.fee}</span><div className="opt-c">{selected&&<Ic d={icons.chk} s={12}/>}</div></div></div>);
+}
+
 export function RegPage({players,addPlayer,addToCart,go}){
   const[step,sStep]=useState(1);const[pl,sPl]=useState(null);const[pr,sPr]=useState(null);const[wv,sWv]=useState({});const[hat,sHat]=useState("");const[jer,sJer]=useState("");const[showAdd,sShowAdd]=useState(false);
   const[digitalPic,setDigitalPic]=useState(false);const[extraHat,setExtraHat]=useState(false);const[extraHatSize,setExtraHatSize]=useState("");const[coaching,setCoaching]=useState("");const[sponsorship,setSponsorship]=useState("");
@@ -56,11 +63,11 @@ export function RegPage({players,addPlayer,addToCart,go}){
     </div>}
     {step===2&&<div className="cd"><h2>Select Program</h2><p className="cd-s">Programs for {pl.firstName} ({pl.gender}).</p>
       {rec.length>0&&<><div style={{fontSize:11,fontWeight:600,color:'var(--grn)',textTransform:"uppercase",letterSpacing:".7px",marginBottom:6}}>Recommended for {pl.firstName}</div>
-      {rec.map(p=>(<div key={p.id} className={`opt ${pr?.id===p.id?"sl":""}`} onClick={()=>sPr(p)}><div className="opt-i"><h4>{p.name}<span className="opt-sg">Recommended</span></h4><p>Ages {p.min}–{p.max} · {p.ageAsOfDate?`${pl.firstName} is ${age(pl.dob,p.ageAsOfDate)} as of ${fmtDate(p.ageAsOfDate)}`:`${pl.firstName} is ${age(pl.dob,p.ageAsOfDate)} years old`}</p></div><div className="opt-r"><span className="opt-f">${p.fee}</span><div className="opt-c">{pr?.id===p.id&&<Ic d={icons.chk} s={12}/>}</div></div></div>))}</>}
+      {rec.map(p=>(<ProgCard key={p.id} p={p} pl={pl} isRec={true} selected={pr?.id===p.id} onSelect={sPr}/>))}</>}
       {other.length>0&&<><div style={{fontSize:11,fontWeight:600,color:'var(--gray)',textTransform:"uppercase",letterSpacing:".7px",marginTop:14,marginBottom:6}}>Other Programs</div>
-      {other.map(p=>(<div key={p.id} className={`opt ${pr?.id===p.id?"sl":""}`} onClick={()=>sPr(p)}><div className="opt-i"><h4>{p.name}</h4><p>Ages {p.min}–{p.max} · {p.ageAsOfDate?`${pl.firstName} is ${age(pl.dob,p.ageAsOfDate)} as of ${fmtDate(p.ageAsOfDate)}`:`${pl.firstName} is ${age(pl.dob,p.ageAsOfDate)} years old`}</p></div><div className="opt-r"><span className="opt-f">${p.fee}</span><div className="opt-c">{pr?.id===p.id&&<Ic d={icons.chk} s={12}/>}</div></div></div>))}</>}
+      {other.map(p=>(<ProgCard key={p.id} p={p} pl={pl} isRec={false} selected={pr?.id===p.id} onSelect={sPr}/>))}</>}
       {SEASON.programs.length===0&&<p style={{color:'var(--red)',padding:14}}>No programs available this season.</p>}
-      <div className="br"><button className="b bgh" onClick={()=>sStep(1)}>Back</button><button className="b bp" disabled={!pr} onClick={()=>sStep(3)}>Continue <Ic d={icons.chev} s={13}/></button></div>
+      <div className="br"><button className="b bgh" onClick={()=>sStep(1)}>Back</button><button className="b bp" disabled={!pr||!!pr.closed} onClick={()=>sStep(3)}>Continue <Ic d={icons.chev} s={13}/></button></div>
     </div>}
     {step===3&&<div className="cd">
       <h2>Parent/Guardian & Contact</h2>
