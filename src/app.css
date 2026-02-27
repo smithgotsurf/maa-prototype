@@ -51,7 +51,7 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
 .hero p { font-size: 16px; opacity: .55; max-width: 440px; margin: 0 auto 32px; line-height: 1.6 }
 .hcta { display: inline-flex; align-items: center; gap: 7px; background: var(--gold); color: var(--blk); border: none; padding: 13px 28px; font-family: var(--font-body); font-size: 15px; font-weight: 600; border-radius: 7px; cursor: pointer; transition: .2s }
 .hcta:hover { background: var(--gold-lt); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(197,160,78,.3) }
-.sb { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 12px; padding: 20px 24px; margin: -136px auto 24px; max-width: 600px; position: relative; z-index: 10; box-shadow: 0 3px 20px rgba(0,0,0,.05); display: flex; align-items: center; justify-content: space-between }
+.sb { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 12px; padding: 20px 24px; margin: -136px auto 40px; max-width: 600px; position: relative; z-index: 10; box-shadow: 0 3px 20px rgba(0,0,0,.05); display: flex; align-items: center; justify-content: space-between }
 .sb h3 { font-family: var(--font-display); font-size: 17px }
 .sb p { font-size: 13px; color: var(--gray); margin-top: 2px }
 .sbb { background: var(--gold-faint); color: var(--gold-dk); font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 16px; border: 1px solid var(--gold-pale) }
@@ -64,6 +64,7 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
 .pcard-m { display: flex; justify-content: space-between; align-items: center }
 .pcard-a { font-size: 11px; color: var(--gray); background: var(--off); padding: 2px 7px; border-radius: 3px }
 .pcard-f { font-size: 13px; font-weight: 700; color: var(--gold-dk) }
+.sh { margin-top: 24px }
 .sh h3 { font-family: var(--font-display); font-size: 20px }
 .sh p { font-size: 13px; color: var(--gray); margin-top: 2px }
 
@@ -153,13 +154,16 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
 .col-picker-item input { accent-color: var(--gold) }
 
 /* -- Responsive -- */
+@media (max-width: 1150px) {
+  .H-full { display: none }
+}
 @media (max-width: 768px) {
   .hero h1 { font-size: 28px }
   .sts { grid-template-columns: repeat(2, 1fr) }
   .adm { grid-template-columns: 1fr }
   .asd { display: none }
   .pgrid { grid-template-columns: 1fr }
-  .sb { flex-direction: column; gap: 8px; text-align: center }
+  .sb { flex-direction: column; gap: 6px; text-align: center; margin-top: -185px; padding: 14px 20px }
   .bgrd { grid-template-columns: repeat(2, 1fr) }
   .spt { grid-template-columns: 1fr }
   .H-full { display: none }
