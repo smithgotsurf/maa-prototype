@@ -126,7 +126,7 @@ function AdminPage(){
 export default function App(){
   const[pg,sPg]=useState("home");const[cart,sCart]=useState([]);const[players,sPlayers]=useState(INIT_PLAYERS);const[menuOpen,setMenuOpen]=useState(false);
   const add=i=>sCart(p=>[...p,i]);const rm=id=>sCart(p=>p.filter(i=>i.id!==id));const clr=()=>sCart([]);const addP=p=>sPlayers(prev=>[...prev,p]);
-  const nav=[{id:"about",ic:icons.info,l:"About"},{id:"faq",ic:icons.help,l:"FAQ"},{id:"fields",ic:icons.map,l:"Field Rentals"},{id:"sponsors",ic:icons.star,l:"Sponsorship"},{id:"register",ic:icons.clip,l:"Register"},{id:"cart",ic:icons.cart,l:"Cart",badge:cart.length},{id:"admin",ic:icons.gear,l:"Admin"}];
+  const nav=[{id:"about",ic:icons.info,l:"About"},{id:"faq",ic:icons.help,l:"FAQ"},{id:"fields",ic:icons.map,l:"Field Rentals"},{id:"sponsors",ic:icons.star,l:"Sponsorship"},{id:"register",ic:icons.clip,l:"Register"},...(cart.length?[{id:"cart",ic:icons.cart,l:"Cart",badge:cart.length}]:[]),{id:"admin",ic:icons.gear,l:"Admin"}];
   return(<div>
     <header className="H"><div className="H-logo" onClick={()=>sPg("home")}><img src={B_URL+"static/maa-large.jpg"} alt="MAA" style={{height:30,width:"auto",borderRadius:3}}/><span className="g">MAA</span><span className="H-full"> Meadow Athletic Association</span></div>
     <nav className="H-nav">{nav.map(n=>(<button key={n.id} className={pg===n.id?"on":""} onClick={()=>sPg(n.id)}><Ic d={n.ic} s={14}/>{n.l}{n.badge>0&&<span className="hbadge">{n.badge}</span>}</button>))}<button><Ic d={icons.user} s={14}/>Sarah C.</button></nav>
