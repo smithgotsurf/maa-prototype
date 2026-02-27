@@ -101,3 +101,12 @@
 .cfm-ic { width: 56px; height: 56px; border-radius: 50%; background: var(--gold-faint); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; color: var(--gold) }
 .cfm h2 { font-family: var(--font-display); font-size: 24px; margin-bottom: 5px }
 .cfm p { color: var(--gray); font-size: 14px; line-height: 1.6; max-width: 380px; margin: 0 auto }
+
+/* -- Mobile -- */
+@media (max-width: 768px) {
+  .steps-v { display: none }
+  .steps-m { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding: 10px 14px; background: #fff; border: 1px solid var(--bdr-lt); border-radius: 8px }
+  .steps-m span { font-size: 14px; font-weight: 600; color: var(--char) }
+  .reg-wrap { grid-template-columns: 1fr; gap: 0 }
+  .reg-ct { max-width: 100% }
+}

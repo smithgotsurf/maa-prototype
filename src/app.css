@@ -37,6 +37,9 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
 .H-nav button:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.8) }
 .H-nav button.on { background: rgba(197,160,78,.15); color: var(--gold) }
 .hbadge { background: var(--gold); color: var(--blk); font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 9px }
+.H-ham { display: none; background: none; border: none; color: #fff; cursor: pointer; padding: 4px }
+.H-mob { display: none }
+.H-mob-overlay { display: none }
 
 /* -- Hero & Home -- */
 .pg { max-width: 900px; margin: 0 auto; padding: 28px 20px }
@@ -74,6 +77,8 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
 .bcrd-av { width: 48px; height: 48px; border-radius: 50%; background: var(--gold-faint); display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: var(--gold) }
 .bcrd h4 { font-size: 14px; font-weight: 600 }
 .bcrd p { font-size: 11px; color: var(--gray) }
+.ic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px }
+.rate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: calc(50% - 6px) }
 .ic { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 10px; padding: 20px; margin-bottom: 12px }
 .ic h3 { font-family: var(--font-display); font-size: 16px; margin-bottom: 4px }
 .ic p { font-size: 14px; color: var(--gray); line-height: 1.6; margin: 0 }
@@ -155,12 +160,18 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
   .asd { display: none }
   .pgrid { grid-template-columns: 1fr }
   .sb { flex-direction: column; gap: 8px; text-align: center }
-  .steps-v { display: none }
-  .steps-m { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding: 10px 14px; background: #fff; border: 1px solid var(--bdr-lt); border-radius: 8px }
-  .steps-m span { font-size: 14px; font-weight: 600; color: var(--char) }
-  .reg-wrap { grid-template-columns: 1fr; gap: 0 }
-  .bgrd { grid-template-columns: 1fr }
+  .bgrd { grid-template-columns: repeat(2, 1fr) }
   .spt { grid-template-columns: 1fr }
   .H-full { display: none }
+  .H-nav { display: none }
+  .H-ham { display: block }
+  .H-mob-overlay { display: block; position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.35); z-index: 99 }
+  .H-mob { display: none; position: fixed; top: 56px; right: 0; width: 220px; background: var(--blk); border-bottom-left-radius: 12px; box-shadow: -4px 4px 20px rgba(0,0,0,.25); z-index: 100; padding: 8px 0; flex-direction: column }
+  .H-mob.open { display: flex }
+  .H-mob button { background: none; border: none; color: rgba(255,255,255,.6); font-family: var(--font-body); font-size: 15px; font-weight: 500; padding: 11px 20px; cursor: pointer; transition: .12s; display: flex; align-items: center; gap: 8px; width: 100%; text-align: left }
+  .H-mob button:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.85) }
+  .H-mob button.on { background: rgba(197,160,78,.15); color: var(--gold) }
   .ic-grid { grid-template-columns: 1fr }
+  .rate-grid { max-width: 100% }
+  html, body { overflow-x: hidden }
 }
