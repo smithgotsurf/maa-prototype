@@ -62,7 +62,7 @@ function FaqPage({go}){
     {q:"Is MAA a non-profit?",a:"Yes. MAA has been a volunteer-run, non-profit organization serving the Meadow community since 1976, governed by 21 members and a Treasurer.",link:{l:"Learn more about MAA",p:"about"}}
   ];
   const[open,setOpen]=useState(null);
-  return(<div className="pg cp"><h1>Frequently Asked Questions</h1><div className="gl"/>{faqs.map((f,i)=>(<div className="wv" key={i}><div className="wv-hd" onClick={()=>setOpen(open===i?null:i)}><h4 style={{fontWeight:600,fontSize:18}}>{f.q}</h4><span className="wv-chev">{open===i?"▾":"▸"}</span></div>{open===i&&<div className="wv-b">{f.a}{f.link&&<button className="b bgh bsm" style={{marginTop:8,display:"inline-flex"}} onClick={()=>go(f.link.p)}>{f.link.l} →</button>}</div>}</div>))}</div>)}
+  return(<div className="pg cp"><h1>Frequently Asked Questions</h1><div className="gl"/>{faqs.map((f,i)=>(<div className="wv" key={i}><div className="wv-hd" onClick={()=>setOpen(open===i?null:i)}><h4 style={{fontWeight:600,fontSize:18}}>{f.q}</h4><span className="wv-chev">{open===i?"▾":"▸"}</span></div>{open===i&&<div className="wv-b faq-a">{f.a}{f.link&&<button className="b bgh bsm" style={{marginTop:8,display:"inline-flex"}} onClick={()=>go(f.link.p)}>{f.link.l} →</button>}</div>}</div>))}</div>)}
 
 
 function AdminPage(){

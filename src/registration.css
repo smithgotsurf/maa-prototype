@@ -60,6 +60,7 @@
 .wv-hd:hover { opacity: .8 }
 .wv-chev { font-size: 14px; color: var(--gray-lt) }
 .wv-b { font-size: 14px; color: var(--gray); line-height: 1.6; margin: 10px 0; padding: 8px; background: var(--off); border-radius: 5px; max-height: 280px; overflow-y: auto }
+.faq-a { max-height: none; overflow-y: visible }
 .wv-b h3 { font-size: 14px; font-weight: 700; color: var(--char); margin: 0 0 2px }
 .wv-b h4 { font-size: 13px; font-weight: 600; color: var(--char); margin: 8px 0 4px }
 .wv-b p { margin: 6px 0 }
