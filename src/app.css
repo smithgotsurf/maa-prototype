@@ -30,12 +30,12 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
 
 /* -- Header -- */
 .H { background: var(--blk); color: #fff; padding: 0 28px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100 }
-.H-logo { font-family: var(--font-display); font-size: 19px; display: flex; align-items: center; gap: 8px; cursor: pointer }
+.H-logo { font-family: var(--font-display); font-size: 19px; display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; color: inherit }
 .H-logo .g { color: var(--gold) }
 .H-nav { display: flex; gap: 1px }
-.H-nav button { background: none; border: none; color: rgba(255,255,255,.5); font-family: var(--font-body); font-size: 14px; font-weight: 500; padding: 7px 12px; border-radius: 7px; cursor: pointer; transition: .15s; display: flex; align-items: center; gap: 5px }
-.H-nav button:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.8) }
-.H-nav button.on { background: rgba(197,160,78,.15); color: var(--gold) }
+.H-nav button, .H-nav a { background: none; border: none; color: rgba(255,255,255,.5); font-family: var(--font-body); font-size: 14px; font-weight: 500; padding: 7px 12px; border-radius: 7px; cursor: pointer; transition: .15s; display: flex; align-items: center; gap: 5px; text-decoration: none }
+.H-nav button:hover, .H-nav a:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.8) }
+.H-nav button.on, .H-nav a.on { background: rgba(197,160,78,.15); color: var(--gold) }
 .hbadge { background: var(--gold); color: var(--blk); font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 9px }
 .H-ham { display: none; background: none; border: none; color: #fff; cursor: pointer; padding: 4px }
 .H-mob { display: none }
@@ -174,9 +174,9 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
   .H-mob-overlay { display: block; position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.35); z-index: 99 }
   .H-mob { display: none; position: fixed; top: 56px; right: 0; width: 220px; background: var(--blk); border-bottom-left-radius: 12px; box-shadow: -4px 4px 20px rgba(0,0,0,.25); z-index: 100; padding: 8px 0; flex-direction: column }
   .H-mob.open { display: flex }
-  .H-mob button { background: none; border: none; color: rgba(255,255,255,.6); font-family: var(--font-body); font-size: 15px; font-weight: 500; padding: 11px 20px; cursor: pointer; transition: .12s; display: flex; align-items: center; gap: 8px; width: 100%; text-align: left }
-  .H-mob button:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.85) }
-  .H-mob button.on { background: rgba(197,160,78,.15); color: var(--gold) }
+  .H-mob button, .H-mob a { background: none; border: none; color: rgba(255,255,255,.6); font-family: var(--font-body); font-size: 15px; font-weight: 500; padding: 11px 20px; cursor: pointer; transition: .12s; display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; text-decoration: none }
+  .H-mob button:hover, .H-mob a:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.85) }
+  .H-mob button.on, .H-mob a.on { background: rgba(197,160,78,.15); color: var(--gold) }
   .ic-grid { grid-template-columns: 1fr }
   .rate-grid { max-width: 100% }
   .mem-list { grid-template-columns: repeat(3, 1fr) }

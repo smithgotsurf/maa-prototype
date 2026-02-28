@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { SEASON, HATS, JERSEYS, COACH_SHIRTS, CURRENT_USER } from './data';
-import { fullName, age, fmtDate, recommended, otherPrograms, calcTotal, Ic, icons } from './App';
+import { fullName, age, fmtDate, recommended, otherPrograms, calcTotal, Ic, icons } from './utils';
+import { useAppContext } from './context/AppContext';
 import './registration.css';
 
 function AddModal({onAdd,onClose}){const[f,sF]=useState({fn:"",mn:"",ln:"",dob:"",g:""});const ok=f.fn&&f.ln&&f.dob&&f.g;return(<div className="mo" onClick={onClose}><div className="md" onClick={e=>e.stopPropagation()}><h3>Add Child</h3><div className="fc"><div className="fr"><label>First Name</label><input value={f.fn} onChange={e=>sF({...f,fn:e.target.value})}/></div><div className="fr"><label>Middle Name</label><input value={f.mn} onChange={e=>sF({...f,mn:e.target.value})}/></div></div><div className="fc"><div className="fr"><label>Last Name</label><input value={f.ln} onChange={e=>sF({...f,ln:e.target.value})}/></div><div className="fr"><label>Gender</label><select value={f.g} onChange={e=>sF({...f,g:e.target.value})}><option value="">Select...</option><option value="Male">Male</option><option value="Female">Female</option></select></div></div><div className="fr"><label>Date of Birth</label><input type="date" value={f.dob} onChange={e=>sF({...f,dob:e.target.value})}/></div><div className="br"><button className="b bgh" onClick={onClose}>Cancel</button><button className="b bg" disabled={!ok} onClick={()=>{onAdd({id:`p-${Date.now()}`,firstName:f.fn,middleName:f.mn,lastName:f.ln,dob:f.dob,gender:f.g});onClose()}}><Ic d={icons.plus} s={13}/> Add</button></div></div></div>)}
@@ -12,7 +14,9 @@ function ProgCard({p,pl,isRec,selected,onSelect}){
   return(<div className={`opt ${selected?"sl":""}`} onClick={()=>onSelect(p)}><div className="opt-i">{nameCell}</div><div className="opt-r"><span className="opt-f">${p.fee}</span><div className="opt-c">{selected&&<Ic d={icons.chk} s={12}/>}</div></div></div>);
 }
 
-export function RegPage({players,addPlayer,addToCart,go}){
+export function RegPage(){
+  const { players, addPlayer, addToCart } = useAppContext();
+  const navigate = useNavigate();
   const[step,sStep]=useState(1);const[pl,sPl]=useState(null);const[pr,sPr]=useState(null);const[wv,sWv]=useState({});const[hat,sHat]=useState("");const[jer,sJer]=useState("");const[showAdd,sShowAdd]=useState(false);
   const[digitalPic,setDigitalPic]=useState(false);const[extraHat,setExtraHat]=useState(false);const[extraHatSize,setExtraHatSize]=useState("");const[coaching,setCoaching]=useState("");const[sponsorship,setSponsorship]=useState("");
   const[coachShirtSize,setCoachShirtSize]=useState("");const[sponsorName,setSponsorName]=useState("");const[activeWaiver,setActiveWaiver]=useState(0);
@@ -47,7 +51,7 @@ export function RegPage({players,addPlayer,addToCart,go}){
     setDigitalPic(false);setExtraHat(false);setExtraHatSize("");setCoaching("");setSponsorship("");
     setCoachShirtSize("");setSponsorName("");setActiveWaiver(0);
     setHasMedical("");setAllergies("");setMedicalInfo("");
-    go("cart");
+    navigate("/cart");
   }
   return(<div className="pg reg-pg">
     <div className="steps-m"><div className={`stn ${step>0?"on":""}`}>{step}</div><span>Step {step} of {labels.length} &mdash; {labels[step-1]}</span></div>
@@ -211,9 +215,11 @@ export function RegPage({players,addPlayer,addToCart,go}){
 </div>}
   </div></div></div>)}
 
-export function CartPage({cart,remove,clear,go}){
+export function CartPage(){
+  const { cart, removeFromCart, clearCart } = useAppContext();
+  const navigate = useNavigate();
   const total=cart.reduce((s,i)=>s+(i.total||i.program.fee),0);const[done,sDone]=useState(false);
-  if(done)return(<div className="pg"><div className="cfm"><div className="cfm-ic"><Ic d={icons.chk} s={28}/></div><h2>Registration Submitted!</h2><p>Your registration has been submitted. Payment details will be communicated separately by the MAA board.</p><button className="b bp" style={{marginTop:20}} onClick={()=>{sDone(false);clear();go("home")}}>Return Home</button></div></div>);
+  if(done)return(<div className="pg"><div className="cfm"><div className="cfm-ic"><Ic d={icons.chk} s={28}/></div><h2>Registration Submitted!</h2><p>Your registration has been submitted. Payment details will be communicated separately by the MAA board.</p><button className="b bp" style={{marginTop:20}} onClick={()=>{sDone(false);clearCart();navigate("/")}}>Return Home</button></div></div>);
   return(<div className="pg"><div className="pgn">
     <h2 style={{fontFamily:'var(--font-display)',fontSize:24,marginBottom:2}}>Your Cart</h2>
     <p style={{fontSize:13,color:'var(--gray)',marginBottom:18}}>{cart.length===0?"Your cart is empty.":`${cart.length} registration${cart.length!==1?"s":""} ready to submit.`}</p>
@@ -227,9 +233,9 @@ export function CartPage({cart,remove,clear,go}){
   </div>
   <div className="ci-r">
     <span className="ci-f">${i.total||i.program.fee}.00</span>
-    <button className="b bd bsm" onClick={()=>remove(i.id)}><Ic d={icons.trash} s={14}/></button>
+    <button className="b bd bsm" onClick={()=>removeFromCart(i.id)}><Ic d={icons.trash} s={14}/></button>
   </div>
 </div>))}
-    {cart.length>0&&<><div className="ct"><span className="ct-l">Total Due</span><span className="ct-a">${total}.00</span></div><div className="br" style={{marginTop:16}}><button className="b bs" onClick={()=>go("register")}>Register Another</button><button className="b bg" onClick={()=>sDone(true)}>Complete Registration</button></div></>}
-    {cart.length===0&&<div style={{textAlign:"center",padding:32}}><button className="b bp" onClick={()=>go("register")}>Start Registration</button></div>}
+    {cart.length>0&&<><div className="ct"><span className="ct-l">Total Due</span><span className="ct-a">${total}.00</span></div><div className="br" style={{marginTop:16}}><button className="b bs" onClick={()=>navigate("/register")}>Register Another</button><button className="b bg" onClick={()=>sDone(true)}>Complete Registration</button></div></>}
+    {cart.length===0&&<div style={{textAlign:"center",padding:32}}><button className="b bp" onClick={()=>navigate("/register")}>Start Registration</button></div>}
   </div></div>)}
