@@ -17,14 +17,24 @@ Future features and enhancements beyond the current proof-of-concept.
 
 ## Registration Enhancements
 
-### Waitlist & Program Capacity
-- Mark a specific program (e.g. 8U Baseball) as full/closed to registration
-- Waitlist support for closed programs (SportsEngine has this today)
+### Program Capacity
+- Each program in a season carries an open/closed flag — admin can mark any individual program (e.g. 8U Baseball) as full/closed to registration
+- The prototype already demonstrates this with `closed: true` on programs (UI shows "Sold Out")
 
-### Late Registration
+### Waitlist (Nice to Have)
+- Waitlist support for closed/sold-out programs (SportsEngine does not offer this)
+- Separate feature from basic program capacity — capacity/closed flag comes first
+
+### Season Reopening
+- A season has configured open and close dates, but the close date is not the final say
+- Admin needs the ability to temporarily reopen a closed season to allow last-minute / late registrants through the system
+- Reopening a season is still subject to per-program closed status — if an age group is marked sold out, reopening the season doesn't override that
+
+### Late Registration Fee (Nice to Have)
 - $20 late fee per player when registration period has officially closed
 - **Private link flow:** generate a unique URL (with nonce query key) to send to individual parents so registration stays closed to the public but accessible to specific families
 - Each link is single-use / tied to one parent
+- Need to determine if/how SportsEngine handles late fees — may be a net new feature
 
 ### Cart & Registration Editing
 - After adding a registration to the cart, allow reviewing and editing it
