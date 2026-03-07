@@ -15,7 +15,7 @@ function ProgCard({p,pl,isRec,selected,onSelect}){
 }
 
 export function RegPage(){
-  const { players, addPlayer, addToCart } = useAppContext();
+  const { players, addPlayer, addToCart, activeSeason } = useAppContext();
   const navigate = useNavigate();
   const[step,sStep]=useState(1);const[pl,sPl]=useState(null);const[pr,sPr]=useState(null);const[wv,sWv]=useState({});const[hat,sHat]=useState("");const[jer,sJer]=useState("");const[showAdd,sShowAdd]=useState(false);
   const[digitalPic,setDigitalPic]=useState(false);const[extraHat,setExtraHat]=useState(false);const[extraHatSize,setExtraHatSize]=useState("");const[coaching,setCoaching]=useState("");const[sponsorship,setSponsorship]=useState("");
@@ -25,7 +25,13 @@ export function RegPage(){
   const[gSec,setGSec]=useState({fn:CURRENT_USER.secondaryGuardian.firstName,ln:CURRENT_USER.secondaryGuardian.lastName,ph:CURRENT_USER.secondaryGuardian.phone});
   const[hasSec,setHasSec]=useState(true);
   const[priContact,setPriContact]=useState("");
-  const rec=pl?recommended(pl,SEASON.programs):[];const other=pl?otherPrograms(pl,SEASON.programs):[];
+  if (!activeSeason) return (
+    <div className="pg"><div className="cd" style={{textAlign:"center",padding:32}}>
+      <h2>Registration Not Open</h2>
+      <p style={{color:'var(--gray)'}}>There is no active season at this time. Check back soon!</p>
+    </div></div>
+  );
+  const rec=pl?recommended(pl,activeSeason.programs):[];const other=pl?otherPrograms(pl,activeSeason.programs):[];
   const applicableWaivers=SEASON.waivers.filter(w=>!w.coachOnly||coaching==="Coach"||coaching==="Assistant Coach");
   const wvOk=applicableWaivers.filter(w=>w.required).every(w=>wv[w.id]?.trim());const szOk=hat&&jer;
   const labels=["Player","Program","Guardian","Sizes","Interest","Medical","Waivers","Review"];
@@ -59,7 +65,7 @@ export function RegPage(){
       <aside className="steps-v">{labels.map((l,i)=>(<div key={i} className={`stv ${step===i+1?"on":step>i+1?"dn":""}`}><div className="stv-r"><div className="stn">{step>i+1?<Ic d={icons.chk} s={12}/>:i+1}</div>{i<labels.length-1&&<div className="stl-v"/>}</div><span>{l}</span></div>))}</aside>
       <div className="reg-ct">
     {pl&&step>1&&<h2 className="reg-for">Registering: {fullName(pl)} &ndash; Age: {age(pl.dob,null)}</h2>}
-    {step===1&&<div className="cd"><h2>Select Player</h2><p className="cd-s">Choose which child to register for {SEASON.name}.</p>
+    {step===1&&<div className="cd"><h2>Select Player</h2><p className="cd-s">Choose which child to register for {activeSeason.name}.</p>
       {players.map(p=>(<div key={p.id} className={`opt ${pl?.id===p.id?"sl":""}`} onClick={()=>sPl(p)}><div className="opt-i"><h4>{fullName(p)}</h4><p>DOB: {fmtDate(p.dob)} · Age: {age(p.dob,null)} · {p.gender}</p></div><div className={`opt-c`}>{pl?.id===p.id&&<Ic d={icons.chk} s={12}/>}</div></div>))}
       <button className="b bs bsm" style={{marginTop:10}} onClick={()=>sShowAdd(true)}><Ic d={icons.plus} s={13}/> Add Child</button>
       <div className="br"><button className="b bp" disabled={!pl} onClick={()=>{sPr(null);sStep(2)}}>Continue <Ic d={icons.chev} s={13}/></button></div>
@@ -70,7 +76,7 @@ export function RegPage(){
       {rec.map(p=>(<ProgCard key={p.id} p={p} pl={pl} isRec={true} selected={pr?.id===p.id} onSelect={sPr}/>))}</>}
       {other.length>0&&<><div style={{fontSize:11,fontWeight:600,color:'var(--gray)',textTransform:"uppercase",letterSpacing:".7px",marginTop:14,marginBottom:6}}>Other Programs</div>
       {other.map(p=>(<ProgCard key={p.id} p={p} pl={pl} isRec={false} selected={pr?.id===p.id} onSelect={sPr}/>))}</>}
-      {SEASON.programs.length===0&&<p style={{color:'var(--red)',padding:14}}>No programs available this season.</p>}
+      {activeSeason.programs.length===0&&<p style={{color:'var(--red)',padding:14}}>No programs available this season.</p>}
       <div className="br"><button className="b bgh" onClick={()=>sStep(1)}>Back</button><button className="b bp" disabled={!pr||!!pr.closed} onClick={()=>sStep(3)}>Continue <Ic d={icons.chev} s={13}/></button></div>
     </div>}
     {step===3&&<div className="cd">

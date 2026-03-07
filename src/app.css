@@ -60,10 +60,14 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
 .pcol-h { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: .7px; font-weight: 600; padding: 0 2px }
 .pcard { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 10px; padding: 18px; transition: .15s }
 .pcard:hover { border-color: var(--gold) }
+.pcard.closed { opacity: .55 }
+.pcard-cl { margin-left: 6px; font-size: 10px; font-weight: 700; color: #fff; background: #c0392b; border-radius: 3px; padding: 1px 5px; text-transform: uppercase; letter-spacing: .5px }
 .pcard h4 { font-family: var(--font-display); font-size: 16px; margin: 2px 0 6px }
 .pcard-m { display: flex; justify-content: space-between; align-items: center }
 .pcard-a { font-size: 11px; color: var(--gray); background: var(--off); padding: 2px 7px; border-radius: 3px }
 .pcard-f { font-size: 13px; font-weight: 700; color: var(--gold-dk) }
+.pcard-ages { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 4px }
+.pcard-ages li { font-size: 11px; color: var(--gray); background: var(--off); padding: 2px 7px; border-radius: 3px }
 .sh { margin-top: 24px }
 .sh h3 { font-family: var(--font-display); font-size: 20px }
 .sh p { font-size: 13px; color: var(--gray); margin-top: 2px }
@@ -154,6 +158,13 @@ body { font-family: var(--font-body); color: var(--blk); background: var(--bg); 
 .col-picker-item { display: flex; align-items: center; gap: 7px; padding: 5px 14px; font-size: 12px; font-weight: 500; cursor: pointer; transition: .1s }
 .col-picker-item:hover { background: var(--gold-faint) }
 .col-picker-item input { accent-color: var(--gold) }
+
+/* -- Season Management -- */
+.sn-active { background: #fff; border: 1px solid var(--bdr-lt); border-radius: 10px; padding: 18px 20px; border-left: 3px solid var(--grn) }
+.sn-active-hd { display: flex; justify-content: space-between; align-items: center }
+.sn-active h2 { font-family: var(--font-display); font-size: 20px }
+.sn-none { background: var(--off); border: 1px dashed var(--bdr); border-radius: 10px; padding: 18px 20px; color: var(--gray); font-size: 13px; text-align: center }
+.bdg-in { background: var(--off); color: var(--gray) }
 
 /* -- Responsive -- */
 @media (max-width: 1150px) {
