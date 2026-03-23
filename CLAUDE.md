@@ -5,36 +5,46 @@ Meadow Athletic Association — registration and info website prototype. React S
 ## Dev commands
 
 - `npm run dev` — start Vite dev server (port 5174)
-- `npm run build` — production build
+- `npm run build` — TypeScript check + production build
+- `npm run lint` — ESLint
+- `npm run format` — Prettier (write)
+- `npm run format:check` — Prettier (check only)
 
 ## Tech stack
 
 - React 19, Vite 6, react-router-dom v7 (HashRouter)
-- No TypeScript, no tests — prototype-grade code
-- Deployed to GitHub Pages; HashRouter + `base: '/maa-prototype/'` in vite.config.js
+- TypeScript 5 (strict mode)
+- Tailwind CSS 4 + DaisyUI 5 (custom "maa" theme)
+- ESLint (flat config) + Prettier
+- No tests — prototype-grade code
+- Deployed to GitHub Pages; HashRouter + `base: '/maa-prototype/'` in vite.config.ts
 
 ## Project structure
 
 ```
 src/
-  main.jsx          — HashRouter, route definitions, AppProvider wrapper
-  App.jsx           — layout shell (header, nav, footer, Outlet)
-  Registration.jsx  — RegPage + CartPage components
-  data.js           — SEASON config, programs, mock registrations, waivers
-  utils.jsx         — shared utilities (Ic icon helper, icons map, B_URL, PAGE_PATHS)
-  app.css            — global styles
-  registration.css   — registration/cart styles
+  main.tsx          — HashRouter, route definitions, AppProvider wrapper
+  App.tsx           — layout shell (navbar, mobile drawer, Outlet)
+  Registration.tsx  — RegPage + CartPage components
+  data.ts           — SEASON config, programs, mock registrations, waivers
+  utils.tsx         — shared utilities (Ic icon helper, icons map, B_URL, PAGE_PATHS)
+  index.css         — Tailwind + DaisyUI theme configuration
+  types/
+    index.ts        — centralized TypeScript type definitions
+  hooks/
+    useLocalStorage.ts — generic localStorage persistence hook
   context/
-    AppContext.jsx   — cart + players state (consumed via useAppContext())
+    AppContext.tsx   — cart + players + seasons state (consumed via useAppContext())
   pages/
-    HomePage.jsx, AboutPage.jsx, FaqPage.jsx,
-    FieldsPage.jsx, SponsorsPage.jsx, AdminPage.jsx
+    HomePage.tsx, AboutPage.tsx, FaqPage.tsx,
+    FieldsPage.tsx, SponsorsPage.tsx, AdminPage.tsx
+  waivers/          — HTML waiver content (imported via ?raw)
 public/static/       — images, logo, sponsorship PDF
 ```
 
 ## Routing
 
-Routes defined in `main.jsx` inside a HashRouter. `App.jsx` renders the layout with `<Outlet />` for page content. All routes are children of the App layout route.
+Routes defined in `main.tsx` inside a HashRouter. `App.tsx` renders the layout with `<Outlet />` for page content. All routes are children of the App layout route.
 
 | Route | Component |
 |-------|-----------|
@@ -51,22 +61,29 @@ Nav uses `NavLink` with `isActive` for highlighting. Logo links to `/`; no "Home
 
 ## Shared state
 
-`AppContext` provides cart and players state. Wrap with `<AppProvider>` (done in main.jsx). Consume via `useAppContext()`:
+`AppContext` provides cart, players, and seasons state. Wrap with `<AppProvider>` (done in main.tsx). Consume via `useAppContext()`:
 
-```js
-const { cart, addToCart, removeFromCart, clearCart, players, addPlayer } = useAppContext();
+```ts
+const { cart, addToCart, removeFromCart, clearCart, players, addPlayer, seasons, activeSeason } = useAppContext();
 ```
+
+Seasons are persisted to localStorage via the `useLocalStorage` hook.
+
+## Type system
+
+All types centralized in `src/types/index.ts`. Key types: `Player`, `Program`, `Season`, `SeasonConfig`, `CartItem`, `AppContextValue`, `AdminRegistration`.
 
 ## Coding conventions
 
-- Short CSS class names (e.g. `.hdr`, `.nav`, `.cta`)
-- Inline styles for one-off styling
-- Compact JSX — keep components concise
-- Shared icons/helpers live in `utils.jsx`
+- TypeScript strict mode — all components and functions typed
+- DaisyUI component classes for UI elements (btn, card, modal, table, badge, etc.)
+- Tailwind utility classes for layout and spacing
+- Shared icons/helpers live in `utils.tsx`
 - Page components are default exports; Registration exports named `RegPage` and `CartPage`
 
 ## Styling
 
-- CSS variables for theme colors: Vegas Gold `#C5A04E`, black, white
-- Google Fonts: Playfair Display (serif headings), Source Sans 3 (body)
-- Styles split across `app.css` (global/layout) and `registration.css` (reg/cart pages)
+- DaisyUI custom theme "maa" defined in `src/index.css`
+- Brand colors: primary (Vegas Gold `#C5A04E`), neutral (black `#1A1A1A`), base (off-white `#FAFAF8`)
+- Single font: Source Sans 3
+- No custom CSS files — all styling via Tailwind utilities + DaisyUI components
