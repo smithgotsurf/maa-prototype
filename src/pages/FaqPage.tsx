@@ -4,15 +4,7 @@ import { PAGE_PATHS } from '../utils';
 
 const Sh = ({ l, first }: { l: string; first?: boolean }) => (
   <div
-    style={{
-      fontWeight: 700,
-      color: 'var(--gold-dk)',
-      fontSize: 18,
-      textTransform: 'uppercase',
-      letterSpacing: '.7px',
-      marginTop: first ? 0 : 10,
-      marginBottom: 3,
-    }}
+    className={`font-bold text-primary uppercase tracking-wider text-lg ${first ? '' : 'mt-2.5'} mb-0.5`}
   >
     {l}
   </div>
@@ -26,20 +18,20 @@ export default function FaqPage() {
       a: (
         <>
           <Sh l="Spring" first />
-          <ul style={{ paddingLeft: 16, marginTop: 3, lineHeight: 1.9 }}>
+          <ul className="pl-4 mt-0.5 leading-[1.9] list-disc">
             <li>T-Ball (Coed, ages 3–4)</li>
             <li>T-Shirt (Coed, ages 5–6)</li>
             <li>Baseball (8U, 10U, 12U — boys)</li>
             <li>Softball (8U, 10U, 12U — girls)</li>
           </ul>
           <Sh l="Fall" />
-          <ul style={{ paddingLeft: 16, marginTop: 3, lineHeight: 1.9 }}>
+          <ul className="pl-4 mt-0.5 leading-[1.9] list-disc">
             <li>Soccer (6U Coed, 8U Boys, 8U Girls)</li>
             <li>Baseball (8U, 10U, 12U — boys)</li>
             <li>Softball (8U, 10U, 12U — girls)</li>
           </ul>
           <Sh l="Winter" />
-          <ul style={{ paddingLeft: 16, marginTop: 3, lineHeight: 1.9 }}>
+          <ul className="pl-4 mt-0.5 leading-[1.9] list-disc">
             <li>Basketball (6U Coed, 8U/10U/12U/15U boys, 8U/10U/12U girls)</li>
             <li>Volleyball (8U, 10U, 12U)</li>
           </ul>
@@ -56,7 +48,7 @@ export default function FaqPage() {
           Opens early July through early August.
           <Sh l="Winter" />
           Opens early October through early November.
-          <div style={{ marginTop: 6, fontSize: 11, color: 'var(--gray)' }}>
+          <div className="mt-1.5 text-[11px] text-gray-400">
             Deadlines may close earlier if an age group fills.
           </div>
         </>
@@ -93,8 +85,8 @@ export default function FaqPage() {
       a: (
         <>
           <Sh l="Spring" first />
-          Baseball and softball games are mostly Monday, Tuesday, and Thursday evenings. T-Ball
-          games start at 6:30 PM; T-Shirt games start at 7:15–7:30 PM.
+          Baseball and softball games are mostly Monday, Tuesday, and Thursday evenings. T-Ball games
+          start at 6:30 PM; T-Shirt games start at 7:15–7:30 PM.
           <Sh l="Fall" />
           Soccer games are mostly Monday, Tuesday, and Thursday.
           <Sh l="Winter" />
@@ -123,22 +115,24 @@ export default function FaqPage() {
   ];
   const [open, setOpen] = useState<number | null>(null);
   return (
-    <div className="pg cp">
-      <h1>Frequently Asked Questions</h1>
-      <div className="gl" />
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <h1 className="text-2xl font-bold mb-2">Frequently Asked Questions</h1>
+      <div className="border-t-2 border-primary w-16 mb-6" />
       {faqs.map((f, i) => (
-        <div className="wv" key={i}>
-          <div className="wv-hd" onClick={() => setOpen(open === i ? null : i)}>
-            <h4 style={{ fontWeight: 600, fontSize: 18 }}>{f.q}</h4>
-            <span className="wv-chev">{open === i ? '▾' : '▸'}</span>
+        <div className="border border-base-300 rounded-lg mb-2" key={i}>
+          <div
+            className="flex items-center justify-between p-4 cursor-pointer hover:bg-base-200 rounded-lg"
+            onClick={() => setOpen(open === i ? null : i)}
+          >
+            <h4 className="font-semibold text-lg">{f.q}</h4>
+            <span className="text-gray-400 ml-2">{open === i ? '▾' : '▸'}</span>
           </div>
           {open === i && (
-            <div className="wv-b faq-a">
+            <div className="px-4 pb-4 text-sm">
               {f.a}
               {f.link && (
                 <button
-                  className="b bgh bsm"
-                  style={{ marginTop: 8, display: 'inline-flex' }}
+                  className="btn btn-ghost btn-sm mt-2 inline-flex"
                   onClick={() => navigate(PAGE_PATHS[f.link.p as keyof typeof PAGE_PATHS])}
                 >
                   {f.link.l} →
