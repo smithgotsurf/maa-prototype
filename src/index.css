@@ -29,4 +29,9 @@
 
 @theme {
   --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
 }
