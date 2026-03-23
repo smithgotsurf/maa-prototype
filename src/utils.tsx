@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import type { Player, Program } from "./types";
 
 export const B_URL: string = import.meta.env.BASE_URL;

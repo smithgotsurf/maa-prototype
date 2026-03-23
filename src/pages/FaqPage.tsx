@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PAGE_PATHS } from '../utils';
 
+const Sh=({l,first}:{l:string;first?:boolean})=><div style={{fontWeight:700,color:'var(--gold-dk)',fontSize:18,textTransform:"uppercase",letterSpacing:".7px",marginTop:first?0:10,marginBottom:3}}>{l}</div>;
+
 export default function FaqPage(){
   const navigate = useNavigate();
-  const Sh=({l,first}:{l:string;first?:boolean})=><div style={{fontWeight:700,color:'var(--gold-dk)',fontSize:18,textTransform:"uppercase",letterSpacing:".7px",marginTop:first?0:10,marginBottom:3}}>{l}</div>;
   const faqs=[
     {q:"What sports does MAA typically offer?",a:<><Sh l="Spring" first/><ul style={{paddingLeft:16,marginTop:3,lineHeight:1.9}}><li>T-Ball (Coed, ages 3–4)</li><li>T-Shirt (Coed, ages 5–6)</li><li>Baseball (8U, 10U, 12U — boys)</li><li>Softball (8U, 10U, 12U — girls)</li></ul><Sh l="Fall"/><ul style={{paddingLeft:16,marginTop:3,lineHeight:1.9}}><li>Soccer (6U Coed, 8U Boys, 8U Girls)</li><li>Baseball (8U, 10U, 12U — boys)</li><li>Softball (8U, 10U, 12U — girls)</li></ul><Sh l="Winter"/><ul style={{paddingLeft:16,marginTop:3,lineHeight:1.9}}><li>Basketball (6U Coed, 8U/10U/12U/15U boys, 8U/10U/12U girls)</li><li>Volleyball (8U, 10U, 12U)</li></ul></>},
     {q:"When does registration open?",a:<><Sh l="Spring" first/>Typically opens mid-January and runs through February.<Sh l="Fall"/>Opens early July through early August.<Sh l="Winter"/>Opens early October through early November.<div style={{marginTop:6,fontSize:11,color:'var(--gray)'}}>Deadlines may close earlier if an age group fills.</div></>},
