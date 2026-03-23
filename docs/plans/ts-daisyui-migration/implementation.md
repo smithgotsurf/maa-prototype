@@ -113,17 +113,13 @@ declare module "*.html?raw" {
 
 This enables TypeScript to understand the `?raw` imports used for waiver HTML files in `data.ts`.
 
-- [ ] **Step 6: Update `index.html`**
-
-Change `<script type="module" src="/src/main.jsx">` to `src="/src/main.tsx"`.
-
-- [ ] **Step 7: Update `package.json` build script**
+- [ ] **Step 6: Update `package.json` build script**
 
 ```json
 "build": "tsc -b && vite build"
 ```
 
-- [ ] **Step 8: Create `src/types/index.ts`**
+- [ ] **Step 7: Create `src/types/index.ts`**
 
 All domain types. Export everything. These are extracted from the actual shapes in `src/data.js` and `src/Registration.jsx`:
 
@@ -271,7 +267,7 @@ export interface AppContextValue {
 }
 ```
 
-- [ ] **Step 9: Verify TypeScript config**
+- [ ] **Step 8: Verify TypeScript config**
 
 ```bash
 npx tsc -b --noEmit
@@ -279,10 +275,10 @@ npx tsc -b --noEmit
 
 Expected: errors about .jsx files not found (we haven't renamed yet). Config itself should be valid.
 
-- [ ] **Step 10: Commit**
+- [ ] **Step 9: Commit**
 
 ```bash
-git add tsconfig.json tsconfig.app.json vite.config.ts src/types/index.ts src/vite-env.d.ts package.json index.html
+git add tsconfig.json tsconfig.app.json vite.config.ts src/types/index.ts src/vite-env.d.ts package.json
 git rm vite.config.js
 git commit -m "feat: add TypeScript config and domain type definitions"
 ```
@@ -297,19 +293,23 @@ git commit -m "feat: add TypeScript config and domain type definitions"
 - Rename: `src/main.jsx` → `src/main.tsx`
 - Rename: `src/App.jsx` → `src/App.tsx`
 - Rename: `src/context/AppContext.jsx` → `src/context/AppContext.tsx`
+- Modify: `index.html` (script src)
 
 - [ ] **Step 1: Rename files**
 
 ```bash
-cd src
-git mv data.js data.ts
-git mv utils.jsx utils.tsx
-git mv main.jsx main.tsx
-git mv App.jsx App.tsx
-git mv context/AppContext.jsx context/AppContext.tsx
+git mv src/data.js src/data.ts
+git mv src/utils.jsx src/utils.tsx
+git mv src/main.jsx src/main.tsx
+git mv src/App.jsx src/App.tsx
+git mv src/context/AppContext.jsx src/context/AppContext.tsx
 ```
 
-- [ ] **Step 2: Type `data.ts`**
+- [ ] **Step 2: Update `index.html`**
+
+Change `<script type="module" src="/src/main.jsx">` to `src="/src/main.tsx"`. This must happen after the rename in Step 1.
+
+- [ ] **Step 3: Type `data.ts`**
 
 Add imports and type annotations:
 
@@ -330,7 +330,7 @@ import type {
 - Type `ADMIN_COLS` as `AdminColumn[]`.
 - The `?raw` waiver imports should work with the `vite-env.d.ts` declaration from Task 1.
 
-- [ ] **Step 3: Type `utils.tsx`**
+- [ ] **Step 4: Type `utils.tsx`**
 
 Add parameter and return types to all functions:
 
@@ -375,7 +375,7 @@ export const PAGE_PATHS = {
 } as const;
 ```
 
-- [ ] **Step 4: Type `AppContext.tsx`**
+- [ ] **Step 5: Type `AppContext.tsx`**
 
 ```ts
 import { createContext, useContext, useState, useEffect } from "react";
@@ -388,19 +388,27 @@ import { INIT_PLAYERS, SEED_SEASONS } from "../data";
 - Type `loadSeasons()` return as `Season[]`.
 - Type all callback parameters: `addToCart(item: CartItem)`, `removeFromCart(id: string)`, `addSeason(season: Season)`, `updateSeason(id: string, updates: Partial<Season>)`, etc.
 - Type `AppProvider` props: `{ children: React.ReactNode }`.
-- Type `useAppContext()`: add null check — `const ctx = useContext(AppContext); if (!ctx) throw new Error("useAppContext must be used within AppProvider"); return ctx;`
+- Type `useAppContext()` with null guard:
 
-- [ ] **Step 5: Type `main.tsx`**
+```ts
+export function useAppContext(): AppContextValue {
+  const ctx = useContext(AppContext);
+  if (!ctx) throw new Error("useAppContext must be used within AppProvider");
+  return ctx;
+}
+```
+
+- [ ] **Step 6: Type `main.tsx`**
 
 Add `!` non-null assertion on `document.getElementById("root")!` for `createRoot`.
 
-- [ ] **Step 6: Type `App.tsx`**
+- [ ] **Step 7: Type `App.tsx`**
 
 - Type the `nav` array as `Array<{ to: string; ic: string; l: string; badge?: number }>`.
 - The `menuOpen` state is inferred as `boolean` — no annotation needed.
 - No props interface needed (no props).
 
-- [ ] **Step 7: Build check**
+- [ ] **Step 8: Build check**
 
 ```bash
 npx tsc -b
@@ -408,7 +416,7 @@ npx tsc -b
 
 Expected: May still have errors from un-renamed page/component files. Fix any errors in the files converted so far.
 
-- [ ] **Step 8: Commit**
+- [ ] **Step 9: Commit**
 
 ```bash
 git add -A
@@ -479,10 +487,8 @@ export function useLocalStorage<T>(
 - [ ] **Step 3: Rename all page/component files**
 
 ```bash
-cd src
-git mv Registration.jsx Registration.tsx
-cd pages
-for f in *.jsx; do git mv "$f" "${f%.jsx}.tsx"; done
+git mv src/Registration.jsx src/Registration.tsx
+for f in src/pages/*.jsx; do git mv "$f" "${f%.jsx}.tsx"; done
 ```
 
 - [ ] **Step 4: Type `HomePage.tsx`**
@@ -529,7 +535,7 @@ This is the largest file (~248 lines). Key typing work:
   - `useState<number>(1)` for step
   - `useState<Player | null>(null)` for selected player
   - `useState<Program | null>(null)` for selected program
-  - `useState<Record<string, string>>({})` for waiver initials
+  - `useState<Partial<Record<string, string>>>({})` for waiver initials (values may be `undefined` for unsigned waivers)
 - Type the `AddModal` component props: `{ onAdd: (player: Player) => void; onClose: () => void }`.
 - Type the `submit()` function — it constructs a `CartItem` object. Ensure all fields match the `CartItem` interface.
 - Type the `ProgCard` subcomponent if it exists as a local function.
@@ -542,10 +548,11 @@ Second largest file (~238 lines). Key typing work:
 - Import types: `Season`, `Program`, `SportType`, `AdminRegistration`, `AdminColumn` from types.
 - Type `tab` state as `useState<"registrations" | "seasons" | "users">("registrations")`.
 - Type `editSeason` state as `useState<Season | null>(null)`.
-- Type the `SeasonDetail` component props: `{ season: Season; onSave: (updates: Partial<Season>) => void; onBack: () => void }`.
+- Type the `SeasonDetail` component props: `{ season: Season; sportTypes: SportType[]; onSave: (updates: Partial<Season>) => void; onCancel: () => void }`.
 - Type filter states: `filter` as `string`, `statusFilter` as `string`, `search` as `string`.
 - Type `visibleCols` state as `useState<Set<string>>`.
 - Type the `applyDefaults` function that populates program fields from `SportType`.
+- Note: `ADMIN_COLS` includes an `"age"` column that has no matching field in `AdminRegistration` — age is computed from `dob`. The table rendering code that maps `col.id` to row values must handle `"age"` as a special case (compute via `age()` utility) rather than a direct property lookup. Use a render function or switch statement instead of `reg[col.id as keyof AdminRegistration]`.
 
 - [ ] **Step 11: Full build check**
 
@@ -583,7 +590,7 @@ git commit -m "feat: convert all components and pages to TypeScript, extract use
 - [ ] **Step 1: Install ESLint dependencies**
 
 ```bash
-npm install -D eslint @eslint/js globals typescript-eslint eslint-plugin-react-hooks eslint-plugin-react-refresh
+npm install -D eslint @eslint/js globals typescript-eslint eslint-plugin-react-hooks eslint-plugin-react-refresh eslint-config-prettier
 ```
 
 - [ ] **Step 2: Create `eslint.config.js`**
@@ -596,6 +603,7 @@ import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
+import prettierConfig from "eslint-config-prettier";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
@@ -619,8 +627,11 @@ export default defineConfig([
       ],
     },
   },
+  prettierConfig,
 ]);
 ```
+
+Note: `eslint-config-prettier` disables ESLint formatting rules that would conflict with Prettier. It must be last in the config array to override other configs.
 
 - [ ] **Step 3: Add lint script to `package.json`**
 
@@ -781,7 +792,7 @@ Note: DaisyUI 5 theme syntax may need adjustment during implementation. Check ht
 
 - [ ] **Step 4: Update `src/main.tsx` CSS import**
 
-Add `import "./index.css"` at the top. Keep the existing `import "./app.css"` import in `App.tsx` — both CSS files will coexist during migration.
+Add `import "./index.css"` to `src/main.tsx` (before the component imports). Do NOT touch the `import './app.css'` in `App.tsx` — it remains there until Task 13. Both CSS files coexist during migration.
 
 - [ ] **Step 5: Verify Tailwind is working**
 
