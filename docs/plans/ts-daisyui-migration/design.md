@@ -66,7 +66,14 @@ type Season = {
   description: string
   status: "active" | "inactive"
   programs: Program[]
-  waivers?: Waiver[]  // present on SEASON config, absent on admin-managed seasons
+}
+
+// SEASON config in data.ts has a different shape — no id/description/status,
+// but includes waivers. Separate type to avoid forcing conformance.
+type SeasonConfig = {
+  name: string
+  programs: Program[]
+  waivers: Waiver[]
 }
 
 type Waiver = {
@@ -173,8 +180,22 @@ type AppContextValue = {
 
 - `PAGE_PATHS` in `utils.tsx` — typed with `as const` for route string safety
 - `B_URL` — typed as `string`
+- `Ic` component — typed as `FC<{ d: string; s?: number }>`
 - `icons` map — typed as `Record<string, string>`
 - Helper functions (`age`, `fmtDate`, `recommended`, `otherPrograms`, `fullName`, `calcTotal`) — add parameter and return types
+
+#### Data Constants Typing
+
+Exported constants in `data.ts` need explicit type annotations:
+
+- `SEASON: SeasonConfig`
+- `SEED_SEASONS: Season[]`
+- `INIT_PLAYERS: Player[]`
+- `CURRENT_USER: CurrentUser`
+- `REGS: AdminRegistration[]`
+- `ADMIN_COLS: AdminColumn[]`
+- `SPORT_TYPES: SportType[]`
+- `HATS`, `JERSEYS`, `COACH_SHIRTS` — `as const` string tuple arrays
 
 #### Vite Type Declarations
 
