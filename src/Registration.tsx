@@ -97,6 +97,21 @@ const SectionLabel = ({ children }: { children: React.ReactNode }) => (
 
 const RequiredLabel = () => <span className="text-error text-[10px] ml-1">Required</span>;
 
+const OptCard = ({ selected, onClick, children }: { selected: boolean; onClick: () => void; children: React.ReactNode }) => (
+  <div className={`card border-2 p-3 mb-2 cursor-pointer transition-colors ${selected ? 'border-primary bg-primary/10' : 'border-base-300 hover:border-primary hover:bg-primary/5'}`} onClick={onClick}>
+    <div className="flex items-center justify-between">
+      <div>{children}</div>
+      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selected ? 'border-primary bg-primary text-white' : 'border-base-300'}`}>
+        {selected && <Ic d={icons.chk} s={12} />}
+      </div>
+    </div>
+  </div>
+);
+
+const SizeBtn = ({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) => (
+  <button className={`btn btn-sm ${selected ? 'btn-primary' : 'btn-outline'}`} onClick={onClick}>{label}</button>
+);
+
 export function RegPage() {
   const { players, addPlayer, addToCart, activeSeason } = useAppContext();
   const navigate = useNavigate();
@@ -154,20 +169,6 @@ export function RegPage() {
     navigate('/cart');
   }
 
-  const OptCard = ({ selected, onClick, children }: { selected: boolean; onClick: () => void; children: React.ReactNode }) => (
-    <div className={`card border-2 p-3 mb-2 cursor-pointer transition-colors ${selected ? 'border-primary bg-primary/10' : 'border-base-300 hover:border-primary hover:bg-primary/5'}`} onClick={onClick}>
-      <div className="flex items-center justify-between">
-        <div>{children}</div>
-        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selected ? 'border-primary bg-primary text-white' : 'border-base-300'}`}>
-          {selected && <Ic d={icons.chk} s={12} />}
-        </div>
-      </div>
-    </div>
-  );
-
-  const SizeBtn = ({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) => (
-    <button className={`btn btn-sm ${selected ? 'btn-primary' : 'btn-outline'}`} onClick={onClick}>{label}</button>
-  );
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">

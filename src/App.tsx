@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Outlet, NavLink, Link } from 'react-router-dom';
 import { useAppContext } from './context/AppContext';
 import { B_URL, Ic, icons } from './utils';
-import './app.css';
+
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
