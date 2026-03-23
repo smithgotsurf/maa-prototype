@@ -1,8 +1,8 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 
 export function useLocalStorage<T>(
   key: string,
-  initialValue: T
+  initialValue: T,
 ): [T, (value: T | ((prev: T) => T)) => void, () => void] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
@@ -21,7 +21,7 @@ export function useLocalStorage<T>(
         return next;
       });
     },
-    [key]
+    [key],
   );
 
   const resetValue = useCallback(() => {

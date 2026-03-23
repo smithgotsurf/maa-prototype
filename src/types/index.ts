@@ -1,7 +1,7 @@
 // --- Domain types ---
 
-export type Gender = "Male" | "Female";
-export type ProgramGender = "Coed" | "Male" | "Female";
+export type Gender = 'Male' | 'Female';
+export type ProgramGender = 'Coed' | 'Male' | 'Female';
 
 export interface Player {
   id: string;
@@ -27,7 +27,7 @@ export interface Season {
   id: string;
   name: string;
   description: string;
-  status: "active" | "inactive";
+  status: 'active' | 'inactive';
   programs: Program[];
 }
 
@@ -96,7 +96,7 @@ export interface AdminRegistration {
   email: string;
   primaryContact: string;
   fee: number;
-  status: "Completed" | "Pending";
+  status: 'Completed' | 'Pending';
   date: string;
   hat: string;
   jersey: string;
