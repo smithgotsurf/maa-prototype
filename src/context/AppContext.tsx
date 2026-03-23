@@ -1,26 +1,14 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 import type { CartItem, Player, Season, AppContextValue } from '../types';
 import { INIT_PLAYERS, SEED_SEASONS } from '../data';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 const AppContext = createContext<AppContextValue | null>(null);
-const LS_KEY = 'maa_seasons';
-
-function loadSeasons(): Season[] {
-  try {
-    const stored = localStorage.getItem(LS_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch (_e) { /* ignore */ }
-  return SEED_SEASONS;
-}
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [players, setPlayers] = useState<Player[]>(INIT_PLAYERS);
-  const [seasons, setSeasons] = useState<Season[]>(loadSeasons);
-
-  useEffect(() => {
-    localStorage.setItem(LS_KEY, JSON.stringify(seasons));
-  }, [seasons]);
+  const [seasons, setSeasons] = useLocalStorage<Season[]>('maa_seasons', SEED_SEASONS);
 
   const activeSeason = seasons.find(s => s.status === 'active') || null;
 

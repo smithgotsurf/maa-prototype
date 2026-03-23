@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { SEASON, HATS, JERSEYS, COACH_SHIRTS, CURRENT_USER } from './data';
 import { fullName, age, fmtDate, recommended, otherPrograms, calcTotal, Ic, icons } from './utils';
 import { useAppContext } from './context/AppContext';
+import type { Player, Program } from './types';
 import './registration.css';
 
-function AddModal({onAdd,onClose}){const[f,sF]=useState({fn:"",mn:"",ln:"",dob:"",g:""});const ok=f.fn&&f.ln&&f.dob&&f.g;return(<div className="mo" onClick={onClose}><div className="md" onClick={e=>e.stopPropagation()}><h3>Add Child</h3><div className="fc"><div className="fr"><label>First Name</label><input value={f.fn} onChange={e=>sF({...f,fn:e.target.value})}/></div><div className="fr"><label>Middle Name</label><input value={f.mn} onChange={e=>sF({...f,mn:e.target.value})}/></div></div><div className="fc"><div className="fr"><label>Last Name</label><input value={f.ln} onChange={e=>sF({...f,ln:e.target.value})}/></div><div className="fr"><label>Gender</label><select value={f.g} onChange={e=>sF({...f,g:e.target.value})}><option value="">Select...</option><option value="Male">Male</option><option value="Female">Female</option></select></div></div><div className="fr"><label>Date of Birth</label><input type="date" value={f.dob} onChange={e=>sF({...f,dob:e.target.value})}/></div><div className="br"><button className="b bgh" onClick={onClose}>Cancel</button><button className="b bg" disabled={!ok} onClick={()=>{onAdd({id:`p-${Date.now()}`,firstName:f.fn,middleName:f.mn,lastName:f.ln,dob:f.dob,gender:f.g});onClose()}}><Ic d={icons.plus} s={13}/> Add</button></div></div></div>)}
+function AddModal({onAdd,onClose}:{onAdd:(p:Player)=>void;onClose:()=>void}){const[f,sF]=useState({fn:"",mn:"",ln:"",dob:"",g:""});const ok=f.fn&&f.ln&&f.dob&&f.g;return(<div className="mo" onClick={onClose}><div className="md" onClick={e=>e.stopPropagation()}><h3>Add Child</h3><div className="fc"><div className="fr"><label>First Name</label><input value={f.fn} onChange={e=>sF({...f,fn:e.target.value})}/></div><div className="fr"><label>Middle Name</label><input value={f.mn} onChange={e=>sF({...f,mn:e.target.value})}/></div></div><div className="fc"><div className="fr"><label>Last Name</label><input value={f.ln} onChange={e=>sF({...f,ln:e.target.value})}/></div><div className="fr"><label>Gender</label><select value={f.g} onChange={e=>sF({...f,g:e.target.value})}><option value="">Select...</option><option value="Male">Male</option><option value="Female">Female</option></select></div></div><div className="fr"><label>Date of Birth</label><input type="date" value={f.dob} onChange={e=>sF({...f,dob:e.target.value})}/></div><div className="br"><button className="b bgh" onClick={onClose}>Cancel</button><button className="b bg" disabled={!ok} onClick={()=>{onAdd({id:`p-${Date.now()}`,firstName:f.fn,middleName:f.mn,lastName:f.ln,dob:f.dob,gender:f.g as "Male"|"Female"});onClose()}}><Ic d={icons.plus} s={13}/> Add</button></div></div></div>)}
 
-function ProgCard({p,pl,isRec,selected,onSelect}){
+function ProgCard({p,pl,isRec,selected,onSelect}:{p:Program;pl:Player;isRec:boolean;selected:boolean;onSelect:(p:Program)=>void}){
   const ageText=p.ageAsOfDate?`${pl.firstName} is ${age(pl.dob,p.ageAsOfDate)} as of ${fmtDate(p.ageAsOfDate)}`:`${pl.firstName} is ${age(pl.dob,null)} years old`;
   const nameCell=<><h4>{p.name}{isRec&&<span className="opt-sg">Recommended</span>}{p.closed&&<span style={{marginLeft:6,fontSize:10,fontWeight:700,color:'#fff',background:'#c0392b',borderRadius:3,padding:'1px 5px',textTransform:'uppercase',letterSpacing:'.5px'}}>CLOSED</span>}</h4><p>Ages {p.min}–{p.max} · {ageText}</p></>;
   if(p.closed)return(<div className="opt" style={{opacity:.4,cursor:'not-allowed',pointerEvents:'none',position:'relative',overflow:'hidden'}}><div className="opt-i">{nameCell}</div><div className="opt-r"><span className="opt-f">${p.fee}</span><div className="opt-c"/></div><div style={{position:'absolute',top:14,right:-28,width:96,background:'#c0392b',color:'#fff',fontSize:10,fontWeight:800,textAlign:'center',padding:'4px 0',transform:'rotate(45deg)',letterSpacing:'1px',textTransform:'uppercase',boxShadow:'0 1px 3px rgba(0,0,0,.3)'}}>FULL</div></div>);
@@ -17,7 +18,7 @@ function ProgCard({p,pl,isRec,selected,onSelect}){
 export function RegPage(){
   const { players, addPlayer, addToCart, activeSeason } = useAppContext();
   const navigate = useNavigate();
-  const[step,sStep]=useState(1);const[pl,sPl]=useState(null);const[pr,sPr]=useState(null);const[wv,sWv]=useState({});const[hat,sHat]=useState("");const[jer,sJer]=useState("");const[showAdd,sShowAdd]=useState(false);
+  const[step,sStep]=useState(1);const[pl,sPl]=useState<Player|null>(null);const[pr,sPr]=useState<Program|null>(null);const[wv,sWv]=useState<Partial<Record<string,string>>>({});const[hat,sHat]=useState("");const[jer,sJer]=useState("");const[showAdd,sShowAdd]=useState(false);
   const[digitalPic,setDigitalPic]=useState(false);const[extraHat,setExtraHat]=useState(false);const[extraHatSize,setExtraHatSize]=useState("");const[coaching,setCoaching]=useState("");const[sponsorship,setSponsorship]=useState("");
   const[coachShirtSize,setCoachShirtSize]=useState("");const[sponsorName,setSponsorName]=useState("");const[activeWaiver,setActiveWaiver]=useState(0);
   const[hasMedical,setHasMedical]=useState("");const[allergies,setAllergies]=useState("");const[medicalInfo,setMedicalInfo]=useState("");
@@ -38,7 +39,7 @@ export function RegPage(){
   function submit(){
     addToCart({
       id:`c-${Date.now()}`,
-      player:pl, program:pr, hat, jersey:jer,
+      player:pl!, program:pr!, hat, jersey:jer,
       guardian:{
         primary:{firstName:gPri.fn,lastName:gPri.ln,phone:gPri.ph},
         secondary:hasSec?{firstName:gSec.fn,lastName:gSec.ln,phone:gSec.ph}:null,
@@ -51,7 +52,7 @@ export function RegPage(){
       sponsorship,
       sponsorName:sponsorship==="Yes"?sponsorName:null,
       medical:hasMedical==="Yes"?{allergies:allergies||null,info:medicalInfo||null}:null,
-      total:calcTotal(pr,digitalPic,extraHat)
+      total:calcTotal(pr!,digitalPic,extraHat)
     });
     sStep(1);sPl(null);sPr(null);sWv({});sHat("");sJer("");setPriContact("");
     setDigitalPic(false);setExtraHat(false);setExtraHatSize("");setCoaching("");setSponsorship("");
@@ -71,7 +72,7 @@ export function RegPage(){
       <div className="br"><button className="b bp" disabled={!pl} onClick={()=>{sPr(null);sStep(2)}}>Continue <Ic d={icons.chev} s={13}/></button></div>
       {showAdd&&<AddModal onAdd={addPlayer} onClose={()=>sShowAdd(false)}/>}
     </div>}
-    {step===2&&<div className="cd"><h2>Select Program</h2><p className="cd-s">Programs for {pl.firstName} ({pl.gender}).</p>
+    {step===2&&pl&&<div className="cd"><h2>Select Program</h2><p className="cd-s">Programs for {pl.firstName} ({pl.gender}).</p>
       {rec.length>0&&<><div style={{fontSize:11,fontWeight:600,color:'var(--grn)',textTransform:"uppercase",letterSpacing:".7px",marginBottom:6}}>Recommended for {pl.firstName}</div>
       {rec.map(p=>(<ProgCard key={p.id} p={p} pl={pl} isRec={true} selected={pr?.id===p.id} onSelect={sPr}/>))}</>}
       {other.length>0&&<><div style={{fontSize:11,fontWeight:600,color:'var(--gray)',textTransform:"uppercase",letterSpacing:".7px",marginTop:14,marginBottom:6}}>Other Programs</div>
@@ -115,7 +116,7 @@ export function RegPage(){
         <button className="b bp" disabled={!gPri.fn||!gPri.ln||!gPri.ph||!priContact} onClick={()=>sStep(4)}>Continue <Ic d={icons.chev} s={13}/></button>
       </div>
     </div>}
-    {step===4&&<div className="cd"><h2>Hat & Jersey Size</h2><p className="cd-s">Select {pl.firstName}'s sizing for this season.</p>
+    {step===4&&pl&&<div className="cd"><h2>Hat & Jersey Size</h2><p className="cd-s">Select {pl.firstName}'s sizing for this season.</p>
       <div className="szg">
         <div className="szg-l">Hat Size</div>
         <div className="szg-d">Fitted cap — included with registration</div>
@@ -191,10 +192,10 @@ export function RegPage(){
     </div>}
     {step===8&&<div className="cd"><h2>Review Registration</h2><p className="cd-s">Confirm details before adding to cart.</p>
   <table className="rt"><tbody>
-    <tr><td>Player</td><td>{fullName(pl)}</td></tr>
-    <tr><td>Date of Birth</td><td>{fmtDate(pl.dob)}</td></tr>
-    <tr><td>Program</td><td>{pr.name}</td></tr>
-    <tr><td>Age</td><td>{age(pl.dob,pr.ageAsOfDate)} years old{pr.ageAsOfDate?` (as of ${fmtDate(pr.ageAsOfDate)})`:""}</td></tr>
+    <tr><td>Player</td><td>{fullName(pl!)}</td></tr>
+    <tr><td>Date of Birth</td><td>{fmtDate(pl!.dob)}</td></tr>
+    <tr><td>Program</td><td>{pr!.name}</td></tr>
+    <tr><td>Age</td><td>{age(pl!.dob,pr!.ageAsOfDate)} years old{pr!.ageAsOfDate?` (as of ${fmtDate(pr!.ageAsOfDate)})`:""}</td></tr>
     <tr><td>Primary Guardian</td><td>{gPri.fn} {gPri.ln} — {gPri.ph}</td></tr>
     {hasSec&&<tr><td>Secondary Guardian</td><td>{gSec.fn} {gSec.ln} — {gSec.ph}</td></tr>}
     <tr><td>Primary Contact</td><td>{priContact==="primary"?gPri.ph:gSec.ph}</td></tr>
@@ -212,10 +213,10 @@ export function RegPage(){
     <tr><td>Waivers</td><td>{applicableWaivers.map(w=>`${w.title} (${wv[w.id]})`).join(", ")}</td></tr>
   </tbody></table>
   <div style={{borderTop:'1px solid var(--bdr-lt)',marginTop:12,paddingTop:12}}>
-    <div style={{display:"flex",justifyContent:"space-between",fontSize:13,marginBottom:4}}><span>Registration Fee</span><span>${pr.fee}.00</span></div>
+    <div style={{display:"flex",justifyContent:"space-between",fontSize:13,marginBottom:4}}><span>Registration Fee</span><span>${pr!.fee}.00</span></div>
     {digitalPic&&<div style={{display:"flex",justifyContent:"space-between",fontSize:13,marginBottom:4,color:'var(--gray)'}}><span>Digital Picture</span><span>+$10.00</span></div>}
     {extraHat&&<div style={{display:"flex",justifyContent:"space-between",fontSize:13,marginBottom:4,color:'var(--gray)'}}><span>Extra Hat</span><span>+$30.00</span></div>}
-    <div style={{display:"flex",justifyContent:"space-between",fontSize:13,fontWeight:700,borderTop:'1px solid var(--bdr-lt)',paddingTop:8,marginTop:4}}><span>Total</span><span className="rf">${calcTotal(pr,digitalPic,extraHat)}.00</span></div>
+    <div style={{display:"flex",justifyContent:"space-between",fontSize:13,fontWeight:700,borderTop:'1px solid var(--bdr-lt)',paddingTop:8,marginTop:4}}><span>Total</span><span className="rf">${calcTotal(pr!,digitalPic,extraHat)}.00</span></div>
   </div>
   <div className="br"><button className="b bgh" onClick={()=>sStep(7)}>Back</button><button className="b bg" onClick={submit}><Ic d={icons.cart} s={14}/> Add to Cart</button></div>
 </div>}

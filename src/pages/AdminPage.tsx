@@ -2,11 +2,19 @@ import { useState } from 'react';
 import { Ic, icons, age } from '../utils';
 import { HATS, JERSEYS, REGS, ADMIN_COLS, SPORT_TYPES } from '../data';
 import { useAppContext } from '../context/AppContext';
+import type { Season, Program, SportType } from '../types';
 
-function SeasonDetail({ season, sportTypes, onSave, onCancel }) {
+interface SeasonDetailProps {
+  season: Season | null | undefined;
+  sportTypes: SportType[];
+  onSave: (data: Partial<Season>) => void;
+  onCancel: () => void;
+}
+
+function SeasonDetail({ season, sportTypes, onSave, onCancel }: SeasonDetailProps) {
   const [name, setName] = useState(season?.name || "");
   const [desc, setDesc] = useState(season?.description || "");
-  const [programs, setPrograms] = useState(season?.programs ? season.programs.map(p=>({...p})) : []);
+  const [programs, setPrograms] = useState<Program[]>(season?.programs ? season.programs.map(p=>({...p})) : []);
 
   const addProgram = () => {
     setPrograms(prev => [...prev, {
@@ -15,16 +23,16 @@ function SeasonDetail({ season, sportTypes, onSave, onCancel }) {
     }]);
   };
 
-  const updateProgram = (id, field, value) => {
+  const updateProgram = (id: string, field: string, value: string | number | boolean | null) => {
     setPrograms(prev => prev.map(p => p.id === id ? { ...p, [field]: value } : p));
   };
 
-  const removeProgram = (id) => {
+  const removeProgram = (id: string) => {
     setPrograms(prev => prev.filter(p => p.id !== id));
   };
 
-  const applyDefaults = (id, sportName) => {
-    const type = sportTypes.find(t => t.name === sportName);
+  const applyDefaults = (id: string, sportName: string) => {
+    const type = sportTypes.find((t: SportType) => t.name === sportName);
     if (type) {
       setPrograms(prev => prev.map(p => p.id === id
         ? { ...p, name: sportName, gender: type.gender, min: type.min, max: type.max, fee: type.fee }
@@ -127,15 +135,15 @@ export default function AdminPage(){
   const[showColPicker,setShowColPicker]=useState(false);
   const[showEquipModal,setShowEquipModal]=useState(false);
   const { seasons, activeSeason, addSeason, updateSeason, deleteSeason, activateSeason, deactivateSeason } = useAppContext();
-  const [seasonView, setSeasonView] = useState("list");
-  const [editSeasonId, setEditSeasonId] = useState(null);
+  const [seasonView, setSeasonView] = useState<"list"|"edit"|"new">("list");
+  const [editSeasonId, setEditSeasonId] = useState<string|null>(null);
   const filt=REGS.filter(r=>{if(sf!=="All"&&r.program!==sf)return false;if(stf!=="All"&&r.status!==stf)return false;if(q&&!r.player.toLowerCase().includes(q.toLowerCase())&&!r.parent.toLowerCase().includes(q.toLowerCase()))return false;return true});
   const totalRev=REGS.reduce((s,r)=>s+r.total,0);
-  const progCounts={};(activeSeason?.programs||[]).forEach(p=>{progCounts[p.name]=REGS.filter(r=>r.program===p.name).length});
-  const hatCounts={};REGS.forEach(r=>{hatCounts[r.hat]=(hatCounts[r.hat]||0)+1});
-  const jerseyCounts={};REGS.forEach(r=>{jerseyCounts[r.jersey]=(jerseyCounts[r.jersey]||0)+1});
-  const toggleCol=id=>setVisCols(v=>v.includes(id)?v.filter(c=>c!==id):[...v,id]);
-  const vis=id=>visCols.includes(id);
+  const progCounts: Record<string,number>={};(activeSeason?.programs||[]).forEach(p=>{progCounts[p.name]=REGS.filter(r=>r.program===p.name).length});
+  const hatCounts: Record<string,number>={};REGS.forEach(r=>{hatCounts[r.hat]=(hatCounts[r.hat]||0)+1});
+  const jerseyCounts: Record<string,number>={};REGS.forEach(r=>{jerseyCounts[r.jersey]=(jerseyCounts[r.jersey]||0)+1});
+  const toggleCol=(id: string)=>setVisCols(v=>v.includes(id)?v.filter(c=>c!==id):[...v,id]);
+  const vis=(id: string)=>visCols.includes(id);
   return(<div className="adm"><aside className="asd"><div className="asd-l">Management</div>
     {[{id:"dash",ic:icons.clip,l:"Registrations"},{id:"seasons",ic:icons.gear,l:"Seasons"},{id:"users",ic:icons.users,l:"Users"}].map(i=>(<button key={i.id} className={`asd-i ${tab===i.id?"on":""}`} onClick={()=>sTab(i.id)}><Ic d={i.ic} s={15}/>{i.l}</button>))}
   </aside><main className="am">
@@ -208,7 +216,7 @@ export default function AdminPage(){
             {s.status!=="active"&&<button className="b bs bsm" onClick={()=>activateSeason(s.id)}>Activate</button>}
             <button className="b bs bsm" onClick={()=>{setEditSeasonId(s.id);setSeasonView("edit")}}>Edit</button>
             <button className="b bs bsm" onClick={()=>{
-              const clone={...s,id:`s-${Date.now()}`,name:`${s.name} (Copy)`,status:"inactive",
+              const clone: Season={...s,id:`s-${Date.now()}`,name:`${s.name} (Copy)`,status:"inactive" as const,
                 programs:s.programs.map(p=>({...p,id:`pg-${Date.now()}-${Math.random().toString(36).slice(2,6)}`}))};
               addSeason(clone);
               setEditSeasonId(clone.id);
@@ -225,9 +233,9 @@ export default function AdminPage(){
   sportTypes={SPORT_TYPES}
   onSave={(data) => {
     if (seasonView==="edit") {
-      updateSeason(editSeasonId, data);
+      updateSeason(editSeasonId!, data);
     } else {
-      addSeason({ ...data, id: `s-${Date.now()}`, status: "inactive" });
+      addSeason({ ...data, id: `s-${Date.now()}`, status: "inactive" as const } as Season);
     }
     setSeasonView("list");
   }}
