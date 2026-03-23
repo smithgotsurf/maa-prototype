@@ -37,55 +37,60 @@ export default function HomePage() {
   return (
     <div>
       <div
-        className="hero"
+        className="relative bg-cover bg-center py-20 px-6 text-white text-center"
         style={{
           backgroundImage: `linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.78)),url('${B_URL}static/field-1.jpg')`,
         }}
       >
-        <h1>
-          <span className="g">M</span>eadow <span className="g">A</span>thletic{' '}
-          <span className="g">A</span>ssociation
+        <h1 className="text-3xl md:text-[42px] font-bold leading-tight mb-3">
+          <span className="text-primary">M</span>eadow <span className="text-primary">A</span>
+          thletic <span className="text-primary">A</span>ssociation
         </h1>
-        <p>
+        <p className="text-sm md:text-base opacity-90 max-w-xl mx-auto">
           Youth recreational sports for the Meadow community. Building character, teamwork, and
           lifelong memories.
         </p>
       </div>
-      <div className="pg">
+      <div className="max-w-4xl mx-auto px-4 py-6">
         {activeSeason ? (
           <>
-            <div className="sb">
+            <div className="card bg-base-100 shadow-md p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 -mt-10 relative z-10 mb-6">
               <div>
-                <h3>{activeSeason.name}</h3>
-                <p>{activeSeason.description}</p>
+                <h3 className="text-lg font-bold">{activeSeason.name}</h3>
+                <p className="text-sm text-gray-500">{activeSeason.description}</p>
               </div>
-              <button className="hcta" onClick={() => navigate('/register')}>
+              <button className="btn btn-primary" onClick={() => navigate('/register')}>
                 Register Now <Ic d={icons.chev} s={15} />
               </button>
             </div>
-            <div className="sh">
-              <h3>Available Programs</h3>
-              <p>
+            <div className="mb-4">
+              <h3 className="text-lg font-bold">Available Programs</h3>
+              <p className="text-sm text-gray-500">
                 {activeSeason.programs.length} programs for ages {minAge}–{maxAge}
               </p>
             </div>
-            <div className="pgrid">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
                 ['Coed', 'Coed'],
                 ['Boys', 'Male'],
                 ['Girls', 'Female'],
               ].map(([label, key]) => (
-                <div key={label} className="pcol">
-                  <div className="pcol-h">{label}</div>
+                <div key={label}>
+                  <div className="text-xs font-bold uppercase tracking-wider text-center mb-2 text-gray-500">
+                    {label}
+                  </div>
                   {activeSeason.programs
                     .filter((p) => p.gender === key)
                     .map((p) => (
-                      <div className={`pcard${p.closed ? ' closed' : ''}`} key={p.id}>
-                        <div className="pcard-m">
-                          <h4>{p.name}</h4>
-                          {p.closed && <span className="pcard-cl">Closed</span>}
+                      <div
+                        className={`card border border-base-300 p-3 mb-2 ${p.closed ? 'opacity-40' : ''}`}
+                        key={p.id}
+                      >
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-semibold text-sm">{p.name}</h4>
+                          {p.closed && <span className="badge badge-error badge-sm">Closed</span>}
                         </div>
-                        <span className="pcard-a">
+                        <span className="text-xs text-gray-500">
                           Ages {p.min}–{p.max}
                         </span>
                       </div>
@@ -96,26 +101,30 @@ export default function HomePage() {
           </>
         ) : (
           <>
-            <div className="sb">
-              <div>
-                <h3>Registration</h3>
-                <p>Check back soon for upcoming registration information.</p>
-              </div>
+            <div className="card bg-base-100 shadow-md p-5 -mt-10 relative z-10 mb-6">
+              <h3 className="text-lg font-bold">Registration</h3>
+              <p className="text-sm text-gray-500">
+                Check back soon for upcoming registration information.
+              </p>
             </div>
-            <div className="sh">
-              <h3>What We Offer</h3>
-              <p>Youth sports across three seasons</p>
+            <div className="mb-4">
+              <h3 className="text-lg font-bold">What We Offer</h3>
+              <p className="text-sm text-gray-500">Youth sports across three seasons</p>
             </div>
-            <div className="pgrid">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {SPORTS.map((s) => (
-                <div key={s.label} className="pcol">
-                  <div className="pcol-h">{s.label}</div>
+                <div key={s.label}>
+                  <div className="text-xs font-bold uppercase tracking-wider text-center mb-2 text-gray-500">
+                    {s.label}
+                  </div>
                   {s.items.map((i) => (
-                    <div className="pcard" key={i.name}>
-                      <h4>{i.name}</h4>
-                      <ul className="pcard-ages">
+                    <div className="card border border-base-300 p-3 mb-2" key={i.name}>
+                      <h4 className="font-semibold text-sm">{i.name}</h4>
+                      <ul className="flex flex-wrap gap-1 mt-1">
                         {i.ages.map((a) => (
-                          <li key={a}>{a}</li>
+                          <li key={a} className="badge badge-ghost badge-sm">
+                            {a}
+                          </li>
                         ))}
                       </ul>
                     </div>
