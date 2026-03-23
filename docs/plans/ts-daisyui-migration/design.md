@@ -234,15 +234,15 @@ Largest workstream. Install Tailwind CSS 4 and DaisyUI 5, configure custom theme
 
 | DaisyUI Role | MAA Color | Value |
 |---|---|---|
-| `primary` | Vegas Gold | `#C5A04E` |
-| `primary-content` | Black (text on gold) | `#1A1A1A` |
-| `neutral` | Near-black | `#1A1A1A` |
-| `neutral-content` | White | `#FFFFFF` |
-| `base-100` | Off-white | `#FAFAF8` |
-| `base-200` | Background | `#F5F4F0` |
-| `base-300` | Border | `#E0E0E0` |
-| `error` | Red | `#C23B22` |
-| `success` | Green | `#2E7D4F` |
+| `primary` | Vegas Gold | `#C5A04E` <span style="background:#C5A04E;padding:0 12px;border-radius:2px">&nbsp;</span> |
+| `primary-content` | Black (text on gold) | `#1A1A1A` <span style="background:#1A1A1A;padding:0 12px;border-radius:2px">&nbsp;</span> |
+| `neutral` | Near-black | `#1A1A1A` <span style="background:#1A1A1A;padding:0 12px;border-radius:2px">&nbsp;</span> |
+| `neutral-content` | White | `#FFFFFF` <span style="background:#FFFFFF;border:1px solid #ccc;padding:0 12px;border-radius:2px">&nbsp;</span> |
+| `base-100` | Off-white | `#FAFAF8` <span style="background:#FAFAF8;border:1px solid #ccc;padding:0 12px;border-radius:2px">&nbsp;</span> |
+| `base-200` | Background | `#F5F4F0` <span style="background:#F5F4F0;border:1px solid #ccc;padding:0 12px;border-radius:2px">&nbsp;</span> |
+| `base-300` | Border | `#E0E0E0` <span style="background:#E0E0E0;padding:0 12px;border-radius:2px">&nbsp;</span> |
+| `error` | Red | `#C23B22` <span style="background:#C23B22;padding:0 12px;border-radius:2px">&nbsp;</span> |
+| `success` | Green | `#2E7D4F` <span style="background:#2E7D4F;padding:0 12px;border-radius:2px">&nbsp;</span> |
 
 Single font: Source Sans 3 for all text. Weight range 300–700 for heading/body differentiation.
 
