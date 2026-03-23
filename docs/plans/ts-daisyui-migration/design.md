@@ -33,26 +33,31 @@ Rename all `.jsx`/`.js` files to `.tsx`/`.ts`. Add `tsconfig.json` with strict m
 
 #### Type System
 
+Centralized in `src/types/index.ts`. All types derived from actual codebase usage.
+
 ```ts
 // Domain
+type Gender = "Male" | "Female"
+type ProgramGender = "Coed" | "Male" | "Female"
+
 type Player = {
   id: string
   firstName: string
   middleName: string
   lastName: string
   dob: string
-  gender: "M" | "F"
+  gender: Gender
 }
 
 type Program = {
   id: string
   name: string
-  gender: "Coed" | "Boys" | "Girls"
-  minAge: number
-  maxAge: number
+  gender: ProgramGender
+  min: number
+  max: number
   fee: number
   closed?: boolean
-  ageAsOfDate?: string
+  ageAsOfDate: string | null
 }
 
 type Season = {
@@ -61,6 +66,7 @@ type Season = {
   description: string
   status: "active" | "inactive"
   programs: Program[]
+  waivers?: Waiver[]  // present on SEASON config, absent on admin-managed seasons
 }
 
 type Waiver = {
@@ -73,39 +79,76 @@ type Waiver = {
 
 type SportType = {
   name: string
-  gender: string
+  gender: ProgramGender
   min: number
   max: number
   fee: number
 }
 
 // Registration / Cart
-type Guardian = {
+type ContactInfo = {
   firstName: string
   lastName: string
   phone: string
 }
 
-type MedicalInfo = {
-  allergies: string
-  conditions: string
-  medications: string
+type CartItemGuardian = {
+  primary: ContactInfo
+  secondary: ContactInfo | null
+  primaryContactPhone: string
 }
 
 type CartItem = {
   id: string
   player: Player
   program: Program
-  guardian: Guardian
-  secondaryGuardian?: Guardian
-  hatSize: string
-  jerseySize: string
+  hat: string
+  jersey: string
+  guardian: CartItemGuardian
+  digitalPicture: boolean
+  extraHat: { size: string } | null
+  coaching: string
+  coachShirtSize: string | null
+  sponsorship: string
+  sponsorName: string | null
+  medical: { allergies: string | null; info: string | null } | null
+  total: number
+}
+
+// Admin mock data (flat shape, different from CartItem)
+type AdminRegistration = {
+  id: string
+  player: string
+  gender: Gender
+  dob: string
+  program: string
+  parent: string
+  email: string
+  primaryContact: string
+  fee: number
+  status: "Completed" | "Pending"
+  date: string
+  hat: string
+  jersey: string
   digitalPic: boolean
-  extraHat: boolean
-  coachInterest: boolean
-  sponsorInterest: boolean
-  medical: MedicalInfo
-  waiverInitials: Record<string, string>
+  extraHat: string | null
+  coaching: string
+  sponsorship: string
+  total: number
+}
+
+type AdminColumn = {
+  id: string
+  label: string
+  default: boolean
+}
+
+// User
+type CurrentUser = {
+  firstName: string
+  lastName: string
+  phone: string
+  secondaryGuardian: ContactInfo
 }
 
 // Context
@@ -126,7 +169,20 @@ type AppContextValue = {
 }
 ```
 
-Types will be refined during implementation to match actual component usage.
+#### Utility Typing
+
+- `PAGE_PATHS` in `utils.tsx` — typed with `as const` for route string safety
+- `B_URL` — typed as `string`
+- `icons` map — typed as `Record<string, string>`
+- Helper functions (`age`, `fmtDate`, `recommended`, `otherPrograms`, `fullName`, `calcTotal`) — add parameter and return types
+
+#### Vite Type Declarations
+
+A `src/vite-env.d.ts` file is needed for:
+- Vite client types (`/// <reference types="vite/client" />`)
+- `?raw` HTML imports used by waiver files (`declare module '*.html?raw'`)
+
+The `src/waivers/*.html` files themselves stay as-is — no TypeScript conversion needed.
 
 #### useLocalStorage Hook
 
@@ -171,25 +227,89 @@ Single font: Source Sans 3 for all text. Weight range 300–700 for heading/body
 
 #### Component Mapping
 
+**Layout & Navigation**
+
 | Current CSS | DaisyUI Replacement |
 |---|---|
-| `.H` (header) | `navbar` |
+| `.H` (header) | `navbar` with `bg-neutral text-neutral-content` |
 | `.H-mob` (mobile menu) | `drawer` |
+| `.pg` / `.pgn` (page containers) | `max-w-4xl mx-auto` / `max-w-2xl mx-auto` |
+| `.cp` (content page) | Tailwind prose/spacing utilities |
+
+**Buttons**
+
+| Current CSS | DaisyUI Replacement |
+|---|---|
 | `.b.bp` (primary button) | `btn btn-neutral` |
 | `.b.bg` (gold CTA button) | `btn btn-primary` |
 | `.b.bs` (secondary button) | `btn btn-outline` |
 | `.b.bd` (delete button) | `btn btn-error btn-ghost` |
 | `.b.bgh` (ghost button) | `btn btn-ghost` |
 | `.b.bsm` (small modifier) | `btn-sm` |
+
+**Cards & Containers**
+
+| Current CSS | DaisyUI Replacement |
+|---|---|
 | `.cd` (card) | `card` |
-| `.mo` / `.md` (modal) | `modal` |
+| `.pcard` / `.pcol` (program cards) | `card` with grid layout |
+| `.spc` (sponsor tier card) | `card` |
+| `.opt` (radio selector) | `card` with `border-primary` active state |
+| `.stt` (stat tiles) | `stat` |
+
+**Data Display**
+
+| Current CSS | DaisyUI Replacement |
+|---|---|
 | `.dt` (data table) | `table` |
-| `.opt` (radio selector) | `card` with border + active state |
-| `.fr input` / `.fr select` | `input` / `select` with DaisyUI classes |
 | `.bdg` (badge) | `badge` |
-| `.stv` (step indicator) | `steps` |
-| `.sb` (status bar) | `alert` |
+| `.bdg-in` (inactive badge) | `badge badge-ghost` |
 | Admin tabs | `tabs tabs-bordered` |
+
+**Forms & Inputs**
+
+| Current CSS | DaisyUI Replacement |
+|---|---|
+| `.fr input` / `.fr select` | `input input-bordered` / `select select-bordered` |
+| `.szg` / `.sz` (size selectors) | `btn-group` or `join` with `btn` toggles |
+| `.wv` (waiver accordion) | `collapse` or custom with Tailwind |
+| `.wck` (waiver checkbox) | `checkbox` |
+| `.flt` / `.fsl` / `.fin` (filter bar) | `join` with `input` / `select` |
+
+**Overlays & Feedback**
+
+| Current CSS | DaisyUI Replacement |
+|---|---|
+| `.mo` / `.md` (modal) | `modal` |
+| `.sb` (status bar / floating card) | `card` with absolute positioning (not `alert` — it overlaps the hero) |
+| `.stv` (step indicator) | `steps` |
+| `.col-picker` (column dropdown) | `dropdown` with `menu` |
+
+**Registration & Cart**
+
+| Current CSS | DaisyUI Replacement |
+|---|---|
+| `.reg-wrap` (2-col reg layout) | Tailwind `grid grid-cols-[180px_1fr]` |
+| `.ci` (cart item) | `card` |
+| `.ct` (cart total) | Tailwind utilities |
+| `.cfm` (confirmation) | `card` with `text-center` |
+| `.rt` (review table) | `table table-sm` |
+
+**Admin-Specific**
+
+| Current CSS | DaisyUI Replacement |
+|---|---|
+| `.adm` / `.asd` / `.am` (admin layout) | Tailwind grid/flex |
+| `.sts` (stat tiles grid) | `stats` or grid of `stat` |
+| `.sn-active` / `.sn-none` (season cards) | `card` with conditional `border-primary` |
+
+#### Inline Styles Strategy
+
+The codebase uses extensive inline `style={{}}` attributes for dynamic and one-off styling. During migration:
+- **Dynamic values** (opacity, conditional colors) → Tailwind conditional classes where possible, or keep inline for truly dynamic values
+- **One-off positioning/sizing** → Tailwind utility classes
+- **`var(--font-display)` references** → remove (single font now)
+- **`var(--gold)` etc.** → replaced by DaisyUI theme tokens or Tailwind classes
 
 #### Migration Order
 
