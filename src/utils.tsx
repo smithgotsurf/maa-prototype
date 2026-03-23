@@ -1,15 +1,21 @@
-export const B_URL = import.meta.env.BASE_URL;
+import type { Player, Program } from "./types";
 
-function ld(s){const[y,m,d]=s.split('-');return new Date(y,m-1,d)}
-export function age(dob,asOf){const d=ld(dob);const c=asOf?ld(asOf):new Date();let a=c.getFullYear()-d.getFullYear();if(d.getMonth()>c.getMonth()||(d.getMonth()===c.getMonth()&&d.getDate()>c.getDate()))a--;return a}
-export function fmtDate(s){return ld(s).toLocaleDateString()}
-export function recommended(p,progs){return progs.filter(pr=>{const a2=age(p.dob,pr.ageAsOfDate);return a2>=pr.min&&a2<=pr.max&&(pr.gender==="Coed"||pr.gender===p.gender)})}
-export function otherPrograms(p,progs){const rec=recommended(p,progs);return progs.filter(pr=>!rec.find(r=>r.id===pr.id))}
-export function fullName(p){return[p.firstName,p.middleName,p.lastName].filter(Boolean).join(' ')}
-export function calcTotal(pr,digitalPic,extraHat){let total=pr.fee;if(digitalPic)total+=10;if(extraHat)total+=30;return total}
+export const B_URL: string = import.meta.env.BASE_URL;
 
-export const Ic=({d,s=18})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{__html:d}}/>;
-export const icons={
+function ld(s: string): Date {const[y,m,d]=s.split('-');return new Date(Number(y),Number(m)-1,Number(d))}
+export function age(dob: string, asOf?: string | null): number {const d=ld(dob);const c=asOf?ld(asOf):new Date();let a=c.getFullYear()-d.getFullYear();if(d.getMonth()>c.getMonth()||(d.getMonth()===c.getMonth()&&d.getDate()>c.getDate()))a--;return a}
+export function fmtDate(s: string): string {return ld(s).toLocaleDateString()}
+export function recommended(p: Player, progs: Program[]): Program[] {return progs.filter(pr=>{const a2=age(p.dob,pr.ageAsOfDate);return a2>=pr.min&&a2<=pr.max&&(pr.gender==="Coed"||pr.gender===p.gender)})}
+export function otherPrograms(p: Player, progs: Program[]): Program[] {const rec=recommended(p,progs);return progs.filter(pr=>!rec.find(r=>r.id===pr.id))}
+export function fullName(p: Player): string {return[p.firstName,p.middleName,p.lastName].filter(Boolean).join(' ')}
+export function calcTotal(pr: Program, digitalPic: boolean, extraHat: boolean): number {let total=pr.fee;if(digitalPic)total+=10;if(extraHat)total+=30;return total}
+
+interface IcProps {
+  d: string;
+  s?: number;
+}
+export const Ic=({d,s=18}: IcProps)=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{__html:d}}/>;
+export const icons: Record<string, string>={
   ball:'<circle cx="12" cy="12" r="10"/><path d="M4.93 4.93c4.08 2.38 6.2 6.76 6.2 6.76s.86 4.56-1.14 8.38"/><path d="M19.07 4.93c-4.08 2.38-6.2 6.76-6.2 6.76s-.86 4.56 1.14 8.38"/>',
   home:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
   clip:'<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>',
@@ -43,4 +49,4 @@ export const PAGE_PATHS = {
   register: "/register",
   cart: "/cart",
   admin: "/admin",
-};
+} as const;

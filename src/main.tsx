@@ -11,7 +11,7 @@ import SponsorsPage from './pages/SponsorsPage'
 import AdminPage from './pages/AdminPage'
 import { RegPage, CartPage } from './Registration'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AppProvider>
       <HashRouter>
