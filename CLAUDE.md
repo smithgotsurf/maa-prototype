@@ -84,6 +84,11 @@ All types centralized in `src/types/index.ts`. Key types: `Player`, `Program`, `
 ## Styling
 
 - DaisyUI custom theme "maa" defined in `src/index.css`
-- Brand colors: primary (Vegas Gold `#C5A04E`), neutral (black `#1A1A1A`), base (off-white `#FAFAF8`)
-- Single font: Source Sans 3
+- Brand colors: primary (Vegas Gold `#C5A04E`), secondary (dark gold `#A68636`), neutral (black `#1A1A1A`)
+- `text-primary` for brand gold; `text-secondary` for darker gold (prices, links)
+- Fonts: Playfair Display (headings via `font-serif`) + Source Sans 3 (body via `font-sans`). Both loaded from Google Fonts in `index.html` — ensure needed weights are included when using new weights
+- Body background overridden to `base-200` (`#F5F4F0`) in `index.css`; use `bg-white` for cards/containers that need to stand out from the page
+- Antialiased font smoothing set on body in `index.css`
 - No custom CSS files — all styling via Tailwind utilities + DaisyUI components
+- DaisyUI `btn` class overrides font-size/weight/color — when matching specific designs, set these explicitly on btn elements
+- Reference design (pre-migration): https://smithgotsurf.github.io/maa-prototype/

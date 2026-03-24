@@ -41,3 +41,34 @@ body {
 h1, h2, h3 {
   font-family: var(--font-serif);
 }
+
+.table {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table th {
+  background: var(--color-base-200);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--color-base-content, #6B6B6B);
+  opacity: 0.5;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+}
+
+.table td {
+  font-size: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr:hover td {
+  background: #FBF7EC;
+}
