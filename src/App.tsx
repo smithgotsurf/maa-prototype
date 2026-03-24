@@ -19,18 +19,16 @@ export default function App() {
 
   return (
     <div>
-      <header className="navbar bg-neutral text-neutral-content sticky top-0 z-50 px-4">
+      <header className="bg-neutral text-neutral-content sticky top-0 z-50 px-7 h-14 flex items-center justify-between">
         <div className="flex-1">
-          <Link to="/" className="btn btn-ghost gap-2 text-lg normal-case">
+          <Link to="/" className="flex items-center gap-2 no-underline text-inherit font-serif text-[19px] font-normal">
             <img
               src={B_URL + 'static/maa-large.jpg'}
               alt="MAA"
               className="h-[30px] w-auto rounded-sm"
             />
             <span className="text-primary font-bold">MAA</span>
-            <span className="hidden xl:inline text-sm font-normal opacity-80">
-              Meadow Athletic Association
-            </span>
+            <span className="hidden xl:inline">Meadow Athletic Association</span>
           </Link>
         </div>
         <nav className="hidden lg:flex items-center gap-1">
@@ -39,7 +37,7 @@ export default function App() {
               key={n.to}
               to={n.to}
               className={({ isActive }) =>
-                `btn btn-ghost btn-sm gap-1 ${isActive ? 'bg-white/10' : ''}`
+                `btn btn-ghost btn-sm gap-1 font-medium text-[14px] text-white/45 hover:bg-white/7 hover:text-white/80 ${isActive ? 'bg-primary/15 !text-primary' : ''}`
               }
             >
               <Ic d={n.ic} s={14} />
@@ -49,7 +47,7 @@ export default function App() {
               )}
             </NavLink>
           ))}
-          <button className="btn btn-ghost btn-sm gap-1">
+          <button className="btn btn-ghost btn-sm gap-1 font-medium text-[14px] text-white/45 hover:bg-white/7 hover:text-white/80">
             <Ic d={icons.user} s={14} />
             Josh S.
           </button>
