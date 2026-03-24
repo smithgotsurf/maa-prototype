@@ -4,7 +4,7 @@ import { PAGE_PATHS } from '../utils';
 
 const Sh = ({ l, first }: { l: string; first?: boolean }) => (
   <div
-    className={`font-bold text-primary uppercase tracking-wider text-lg ${first ? '' : 'mt-2.5'} mb-0.5`}
+    className={`font-bold text-secondary uppercase text-lg tracking-wide ${first ? '' : 'mt-2.5'} mb-0.5`}
   >
     {l}
   </div>
@@ -18,20 +18,20 @@ export default function FaqPage() {
       a: (
         <>
           <Sh l="Spring" first />
-          <ul className="pl-4 mt-0.5 leading-[1.9] list-disc">
+          <ul className="pl-5 mt-1.5 leading-[1.9] list-disc">
             <li>T-Ball (Coed, ages 3–4)</li>
             <li>T-Shirt (Coed, ages 5–6)</li>
             <li>Baseball (8U, 10U, 12U — boys)</li>
             <li>Softball (8U, 10U, 12U — girls)</li>
           </ul>
           <Sh l="Fall" />
-          <ul className="pl-4 mt-0.5 leading-[1.9] list-disc">
+          <ul className="pl-5 mt-1.5 leading-[1.9] list-disc">
             <li>Soccer (6U Coed, 8U Boys, 8U Girls)</li>
             <li>Baseball (8U, 10U, 12U — boys)</li>
             <li>Softball (8U, 10U, 12U — girls)</li>
           </ul>
           <Sh l="Winter" />
-          <ul className="pl-4 mt-0.5 leading-[1.9] list-disc">
+          <ul className="pl-5 mt-1.5 leading-[1.9] list-disc">
             <li>Basketball (6U Coed, 8U/10U/12U/15U boys, 8U/10U/12U girls)</li>
             <li>Volleyball (8U, 10U, 12U)</li>
           </ul>
@@ -48,7 +48,7 @@ export default function FaqPage() {
           Opens early July through early August.
           <Sh l="Winter" />
           Opens early October through early November.
-          <div className="mt-1.5 text-[11px] text-gray-400">
+          <div className="mt-1.5 text-[11px] text-base-content/50">
             Deadlines may close earlier if an age group fills.
           </div>
         </>
@@ -116,19 +116,19 @@ export default function FaqPage() {
   const [open, setOpen] = useState<number | null>(null);
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-2">Frequently Asked Questions</h1>
-      <div className="border-t-2 border-primary w-16 mb-6" />
+      <h1 className="text-[30px] font-bold mb-1.5">Frequently Asked Questions</h1>
+      <div className="w-11 h-[3px] bg-primary rounded-sm mb-4" />
       {faqs.map((f, i) => (
-        <div className="border border-base-300 rounded-lg mb-2" key={i}>
+        <div className="border border-secondary rounded-[9px] p-4 mb-2" key={i}>
           <div
-            className="flex items-center justify-between p-4 cursor-pointer hover:bg-base-200 rounded-lg"
+            className="flex items-center justify-between cursor-pointer"
             onClick={() => setOpen(open === i ? null : i)}
           >
-            <h4 className="font-semibold text-lg">{f.q}</h4>
-            <span className="text-gray-400 ml-2">{open === i ? '▾' : '▸'}</span>
+            <h4 className="text-base font-semibold">{f.q}</h4>
+            <span className="text-base-content/30 ml-2">{open === i ? '▾' : '▸'}</span>
           </div>
           {open === i && (
-            <div className="px-4 pb-4 text-sm">
+            <div className="text-sm text-base-content/50 leading-relaxed mt-2.5 bg-base-100 rounded-[5px] p-2">
               {f.a}
               {f.link && (
                 <button
