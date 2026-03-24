@@ -33,6 +33,7 @@
 }
 
 body {
+  background: var(--color-base-200);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

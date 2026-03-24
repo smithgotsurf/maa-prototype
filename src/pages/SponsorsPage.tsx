@@ -20,7 +20,7 @@ export default function SponsorsPage() {
             s={24}
             style={{ margin: '0 auto 6px', display: 'block' }}
           />
-          <h3 className="text-lg mb-0.5">Field Banner</h3>
+          <h3 className="text-lg font-bold mb-0.5">Field Banner</h3>
           <div className="flex gap-4 justify-center items-end my-2">
             <div className="text-center">
               <div className="text-[26px] font-bold font-serif text-secondary">
@@ -63,7 +63,7 @@ export default function SponsorsPage() {
             s={24}
             style={{ margin: '0 auto 6px', display: 'block' }}
           />
-          <h3 className="text-lg mb-0.5">Team Sponsor</h3>
+          <h3 className="text-lg font-bold mb-0.5">Team Sponsor</h3>
           <div className="text-[26px] font-bold font-serif text-secondary my-1.5">$250</div>
           <div className="text-xs text-base-content/50 mb-2.5">per team · per season</div>
           <ul className="text-[13px] text-base-content/70 text-left list-none p-0 leading-6">
@@ -90,7 +90,7 @@ export default function SponsorsPage() {
             s={24}
             style={{ margin: '0 auto 6px', display: 'block' }}
           />
-          <h3 className="text-lg mb-0.5">Custom Opportunity</h3>
+          <h3 className="text-lg font-bold mb-0.5">Custom Opportunity</h3>
           <div className="text-[26px] font-bold font-serif text-secondary my-1.5">
             Let&rsquo;s Talk
           </div>
