@@ -14,21 +14,21 @@ function AddModal({ onAdd, onClose }: { onAdd: (p: Player) => void; onClose: () 
         <h3 className="text-lg font-bold mb-4">Add Child</h3>
         <div className="grid grid-cols-2 gap-4">
           <div className="mb-3">
-            <label className="label label-text text-xs font-semibold">First Name</label>
+            <label className="label label-text text-base text-neutral font-semibold">First Name</label>
             <input className="input input-bordered w-full input-sm" value={f.fn} onChange={(e) => sF({ ...f, fn: e.target.value })} />
           </div>
           <div className="mb-3">
-            <label className="label label-text text-xs font-semibold">Middle Name</label>
+            <label className="label label-text text-base text-neutral font-semibold">Middle Name</label>
             <input className="input input-bordered w-full input-sm" value={f.mn} onChange={(e) => sF({ ...f, mn: e.target.value })} />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="mb-3">
-            <label className="label label-text text-xs font-semibold">Last Name</label>
+            <label className="label label-text text-base text-neutral font-semibold">Last Name</label>
             <input className="input input-bordered w-full input-sm" value={f.ln} onChange={(e) => sF({ ...f, ln: e.target.value })} />
           </div>
           <div className="mb-3">
-            <label className="label label-text text-xs font-semibold">Gender</label>
+            <label className="label label-text text-base text-neutral font-semibold">Gender</label>
             <select className="select select-bordered w-full select-sm" value={f.g} onChange={(e) => sF({ ...f, g: e.target.value })}>
               <option value="">Select...</option>
               <option value="Male">Male</option>
@@ -37,7 +37,7 @@ function AddModal({ onAdd, onClose }: { onAdd: (p: Player) => void; onClose: () 
           </div>
         </div>
         <div className="mb-3">
-          <label className="label label-text text-xs font-semibold">Date of Birth</label>
+          <label className="label label-text text-base text-neutral font-semibold">Date of Birth</label>
           <input type="date" className="input input-bordered w-full input-sm" value={f.dob} onChange={(e) => sF({ ...f, dob: e.target.value })} />
         </div>
         <div className="modal-action">
@@ -109,7 +109,7 @@ const OptCard = ({ selected, onClick, children }: { selected: boolean; onClick: 
 );
 
 const SizeBtn = ({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) => (
-  <button className={`btn btn-sm ${selected ? 'btn-primary' : 'btn-outline'}`} onClick={onClick}>{label}</button>
+  <button className={`btn btn-sm border border-base-300 font-medium text-[13px] ${selected ? 'bg-primary/10 border-primary text-secondary font-semibold' : 'bg-white text-base-content hover:border-primary'}`} onClick={onClick}>{label}</button>
 );
 
 export function RegPage() {
@@ -186,7 +186,7 @@ export function RegPage() {
         </aside>
         <div>
           {pl && step > 1 && (
-            <h2 className="text-lg font-bold mb-4 text-primary">
+            <h2 className="text-[20px] font-serif font-semibold mb-4 text-base-content">
               Registering: {fullName(pl)} &ndash; Age: {age(pl.dob, null)}
             </h2>
           )}
@@ -240,10 +240,10 @@ export function RegPage() {
               <p className="text-sm text-base-content/50 mb-4">Confirm contact information for this registration.</p>
               <SectionLabel>Primary Guardian</SectionLabel>
               <div className="grid grid-cols-2 gap-4">
-                <div className="mb-3"><label className="label label-text text-xs font-semibold">First Name</label><input className="input input-bordered w-full input-sm" value={gPri.fn} onChange={(e) => setGPri({ ...gPri, fn: e.target.value })} /></div>
-                <div className="mb-3"><label className="label label-text text-xs font-semibold">Last Name</label><input className="input input-bordered w-full input-sm" value={gPri.ln} onChange={(e) => setGPri({ ...gPri, ln: e.target.value })} /></div>
+                <div className="mb-3"><label className="label label-text text-base text-neutral font-semibold">First Name</label><input className="input input-bordered w-full" value={gPri.fn} onChange={(e) => setGPri({ ...gPri, fn: e.target.value })} /></div>
+                <div className="mb-3"><label className="label label-text text-base text-neutral font-semibold">Last Name</label><input className="input input-bordered w-full" value={gPri.ln} onChange={(e) => setGPri({ ...gPri, ln: e.target.value })} /></div>
               </div>
-              <div className="mb-3"><label className="label label-text text-xs font-semibold">Phone</label><input className="input input-bordered w-full input-sm" value={gPri.ph} onChange={(e) => setGPri({ ...gPri, ph: e.target.value })} /></div>
+              <div className="mb-3"><label className="label label-text text-base text-neutral font-semibold">Phone</label><input className="input input-bordered w-full" value={gPri.ph} onChange={(e) => setGPri({ ...gPri, ph: e.target.value })} /></div>
               <div className="mt-4 mb-2">
                 <label className="flex items-center gap-2 cursor-pointer" onClick={() => setHasSec(!hasSec)}>
                   <input type="checkbox" className="checkbox checkbox-sm checkbox-primary" checked={hasSec} readOnly />
@@ -253,10 +253,10 @@ export function RegPage() {
               {hasSec && (
                 <>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="mb-3"><label className="label label-text text-xs font-semibold">First Name</label><input className="input input-bordered w-full input-sm" value={gSec.fn} onChange={(e) => setGSec({ ...gSec, fn: e.target.value })} /></div>
-                    <div className="mb-3"><label className="label label-text text-xs font-semibold">Last Name</label><input className="input input-bordered w-full input-sm" value={gSec.ln} onChange={(e) => setGSec({ ...gSec, ln: e.target.value })} /></div>
+                    <div className="mb-3"><label className="label label-text text-base text-neutral font-semibold">First Name</label><input className="input input-bordered w-full" value={gSec.fn} onChange={(e) => setGSec({ ...gSec, fn: e.target.value })} /></div>
+                    <div className="mb-3"><label className="label label-text text-base text-neutral font-semibold">Last Name</label><input className="input input-bordered w-full" value={gSec.ln} onChange={(e) => setGSec({ ...gSec, ln: e.target.value })} /></div>
                   </div>
-                  <div className="mb-3"><label className="label label-text text-xs font-semibold">Phone</label><input className="input input-bordered w-full input-sm" value={gSec.ph} onChange={(e) => setGSec({ ...gSec, ph: e.target.value })} /></div>
+                  <div className="mb-3"><label className="label label-text text-base text-neutral font-semibold">Phone</label><input className="input input-bordered w-full" value={gSec.ph} onChange={(e) => setGSec({ ...gSec, ph: e.target.value })} /></div>
                 </>
               )}
               <SectionLabel>Primary Contact Phone</SectionLabel>
@@ -280,12 +280,12 @@ export function RegPage() {
             <div className="card bg-white border border-base-300 p-5">
               <h2 className="text-[21px] font-serif font-bold mb-1">Hat & Jersey Size</h2>
               <p className="text-sm text-base-content/50 mb-4">Select {pl.firstName}'s sizing for this season.</p>
-              <div className="mb-5">
+              <div className="mb-4 pb-4 border-b border-base-200">
                 <div className="font-semibold text-sm mb-1">Hat Size</div>
                 <div className="text-xs text-base-content/50 mb-2">Fitted cap — included with registration</div>
                 <div className="flex flex-wrap gap-2">{HATS.map((s) => <SizeBtn key={s} label={s} selected={hat === s} onClick={() => sHat(s)} />)}</div>
               </div>
-              <div className="mb-5">
+              <div className="mb-4 pb-4 border-b border-base-200">
                 <div className="font-semibold text-sm mb-1">Jersey Size</div>
                 <div className="text-xs text-base-content/50 mb-2">Dri-Fit style game day jersey</div>
                 <div className="flex flex-wrap gap-2">{JERSEYS.map((s) => <SizeBtn key={s} label={s} selected={jer === s} onClick={() => sJer(s)} />)}</div>
@@ -328,7 +328,7 @@ export function RegPage() {
               <div className="mt-4"><SectionLabel>Sponsorship Interest<RequiredLabel /></SectionLabel></div>
               <OptCard selected={sponsorship === 'Yes'} onClick={() => setSponsorship('Yes')}><h4 className="font-semibold text-sm">Yes, I'm interested</h4><p className="text-xs text-base-content/50">We'll send you sponsorship information</p></OptCard>
               <OptCard selected={sponsorship === 'No'} onClick={() => { setSponsorship('No'); setSponsorName(''); }}><h4 className="font-semibold text-sm">No thanks</h4></OptCard>
-              {sponsorship === 'Yes' && <div className="mt-3"><label className="label label-text text-xs font-semibold">Sponsor / Business Name</label><input className="input input-bordered w-full input-sm" value={sponsorName} onChange={(e) => setSponsorName(e.target.value)} placeholder="Enter business or sponsor name" /></div>}
+              {sponsorship === 'Yes' && <div className="mt-3"><label className="label label-text text-base text-neutral font-semibold">Sponsor / Business Name</label><input className="input input-bordered w-full" value={sponsorName} onChange={(e) => setSponsorName(e.target.value)} placeholder="Enter business or sponsor name" /></div>}
               <div className="flex justify-end gap-2 mt-4">
                 <button className="btn btn-ghost" onClick={() => sStep(4)}>Back</button>
                 <button className="btn btn-neutral" disabled={!coaching || !sponsorship || ((coaching === 'Coach' || coaching === 'Assistant Coach') && !coachShirtSize) || (sponsorship === 'Yes' && !sponsorName)} onClick={() => sStep(6)}>Continue <Ic d={icons.chev} s={13} /></button>
@@ -344,8 +344,8 @@ export function RegPage() {
               <OptCard selected={hasMedical === 'No'} onClick={() => { setHasMedical('No'); setAllergies(''); setMedicalInfo(''); }}><h4 className="font-semibold text-sm">No</h4></OptCard>
               {hasMedical === 'Yes' && (
                 <>
-                  <div className="mt-3"><label className="label label-text text-xs font-semibold">Allergies</label><input className="input input-bordered w-full input-sm" value={allergies} onChange={(e) => setAllergies(e.target.value)} placeholder="List any allergies" /></div>
-                  <div className="mt-3"><label className="label label-text text-xs font-semibold">Any important medical information that we need to be made aware of</label><textarea className="textarea textarea-bordered w-full" value={medicalInfo} onChange={(e) => setMedicalInfo(e.target.value)} placeholder="Describe any medical conditions or health concerns" rows={4} /></div>
+                  <div className="mt-3"><label className="label label-text text-base text-neutral font-semibold">Allergies</label><input className="input input-bordered w-full" value={allergies} onChange={(e) => setAllergies(e.target.value)} placeholder="List any allergies" /></div>
+                  <div className="mt-3"><label className="label label-text text-base text-neutral font-semibold">Any important medical information that we need to be made aware of</label><textarea className="textarea textarea-bordered w-full" value={medicalInfo} onChange={(e) => setMedicalInfo(e.target.value)} placeholder="Describe any medical conditions or health concerns" rows={4} /></div>
                 </>
               )}
               <div className="flex justify-end gap-2 mt-4">
@@ -362,22 +362,22 @@ export function RegPage() {
                 const firstId = applicableWaivers[0].id;
                 const firstInit = wv[firstId]?.trim();
                 return (
-                  <div className="border border-base-300 rounded-lg mb-2" key={w.id}>
-                    <div className="flex items-center justify-between p-3 cursor-pointer hover:bg-base-200 rounded-lg" onClick={() => setActiveWaiver(activeWaiver === idx ? -1 : idx)}>
-                      <h4 className="font-semibold text-sm">{w.title}{w.required && <span className="text-error text-[10px] ml-1">Required</span>}</h4>
+                  <div className="border border-secondary rounded-lg p-4 mb-2.5" key={w.id}>
+                    <div className="flex items-center justify-between cursor-pointer py-0.5" onClick={() => setActiveWaiver(activeWaiver === idx ? -1 : idx)}>
+                      <h4 className="font-semibold text-[13px]">{w.title}{w.required && <span className="text-error text-[10px] ml-1">Required</span>}</h4>
                       <div className="flex items-center gap-1.5">
-                        {wv[w.id]?.trim() && <div className="w-4 h-4 rounded-full bg-primary text-primary-content flex items-center justify-center"><Ic d={icons.chk} s={10} /></div>}
+                        {wv[w.id]?.trim() && <div className="w-5.5 h-5.5 rounded-full bg-primary text-base-content flex items-center justify-center"><Ic d={icons.chk} s={11} /></div>}
                         <span className="text-gray-400">{activeWaiver === idx ? '▾' : '▸'}</span>
                       </div>
                     </div>
                     {activeWaiver === idx && (
                       <>
-                        <div className="px-3 pb-3 text-xs max-h-48 overflow-y-auto border-t border-base-300 pt-2" dangerouslySetInnerHTML={{ __html: w.content }} />
-                        <div className="flex items-center gap-2 px-3 pb-3">
-                          <span className="text-xs text-base-content/50">Type your initials to acknowledge</span>
-                          <input className="input input-bordered input-sm w-24" value={wv[w.id] || ''} onChange={(e) => sWv((p) => ({ ...p, [w.id]: e.target.value }))} />
+                        <div className="mt-2.5 mb-2.5 p-2 bg-base-200 rounded text-sm text-base-content/70 leading-relaxed max-h-70 overflow-y-auto [&_h3]:text-sm [&_h3]:font-bold [&_h3]:text-base-content [&_h3]:mb-0.5 [&_h4]:text-[13px] [&_h4]:font-semibold [&_h4]:text-base-content [&_h4]:mt-2 [&_h4]:mb-1 [&_p]:my-1.5 [&_ul]:pl-5 [&_ul]:my-1.5 [&_li]:mb-1" dangerouslySetInnerHTML={{ __html: w.content }} />
+                        <div className="flex items-center gap-2">
+                          <span className="text-[13px] font-medium text-base-content/50">Type your initials to acknowledge</span>
+                          <input className="input input-bordered input-sm w-20 text-center font-semibold uppercase" value={wv[w.id] || ''} onChange={(e) => sWv((p) => ({ ...p, [w.id]: e.target.value }))} />
                           {idx > 0 && firstInit && !wv[w.id]?.trim() && (
-                            <button className="btn btn-ghost btn-xs" onClick={() => sWv((p) => ({ ...p, [w.id]: firstInit }))}>Copy initials</button>
+                            <button className="btn btn-ghost btn-xs text-secondary underline underline-offset-2 font-semibold" onClick={() => sWv((p) => ({ ...p, [w.id]: firstInit }))}>Copy initials</button>
                           )}
                         </div>
                       </>
