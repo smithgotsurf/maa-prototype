@@ -13,8 +13,8 @@ export default function SponsorsPage() {
         MAA relies on local businesses and families to keep registration fees affordable and our
         fields well-maintained. There are several ways to get involved.
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-3.5">
-        <div className="card bg-white border border-primary rounded-[10px] p-5.5 text-center">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-3.5 justify-items-center">
+        <div className="card bg-white border border-primary rounded-[10px] p-5.5 text-center w-68.75">
           <Ic
             d={icons.star}
             s={24}
@@ -57,7 +57,7 @@ export default function SponsorsPage() {
             <Ic d={icons.dl} s={13} /> Download Sponsorship Form
           </a>
         </div>
-        <div className="card bg-white border border-primary rounded-[10px] p-5.5 text-center">
+        <div className="card bg-white border border-primary rounded-[10px] p-5.5 text-center w-68.75">
           <Ic
             d={icons.heart}
             s={24}
@@ -84,7 +84,7 @@ export default function SponsorsPage() {
             Let us know during player registration.
           </div>
         </div>
-        <div className="card bg-white border border-primary rounded-[10px] p-5.5 text-center">
+        <div className="card bg-white border border-primary rounded-[10px] p-5.5 text-center w-68.75">
           <Ic
             d={icons.mail}
             s={24}

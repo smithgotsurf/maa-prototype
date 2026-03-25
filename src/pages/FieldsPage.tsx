@@ -36,7 +36,7 @@ export default function FieldsPage() {
         </div>
       </div>
       <h2 className="text-xl font-bold mb-3">Rental Rates</h2>
-      <div className="grid grid-cols-2 gap-3 max-w-[calc(50%-6px)]">
+      <div className="grid grid-cols-2 gap-3 max-w-full md:max-w-[calc(50%-6px)]">
         <div className="card bg-white border border-base-300 rounded-lg p-4 text-center">
           <div className="text-xs text-base-content/50 font-semibold mb-1">Without Lights</div>
           <div className="text-[26px] font-serif text-secondary">
