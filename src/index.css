@@ -4,7 +4,7 @@
 @plugin "daisyui/theme" {
   name: "maa";
   default: true;
-  color-scheme: light;
+  color-scheme: only light;
 
   --color-primary: #C5A04E;
   --color-primary-content: #1A1A1A;
