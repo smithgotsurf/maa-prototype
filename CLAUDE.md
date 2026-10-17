@@ -105,14 +105,14 @@ All types centralized in `src/types/index.ts`. Key types: `Player`, `Program`, `
 - `src/pages/about/`, `faq/`, `fields/`, `sponsors/`, `not-found/`
 - `src/pages/home/` except `index.tsx` and `OpenSeason.tsx` (prototype only)
 - `.github/workflows/deploy.yml`, `.nvmrc`, `.prettierrc`, `tsconfig.json`, `tsconfig.app.json`, `eslint.config.js`
-- `public/favicon.png`, `public/static/field-1.webp`, `public/static/fields-aerial.webp`, `public/static/sports-balls.jpg`
+- `public/` (everything)
 
-Files that differ on purpose: `App.tsx` and `main.tsx` (registration nav and routes), `utils.tsx` and `index.css` (the frontend's file plus prototype-only blocks), `index.html` (prototype URLs), `package.json` (name), `vite.config.ts` (base).
+Files that differ on purpose: `App.tsx` and `main.tsx` (registration nav and routes), `utils.tsx` and `index.css` (the frontend's file plus prototype-only blocks), `index.html` (prototype URLs), `package.json` and `package-lock.json` (name), `vite.config.ts` (base). For `App.tsx`, `main.tsx`, `utils.tsx` and `index.css`, `diff ../maa-frontend/<file> <file>` should show only prototype additions.
 
-Check the shared paths from the repo root (prints nothing when they match):
+Check the shared paths from the repo root, with `../maa-frontend` on an up-to-date `main` (prints nothing when they match):
 
 ```bash
-for p in src/content.ts src/components src/pages/about src/pages/faq src/pages/fields src/pages/sponsors src/pages/not-found src/pages/home/Hero.tsx src/pages/home/Intro.tsx src/pages/home/ProgramsOffered.tsx src/pages/home/MoreOnTheSite.tsx src/pages/home/GetInvolved.tsx src/pages/home/copy.ts src/pages/home/programs.ts .github/workflows/deploy.yml .nvmrc .prettierrc tsconfig.json tsconfig.app.json eslint.config.js public/favicon.png public/static/field-1.webp public/static/fields-aerial.webp public/static/sports-balls.jpg; do diff -rq "../maa-frontend/$p" "$p" >/dev/null 2>&1 || printf 'DIFFERS: %s\n' "$p"; done
+for p in src/content.ts src/components src/pages/about src/pages/faq src/pages/fields src/pages/sponsors src/pages/not-found public .github/workflows/deploy.yml .nvmrc .prettierrc tsconfig.json tsconfig.app.json eslint.config.js; do diff -rq -x .DS_Store "../maa-frontend/$p" "$p" >/dev/null 2>&1 || printf 'DIFFERS: %s\n' "$p"; done; diff -rq -x .DS_Store -x index.tsx -x OpenSeason.tsx ../maa-frontend/src/pages/home src/pages/home >/dev/null 2>&1 || printf 'DIFFERS: src/pages/home\n'
 ```
 
 ## Styling
