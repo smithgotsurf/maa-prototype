@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Ic, icons, age } from '../utils';
-import { HATS, JERSEYS, REGS, ADMIN_COLS, SPORT_TYPES } from '../data';
-import { useAppContext } from '../context/AppContext';
-import type { Season, Program, SportType } from '../types';
+import { Ic, icons, age, usePageTitle } from '../../utils';
+import { HATS, JERSEYS, REGS, ADMIN_COLS, SPORT_TYPES } from '../../data';
+import { useAppContext } from '../../context/AppContext';
+import type { Season, Program, SportType } from '../../types';
 
 interface SeasonDetailProps {
   season: Season | null | undefined;
@@ -222,6 +222,7 @@ function SeasonDetail({ season, sportTypes, onSave, onCancel }: SeasonDetailProp
 }
 
 export default function AdminPage() {
+  usePageTitle('Admin');
   const [tab, sTab] = useState('dash');
   const [sf, sSf] = useState('All');
   const [stf, sStf] = useState('All');

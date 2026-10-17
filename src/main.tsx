@@ -9,8 +9,9 @@ import FaqPage from './pages/faq';
 import FieldsPage from './pages/fields';
 import SponsorsPage from './pages/sponsors';
 import NotFoundPage from './pages/not-found';
-import AdminPage from './pages/AdminPage';
-import { RegPage, CartPage } from './Registration';
+import AdminPage from './pages/admin';
+import RegPage from './pages/register';
+import CartPage from './pages/cart';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
