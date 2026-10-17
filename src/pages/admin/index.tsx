@@ -292,7 +292,7 @@ export default function AdminPage() {
           </button>
         ))}
       </aside>
-      <main className="p-6">
+      <div className="p-6">
         <div role="tablist" className="tabs tabs-bordered mb-4 md:hidden">
           {['dash', 'seasons', 'users'].map((t) => (
             <button
@@ -669,7 +669,7 @@ export default function AdminPage() {
             </p>
           </>
         )}
-      </main>
+      </div>
     </div>
   );
 }
