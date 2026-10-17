@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
 import App from './App';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/home';
 import AboutPage from './pages/about';
 import FaqPage from './pages/faq';
 import FieldsPage from './pages/fields';
