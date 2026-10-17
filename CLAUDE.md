@@ -1,6 +1,6 @@
 # MAA Prototype
 
-Meadow Athletic Association — registration and info website prototype. React SPA deployed to GitHub Pages.
+Meadow Athletic Association — registration and info website prototype. React SPA deployed to GitHub Pages. This is the future full app; `maa-frontend` is the marketing-only site that launches first (see "Shared with maa-frontend").
 
 ## Dev commands
 
@@ -12,22 +12,23 @@ Meadow Athletic Association — registration and info website prototype. React S
 
 ## Tech stack
 
-- React 19, Vite 6, react-router-dom v7 (HashRouter)
-- TypeScript 5 (strict mode)
+- React 19, Vite 8, react-router-dom v7 (HashRouter)
+- TypeScript 6 (strict mode) — pinned to 6.0.x (`~`) because typescript-eslint doesn't support 6.1+ or 7 yet
 - Tailwind CSS 4 + DaisyUI 5 (custom "maa" theme)
-- ESLint (flat config) + Prettier
+- ESLint 10 (flat config) + Prettier
 - No tests — prototype-grade code
-- Deployed to GitHub Pages; HashRouter + `base: '/maa-prototype/'` in vite.config.ts
+- Node version pinned in `.nvmrc` (CI reads it too); `engines` in package.json sets the minimum
+- Deployed to GitHub Pages via `.github/workflows/deploy.yml` (lint, then build); HashRouter + `base: '/maa-prototype/'` in vite.config.ts
 
 ## Project structure
 
 ```
 src/
   main.tsx          — HashRouter, route definitions, AppProvider wrapper
-  App.tsx           — layout shell (navbar, mobile drawer, Outlet)
-  Registration.tsx  — RegPage + CartPage components
+  App.tsx           — layout shell (navbar, mobile drawer, Outlet, Footer)
+  content.ts        — shared site content/copy
   data.ts           — SEASON config, programs, mock registrations, waivers
-  utils.tsx         — shared utilities (Ic icon helper, icons map, B_URL, PAGE_PATHS)
+  utils.tsx         — shared utilities (Ic icon helper, icons map, B_URL, PAGE_PATHS, usePageTitle, registration helpers)
   index.css         — Tailwind + DaisyUI theme configuration
   types/
     index.ts        — centralized TypeScript type definitions
@@ -35,12 +36,26 @@ src/
     useLocalStorage.ts — generic localStorage persistence hook
   context/
     AppContext.tsx   — cart + players + seasons state (consumed via useAppContext())
+  components/
+    Footer.tsx
+    ContactSection.tsx
   pages/
-    HomePage.tsx, AboutPage.tsx, FaqPage.tsx,
-    FieldsPage.tsx, SponsorsPage.tsx, AdminPage.tsx
+    home/      — index.tsx (composition) + one file per section + OpenSeason.tsx + copy.ts + programs.ts
+    about/     — index.tsx + copy.ts + board.ts
+    faq/       — index.tsx + questions.tsx
+    fields/    — index.tsx
+    sponsors/  — index.tsx + tiers.tsx
+    not-found/ — index.tsx (catch-all route)
+    register/  — index.tsx (RegPage and its step components)
+    cart/      — index.tsx
+    admin/     — index.tsx
   waivers/          — HTML waiver content (imported via ?raw)
-public/static/       — images, logo, sponsorship PDF
+public/static/       — images (photos as WebP; field-1.jpg kept for og:image), logo, sponsorship PDF
 ```
+
+Each page is a folder with `index.tsx` (default-exported component) plus sibling files for copy/data. Keep page-specific content in those siblings; only put genuinely shared content in `src/content.ts`.
+
+The home page shows `OpenSeason` (season card + that season's programs) when `activeSeason` is set, otherwise `Intro` + `ProgramsOffered`; `MoreOnTheSite` and `GetInvolved` follow either way.
 
 ## Routing
 
@@ -56,8 +71,9 @@ Routes defined in `main.tsx` inside a HashRouter. `App.tsx` renders the layout w
 | `/register` | RegPage |
 | `/cart` | CartPage |
 | `/admin` | AdminPage |
+| `*` | NotFoundPage |
 
-Nav uses `NavLink` with `isActive` for highlighting. Logo links to `/`; no "Home" nav item.
+Nav uses `NavLink` with `isActive` for highlighting. Logo links to `/`; no "Home" nav item. Path constants are in `utils.tsx` as `PAGE_PATHS`. Each page calls `usePageTitle()` to set the browser tab title; `App.tsx` scrolls to top on route change.
 
 ## Shared state
 
@@ -67,7 +83,7 @@ Nav uses `NavLink` with `isActive` for highlighting. Logo links to `/`; no "Home
 const { cart, addToCart, removeFromCart, clearCart, players, addPlayer, seasons, activeSeason } = useAppContext();
 ```
 
-Seasons are persisted to localStorage via the `useLocalStorage` hook.
+Seasons are persisted to localStorage (`maa_seasons`) via the `useLocalStorage` hook. After changing `SEED_SEASONS` in `data.ts`, run `localStorage.removeItem('maa_seasons')` in the browser console and reload to see the new seed.
 
 ## Type system
 
@@ -78,8 +94,26 @@ All types centralized in `src/types/index.ts`. Key types: `Player`, `Program`, `
 - TypeScript strict mode — all components and functions typed
 - DaisyUI component classes for UI elements (btn, card, modal, table, badge, etc.)
 - Tailwind utility classes for layout and spacing
-- Shared icons/helpers live in `utils.tsx`
-- Page components are default exports; Registration exports named `RegPage` and `CartPage`
+- Shared icons/helpers live in `utils.tsx`; shared layout in `components/`
+- Page components are default exports from `pages/<name>/index.tsx`
+
+## Shared with maa-frontend
+
+`../maa-frontend` is the marketing-only site. These paths are byte-identical in both repos. Change them in `maa-frontend` first, then copy them here:
+
+- `src/content.ts`, `src/components/`
+- `src/pages/about/`, `faq/`, `fields/`, `sponsors/`, `not-found/`
+- `src/pages/home/` except `index.tsx` and `OpenSeason.tsx` (prototype only)
+- `.github/workflows/deploy.yml`, `.nvmrc`, `.prettierrc`, `tsconfig.json`, `tsconfig.app.json`, `eslint.config.js`
+- `public/favicon.png`, `public/static/field-1.webp`, `public/static/fields-aerial.webp`, `public/static/sports-balls.jpg`
+
+Files that differ on purpose: `App.tsx` and `main.tsx` (registration nav and routes), `utils.tsx` and `index.css` (the frontend's file plus prototype-only blocks), `index.html` (prototype URLs), `package.json` (name), `vite.config.ts` (base).
+
+Check the shared paths from the repo root (prints nothing when they match):
+
+```bash
+for p in src/content.ts src/components src/pages/about src/pages/faq src/pages/fields src/pages/sponsors src/pages/not-found src/pages/home/Hero.tsx src/pages/home/Intro.tsx src/pages/home/ProgramsOffered.tsx src/pages/home/MoreOnTheSite.tsx src/pages/home/GetInvolved.tsx src/pages/home/copy.ts src/pages/home/programs.ts .github/workflows/deploy.yml .nvmrc .prettierrc tsconfig.json tsconfig.app.json eslint.config.js public/favicon.png public/static/field-1.webp public/static/fields-aerial.webp public/static/sports-balls.jpg; do diff -rq "../maa-frontend/$p" "$p" >/dev/null 2>&1 || printf 'DIFFERS: %s\n' "$p"; done
+```
 
 ## Styling
 
@@ -89,6 +123,6 @@ All types centralized in `src/types/index.ts`. Key types: `Player`, `Program`, `
 - Fonts: Playfair Display (headings via `font-serif`) + Source Sans 3 (body via `font-sans`). Both loaded from Google Fonts in `index.html` — ensure needed weights are included when using new weights
 - Body background overridden to `base-200` (`#F5F4F0`) in `index.css`; use `bg-white` for cards/containers that need to stand out from the page
 - Antialiased font smoothing set on body in `index.css`
-- No custom CSS files — all styling via Tailwind utilities + DaisyUI components
+- No custom CSS files — all styling via Tailwind utilities + DaisyUI components (the only custom rules are the theme and the admin `.table` styles in `index.css`)
 - DaisyUI `btn` class overrides font-size/weight/color — when matching specific designs, set these explicitly on btn elements
 - Reference design (pre-migration): https://smithgotsurf.github.io/maa-prototype/
