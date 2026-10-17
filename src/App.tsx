@@ -3,7 +3,6 @@ import { Outlet, NavLink, Link } from 'react-router-dom';
 import { useAppContext } from './context/AppContext';
 import { B_URL, Ic, icons } from './utils';
 
-
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { cart, activeSeason } = useAppContext();
@@ -21,7 +20,10 @@ export default function App() {
     <div>
       <header className="bg-neutral text-neutral-content sticky top-0 z-50 px-7 h-14 flex items-center justify-between">
         <div className="flex-1">
-          <Link to="/" className="flex items-center gap-2 no-underline text-inherit font-serif text-[19px] font-normal">
+          <Link
+            to="/"
+            className="flex items-center gap-2 no-underline text-inherit font-serif text-[19px] font-normal"
+          >
             <img
               src={B_URL + 'static/maa-large.jpg'}
               alt="MAA"
@@ -73,7 +75,10 @@ export default function App() {
         </button>
       </header>
       {menuOpen && (
-        <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMenuOpen(false)} />
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setMenuOpen(false)}
+        />
       )}
       <nav
         className={`fixed top-0 right-0 h-full w-64 bg-base-100 text-base-content z-50 shadow-xl flex flex-col p-4 gap-1 transition-transform duration-200 lg:hidden ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}
@@ -94,7 +99,10 @@ export default function App() {
             )}
           </NavLink>
         ))}
-        <button className="btn btn-ghost btn-sm justify-start gap-2" onClick={() => setMenuOpen(false)}>
+        <button
+          className="btn btn-ghost btn-sm justify-start gap-2"
+          onClick={() => setMenuOpen(false)}
+        >
           <Ic d={icons.user} s={16} />
           Josh S.
         </button>

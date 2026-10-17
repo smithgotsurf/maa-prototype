@@ -15,11 +15,7 @@ export default function SponsorsPage() {
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-3.5 justify-items-center">
         <div className="card bg-white border border-primary rounded-[10px] p-5.5 text-center w-68.75">
-          <Ic
-            d={icons.star}
-            s={24}
-            style={{ margin: '0 auto 6px', display: 'block' }}
-          />
+          <Ic d={icons.star} s={24} style={{ margin: '0 auto 6px', display: 'block' }} />
           <h3 className="text-lg font-bold mb-0.5">Field Banner</h3>
           <div className="flex gap-4 justify-center items-end my-2">
             <div className="text-center">
@@ -58,11 +54,7 @@ export default function SponsorsPage() {
           </a>
         </div>
         <div className="card bg-white border border-primary rounded-[10px] p-5.5 text-center w-68.75">
-          <Ic
-            d={icons.heart}
-            s={24}
-            style={{ margin: '0 auto 6px', display: 'block' }}
-          />
+          <Ic d={icons.heart} s={24} style={{ margin: '0 auto 6px', display: 'block' }} />
           <h3 className="text-lg font-bold mb-0.5">Team Sponsor</h3>
           <div className="text-[26px] font-bold font-serif text-secondary my-1.5">$250</div>
           <div className="text-xs text-base-content/50 mb-2.5">per team · per season</div>
@@ -85,11 +77,7 @@ export default function SponsorsPage() {
           </div>
         </div>
         <div className="card bg-white border border-primary rounded-[10px] p-5.5 text-center w-68.75">
-          <Ic
-            d={icons.mail}
-            s={24}
-            style={{ margin: '0 auto 6px', display: 'block' }}
-          />
+          <Ic d={icons.mail} s={24} style={{ margin: '0 auto 6px', display: 'block' }} />
           <h3 className="text-lg font-bold mb-0.5">Custom Opportunity</h3>
           <div className="text-[26px] font-bold font-serif text-secondary my-1.5">
             Let&rsquo;s Talk

@@ -85,8 +85,8 @@ export default function FaqPage() {
       a: (
         <>
           <Sh l="Spring" first />
-          Baseball and softball games are mostly Monday, Tuesday, and Thursday evenings. T-Ball games
-          start at 6:30 PM; T-Shirt games start at 7:15–7:30 PM.
+          Baseball and softball games are mostly Monday, Tuesday, and Thursday evenings. T-Ball
+          games start at 6:30 PM; T-Shirt games start at 7:15–7:30 PM.
           <Sh l="Fall" />
           Soccer games are mostly Monday, Tuesday, and Thursday.
           <Sh l="Winter" />
