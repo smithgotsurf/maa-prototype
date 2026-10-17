@@ -1,6 +1,8 @@
-import { B_URL } from '../utils';
+import { B_URL, usePageTitle } from '../../utils';
+import { contactEmail } from '../../content';
 
 export default function FieldsPage() {
+  usePageTitle('Field Rentals');
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <h1 className="text-[30px] font-bold mb-1.5">Field Rentals</h1>
@@ -10,7 +12,7 @@ export default function FieldsPage() {
       </p>
       <div className="rounded-xl overflow-hidden my-4 border border-base-300 relative">
         <img
-          src={B_URL + 'static/fields-aerial.jpg'}
+          src={B_URL + 'static/fields-aerial.webp'}
           alt="Aerial view of MAA fields"
           className="w-full block max-h-[420px] object-cover object-center"
         />
@@ -54,9 +56,7 @@ export default function FieldsPage() {
       <p className="text-[13px] text-base-content/50 mt-3">
         Example: 1 hr without lights + 1 hr with lights = $15 + $35 = $50
       </p>
-      <p className="text-[13px] text-base-content/50 mt-4">
-        To reserve, contact meadowathleticassociation@gmail.com.
-      </p>
+      <p className="text-[13px] text-base-content/50 mt-4">To reserve, contact {contactEmail}.</p>
     </div>
   );
 }

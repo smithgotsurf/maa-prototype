@@ -1,0 +1,26 @@
+export type BoardMember = { name: string; role?: string };
+
+export const board: BoardMember[] = [
+  { name: 'Karla Parnell', role: 'President' },
+  { name: 'Justin Massengill', role: 'Vice President' },
+  { name: 'Parker Johnson', role: 'Secretary' },
+  { name: 'Tiffany Adams', role: 'Treasurer' },
+  { name: 'Blake Adams' },
+  { name: 'David Allen' },
+  { name: 'Johnathan Barefoot' },
+  { name: 'Waylon Dale Barefoot' },
+  { name: 'Drew Boyd' },
+  { name: 'Alex Dunn' },
+  { name: 'Craig Hardin' },
+  { name: 'Anthony Harrington' },
+  { name: 'Chris Hudson' },
+  { name: 'Chris Johnson' },
+  { name: 'Thomas Johnson' },
+  { name: 'Justin Knight' },
+  { name: 'Johnathan Lee' },
+  { name: 'Michael Poe' },
+  { name: 'Samantha Poe' },
+  { name: 'Josh Smith' },
+  { name: 'Keith Wall' },
+  { name: 'Brandon Williams' },
+];
