@@ -92,7 +92,7 @@ Exact values. The implementation plans use these verbatim.
 | Art clip | `ellipse(125% calc(100% - 5px) at 50% 0)` |
 | Home Plate art | `linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.78)), url(static/field-1.webp)`; `center / cover` |
 | Gold Lines art | `radial-gradient(ellipse 46% 60% at 50% 26%, rgba(197,160,78,.2), rgba(197,160,78,0) 72%), url(static/ball-pattern.svg), linear-gradient(180deg, #282521 0%, #151514 100%)`; sizes `auto, 180px 180px, auto` |
-| Four Fields panel strip | `left/right: -60px`, `skewX(-10deg)`; each image `left: -12%`, `width: 124%`, `skewX(10deg)`, `object-fit: cover`, `saturate(.78)` |
+| Four Fields panel strip | `left/right: -60px`, `skewX(-10deg)`; each image overhangs its panel by `max(12%, 48px)` per side (`left: calc(-1 * max(12%, 48px))`, `width: calc(100% + 2 * max(12%, 48px))`), `skewX(10deg)`, `object-fit: cover`, `saturate(.78)`. The 48px floor covers the lean on tall phone heroes |
 | Four Fields image position | soccer `50% 100%`, basketball `50% 0`, baseball `center`, volleyball `center` |
 | Four Fields seams | `3px` `rgba(197,160,78,.8)`; phones `2px` `rgba(197,160,78,.4)` |
 | Four Fields overlay | `url(static/grain-dark.svg), radial-gradient(ellipse 44% 56% at 50% 30%, rgba(12,11,9,.6), rgba(12,11,9,0) 78%), linear-gradient(180deg, rgba(12,11,9,.56) 0%, rgba(12,11,9,.42) 50%, rgba(12,11,9,.74) 100%)`; phones add `background-color: rgba(12,11,9,.2)` |

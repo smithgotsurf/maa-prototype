@@ -14,6 +14,11 @@ const PANELS = [
 // Slanted strip, overhanging both edges so the lean never shows a gap
 const STRIP = 'absolute inset-y-0 -left-15 -right-15 flex -skew-x-10';
 
+// Each image overhangs its panel on both sides to fill the panel's leaning corners. The lean
+// needs about 0.09 × the hero's height per side, so on narrow, tall phone heroes a 12% overhang
+// alone leaves dark wedges by the seams; 48px covers heroes up to about 545px tall.
+const OVERHANG = 'max(12%, 48px)';
+
 function FourFields() {
   return (
     <>
@@ -23,8 +28,12 @@ function FourFields() {
             <img
               src={B_URL + 'static/' + file}
               alt=""
-              className="absolute top-0 -left-[12%] h-full w-[124%] max-w-none skew-x-10 object-cover saturate-[.78]"
-              style={{ objectPosition: position }}
+              className="absolute top-0 h-full max-w-none skew-x-10 object-cover saturate-[.78]"
+              style={{
+                objectPosition: position,
+                left: `calc(-1 * ${OVERHANG})`,
+                width: `calc(100% + 2 * ${OVERHANG})`,
+              }}
             />
           </div>
         ))}
