@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <!-- Narrow maple strips with staggered butt joints; shared with the volleyball court -->
+    <pattern id="wood" width="36" height="144" patternUnits="userSpaceOnUse">
+      <rect width="36" height="144" fill="#c4945b"/>
+      <rect x="6" width="6" height="144" fill="#bf8e55"/><rect x="18" width="6" height="144" fill="#c99b63"/><rect x="30" width="6" height="144" fill="#c08f56"/>
+      <g fill="#a87a45"><rect width=".7" height="144"/><rect x="6" width=".7" height="144"/><rect x="12" width=".7" height="144"/><rect x="18" width=".7" height="144"/><rect x="24" width=".7" height="144"/><rect x="30" width=".7" height="144"/></g>
+      <g fill="#a47543"><rect y="19" width="6" height=".7"/><rect y="101" width="6" height=".7"/><rect x="6" y="26" width="6" height=".7"/><rect x="6" y="89" width="6" height=".7"/><rect x="12" y="50" width="6" height=".7"/><rect x="12" y="129" width="6" height=".7"/><rect x="18" y="57" width="6" height=".7"/><rect x="18" y="120" width="6" height=".7"/><rect x="24" y="10" width="6" height=".7"/><rect x="24" y="82" width="6" height=".7"/><rect x="30" y="74" width="6" height=".7"/><rect x="30" y="137" width="6" height=".7"/></g>
+    </pattern>
+  </defs>
+  <rect width="400" height="500" fill="url(#wood)"/>
+  <g transform="rotate(180 200 250)">
+    <rect x="140" y="300" width="120" height="175" fill="#94742e" fill-opacity=".88"/>
+    <g stroke="#f4ede0" stroke-width="4" fill="none">
+      <path d="M0 475H400M0 20H400"/>
+      <rect x="140" y="300" width="120" height="175"/>
+      <path d="M140 300A60 60 0 0 1 260 300"/>
+      <path d="M140 300A60 60 0 0 0 260 300" stroke-dasharray="0.1 9" stroke-linecap="round"/>
+      <!-- 3-point line: straight corners, then an arc that just touches the free-throw circle -->
+      <path d="M30 475V391A171.2 171.2 0 0 1 370 391V475"/>
+      <path d="M140 20A60 60 0 0 0 260 20"/>
+      <!-- Lane hash marks for free-throw positions -->
+      <path d="M140 406H131M140 377H131M140 350H131M140 321H131M260 406H269M260 377H269M260 350H269M260 321H269" stroke-linecap="round"/>
+      <path d="M170 452H230" stroke-width="5"/>
+    </g>
+    <circle cx="200" cy="438" r="9" fill="none" stroke="#d9622b" stroke-width="3"/>
+  </g>
+            </svg>

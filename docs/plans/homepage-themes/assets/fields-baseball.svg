@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <!-- Straight vertical mowing stripes, one centered on home plate -->
+    <pattern id="mow" x="188" width="48" height="10" patternUnits="userSpaceOnUse">
+      <rect width="48" height="10" fill="#3f6e32"/>
+      <rect width="24" height="10" fill="#335d28"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="500" fill="url(#mow)"/>
+  <g transform="translate(0 -170)">
+    <path d="M412 258A300 300 0 0 0 -12 258" fill="none" stroke="#8f5634" stroke-width="16"/>
+    <!-- Infield dirt: arc centered on the pitcher's rubber -->
+    <path d="M200 470L320.6 349.4A127 127 0 1 0 79.4 349.4Z" fill="#a8633a"/>
+    <path d="M140 520A80 80 0 0 0 260 520" fill="none" stroke="#25391f" stroke-width="5"/>
+    <path d="M200 448L264 385L200 322L136 385Z" fill="url(#mow)"/>
+    <circle cx="200" cy="467" r="38" fill="#a8633a"/>
+    <circle cx="200" cy="389" r="13" fill="#a8633a"/>
+    <circle cx="279" cy="386" r="12" fill="#a8633a"/><circle cx="200" cy="300" r="12" fill="#a8633a"/><circle cx="121" cy="386" r="12" fill="#a8633a"/>
+    <g stroke="#efe9dc" stroke-width="3" fill="none">
+      <!-- Foul lines start where they leave the batter's boxes -->
+      <path d="M214 456L440 230M186 456L-40 230"/>
+      <rect x="178" y="456" width="14" height="26"/><rect x="208" y="456" width="14" height="26"/>
+      <!-- Catcher's box: side lines just outside the batter's boxes' inner lines -->
+      <path d="M188 482V502H212V482"/>
+    </g>
+    <g fill="#f4efe4">
+      <!-- 1st and 3rd sit in fair territory, outer edge on the outer edge of the foul line -->
+      <rect x="274" y="381.1" width="10" height="10" transform="rotate(45 279 386.1)"/>
+      <rect x="195" y="295" width="10" height="10" transform="rotate(45 200 300)"/>
+      <rect x="116" y="381.1" width="10" height="10" transform="rotate(45 121 386.1)"/>
+      <path d="M194 466h12v5l-6 5-6-5z"/>
+      <rect x="196" y="387" width="8" height="3"/>
+    </g>
+  </g>
+            </svg>

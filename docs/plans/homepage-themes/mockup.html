@@ -1,0 +1,784 @@
+<!doctype html><meta charset="utf-8">
+<title>MAA Homepage Looks</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap">
+<style>
+  /* Layout: a sticky option bar over one live mock of the MAA homepage, then notes per direction.
+     Wrapper chrome follows the viewer's theme; the mock is always the light MAA site. */
+  :root {
+    --bg: #f2f0ea;
+    --surface: #ffffff;
+    --ink: #1c1b18;
+    --muted: #6a665c;
+    --line: #dcd7cb;
+    --accent: #8f7230;
+    --accent-soft: #efe5cc;
+    --shadow: 0 1px 2px rgba(40, 30, 10, .06), 0 14px 44px rgba(40, 30, 10, .14);
+    --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141310; --surface: #1d1b17; --ink: #eeeae0; --muted: #a59f90; --line: #36322a;
+      --accent: #d4b264; --accent-soft: #2e2716; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 14px 44px rgba(0,0,0,.5);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141310; --surface: #1d1b17; --ink: #eeeae0; --muted: #a59f90; --line: #36322a;
+    --accent: #d4b264; --accent-soft: #2e2716; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 14px 44px rgba(0,0,0,.5);
+    color-scheme: dark;
+  }
+
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+  .wrap { max-width: 1320px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 32px 72px; }
+
+  .intro { max-width: 68ch; display: grid; gap: 8px; margin-bottom: 20px; }
+  .eyebrow { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .intro h1 { font-family: var(--serif); font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin: 0; text-wrap: balance; }
+  .intro p { margin: 0; color: var(--muted); font-size: 17px; }
+
+  /* Sticky option bar */
+  .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding-block: 10px; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+  .group { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font: inherit; font-size: 15px; font-weight: 600; border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 7px 14px; border-radius: 999px; cursor: pointer; transition: background .15s, border-color .15s; }
+  .chip:hover { border-color: var(--accent); }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .chip .k { color: var(--accent); margin-right: 4px; }
+  .chip[aria-pressed="true"] .k { color: inherit; opacity: .7; }
+  .chip:focus-visible, .seg input:focus-visible + label, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .view .chip { font-weight: 500; font-size: 14px; padding: 6px 12px; }
+  .bar-right { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+
+  .caption { margin: 14px 0 10px; font-size: 16px; min-height: 2.6em; max-width: 90ch; }
+  .caption b { font-family: var(--serif); font-weight: 700; }
+
+  .mix { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-bottom: 16px; }
+  .seg { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; min-width: 0; }
+  .seg legend { float: left; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-right: 8px; padding: 0; }
+  .seg input { position: absolute; opacity: 0; pointer-events: none; }
+  .seg label { font-size: 14px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; }
+  .seg input:checked + label { background: var(--accent-soft); border-color: var(--accent); color: var(--ink); font-weight: 600; }
+
+  .frame { margin: 0 auto; width: 100%; max-width: 1280px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); container: site / inline-size; transition: max-width .35s ease; }
+  .frame.phone { max-width: 390px; }
+  @media (prefers-reduced-motion: reduce) { .frame { transition: none; } }
+
+  /* ---------- Mock of the live MAA homepage (always light) ---------- */
+  .site { --s-black: #1a1a1a; --s-gold: #c5a04e; --s-gold2: #a68636; --s-tan: #f5f4f0; --s-line: #e0e0e0; --s-ink: #1a1a1a;
+    background-color: var(--s-tan); color: var(--s-ink); font-family: var(--sans); font-size: 16px; line-height: 1.5; }
+  .s-nav { height: 56px; background: var(--s-black); color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; position: relative; z-index: 3; }
+  .s-brand { display: flex; align-items: center; gap: 8px; font-family: var(--serif); font-size: 19px; }
+  .s-brand img { height: 30px; width: auto; border-radius: 2px; display: block; }
+  .s-maa { color: var(--s-gold); font-weight: 700; }
+  .s-full { display: none; }
+  .s-links { display: flex; gap: 4px; }
+  .s-links span { display: inline-flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,.45); padding: 6px 12px; }
+  .s-burger { display: none; width: 20px; height: 14px; flex-direction: column; justify-content: space-between; }
+  .s-burger i { display: block; height: 2px; border-radius: 1px; background: #fff; }
+  @container site (width >= 1200px) { .s-full { display: inline; } }
+  @container site (width < 1000px) { .s-links { display: none; } .s-burger { display: flex; } }
+
+  .s-hero { position: relative; overflow: hidden; color: #fff; text-align: center; padding: 64px 28px 180px; background: var(--s-black); }
+  .s-hero-text { position: relative; z-index: 2; }
+  .s-h1 { font-family: var(--serif); font-weight: 700; font-size: 42px; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
+  .s-h1 span { color: var(--s-gold); }
+  .s-hero p { font-size: 16px; opacity: .55; max-width: 440px; margin: 0 auto 32px; line-height: 1.625; }
+  /* New heroes get a brighter subhead with a soft shadow; "photo" stays as the live site has it */
+  [data-hero="golden"] .s-hero p, [data-hero="fields"] .s-hero p, [data-hero="lines"] .s-hero p { opacity: .85; text-shadow: 0 1px 2px rgba(0, 0, 0, .75), 0 0 14px rgba(0, 0, 0, .6); }
+  @container site (width < 768px) { .s-h1 { font-size: 30px; } }
+
+  .art { position: absolute; inset: 0; display: none; }
+  [data-hero="photo"] .art-photo, [data-hero="golden"] .art-golden, [data-hero="fields"] .art-fields, [data-hero="lines"] .art-lines { display: block; }
+
+  /* "golden" is the Curved Photo hero: today's photo and overlay, plus the curved edge below */
+  .art-photo, .art-golden { background: linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.78)), url("../../../public/static/field-1.webp") center / cover; }
+
+  .art-lines {
+    background:
+      radial-gradient(ellipse 46% 60% at 50% 26%, rgba(197, 160, 78, .2), rgba(197, 160, 78, 0) 72%),
+      var(--balls-hero),
+      linear-gradient(180deg, #282521 0%, #151514 100%);
+    background-size: auto, 180px 180px, auto;
+  }
+
+  /* Curved bottom edge with a gold rim: the hero shows gold, the art layer is clipped 5px shorter */
+  [data-hero="golden"] .s-hero, [data-hero="fields"] .s-hero, [data-hero="lines"] .s-hero { clip-path: ellipse(125% 100% at 50% 0); background: var(--s-gold); }
+  .art-golden, .art-fields, .art-lines { clip-path: ellipse(125% calc(100% - 5px) at 50% 0); }
+
+  /* Four Fields: skewed panels with counter-skewed art */
+  .art-fields { background: var(--s-black); }
+  .panels, .seams { position: absolute; top: 0; bottom: 0; left: -60px; right: -60px; display: flex; transform: skewX(-10deg); }
+  .panel { flex: 1; position: relative; overflow: hidden; }
+  .panel svg { position: absolute; top: 0; height: 100%; left: -12%; width: 124%; transform: skewX(10deg); filter: saturate(.78); }
+  .seams div { flex: 1; }
+  .seams div + div { border-left: 3px solid rgba(197, 160, 78, .8); }
+  .fields-shade { position: absolute; inset: 0;
+    background:
+      var(--grain-dark),
+      radial-gradient(ellipse 44% 56% at 50% 30%, rgba(12, 11, 9, .6), rgba(12, 11, 9, 0) 78%),
+      linear-gradient(180deg, rgba(12, 11, 9, .56) 0%, rgba(12, 11, 9, .42) 50%, rgba(12, 11, 9, .74) 100%);
+  }
+
+  @container site (width < 768px) {
+    .seams div + div { border-left-width: 2px; border-left-color: rgba(197, 160, 78, .4); }
+    .fields-shade { background-color: rgba(12, 11, 9, .2); }
+  }
+
+  .s-page { position: relative; }
+  /* The column runs down to the footer so margin textures never cross under the content */
+  .s-col { max-width: 896px; margin: 0 auto; padding: 24px 16px 104px; position: relative; }
+
+  /* Backgrounds */
+  [data-bg="grain"].site { background-image: var(--grain-light); }
+  /* Straight mowing stripes, like the baseball panel */
+  [data-bg="stripes"].site { background-image: repeating-linear-gradient(90deg, rgba(110, 92, 40, .055) 0 28px, rgba(110, 92, 40, 0) 28px 56px); }  /* Ball pattern: its own layer behind the page */
+  .site { position: relative; }
+  .s-pattern { display: none; position: absolute; inset: 0; background-image: var(--balls-page); background-size: 150px 150px; }
+  [data-bg="balls"] .s-pattern { display: block; }
+  /* Margin-only textures: the content column covers them in plain tan, with a thin gold edge */
+  [data-bg="grain"] .s-col, [data-bg="stripes"] .s-col, [data-bg="balls"] .s-col { background: var(--s-tan); box-shadow: -1px 0 0 rgba(166, 134, 54, .25), 1px 0 0 rgba(166, 134, 54, .25); }
+  /* Extend the column up under the hero, which sits above it, so the column and its gold edges
+     meet the curved bottom instead of leaving a wedge of texture where the curve lifts */
+  .s-hero { z-index: 1; }
+  [data-bg="grain"] .s-col::before, [data-bg="stripes"] .s-col::before, [data-bg="balls"] .s-col::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 48px; background: inherit; box-shadow: inherit; }
+
+  .s-welcome { background: #fff; border: 1px solid var(--s-line); border-radius: 12px; box-shadow: 0 3px 20px rgba(0,0,0,.05); padding: 20px; margin: -136px auto 40px; max-width: 600px; position: relative; z-index: 2; }
+  .s-welcome .t { font-family: var(--serif); font-weight: 700; font-size: 20px; }
+  .s-welcome p { font-size: 17px; color: rgba(26,26,26,.7); margin: 4px 0 0; line-height: 1.625; }
+
+  .s-h2 { font-family: var(--serif); font-weight: 700; font-size: 30px; line-height: 1.2; margin: 0 0 6px; }
+  .s-rule { width: 44px; height: 3px; background: var(--s-gold); border-radius: 2px; margin-bottom: 12px; }
+  .s-lede { font-size: 17px; color: rgba(26,26,26,.7); line-height: 1.625; margin: 0 0 20px; }
+  .s-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .s-season { font-family: var(--serif); font-weight: 700; font-size: 20px; text-align: center; margin-bottom: 12px; }
+  .s-card { background: #fff; border: 1px solid var(--s-gold); border-radius: 10px; padding: 18px; margin-bottom: 8px; }
+  .s-card .n { font-family: var(--serif); font-weight: 700; font-size: 16px; }
+  .s-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .s-badges span { font-size: 12px; line-height: 20px; padding: 0 8px; border-radius: 6px; background: rgba(26,26,26,.06); }
+
+  .s-teasers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
+  .s-teaser { background: #fff; border: 1px solid var(--s-line); border-radius: 10px; overflow: hidden; }
+  .s-teaser img { width: 100%; height: 140px; object-fit: cover; display: block; }
+  .s-teaser img.contain { object-fit: contain; background: #fafaf8; }
+  .s-teaser .b { padding: 20px; }
+  .s-teaser .t { font-family: var(--serif); font-weight: 700; font-size: 18px; margin-bottom: 4px; }
+  .s-teaser p { font-size: 14px; color: rgba(26,26,26,.6); margin: 0 0 12px; line-height: 1.625; }
+  .s-teaser .cta { font-size: 14px; font-weight: 600; color: var(--s-gold); }
+  @container site (width < 768px) { .s-grid, .s-teasers { grid-template-columns: minmax(0, 1fr); } }
+
+  /* Footer, as on the live site, plus the visitor theme switch in the bottom bar */
+  .s-foot { position: relative; background: var(--s-black); color: #fff; }
+  .s-foot-in { max-width: 896px; margin: 0 auto; padding: 40px 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .s-foot-brand { font-family: var(--serif); font-size: 19px; }
+  .s-foot-brand span { color: var(--s-gold); font-weight: 700; }
+  .s-foot p { font-size: 14px; color: rgba(255, 255, 255, .6); margin: 8px 0 0; line-height: 1.625; }
+  .s-foot-h { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; color: rgba(255, 255, 255, .5); margin-bottom: 8px; }
+  .s-foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 14px; color: rgba(255, 255, 255, .8); overflow-wrap: anywhere; }
+  .s-foot-bar { border-top: 1px solid rgba(255, 255, 255, .1); }
+  .s-foot-bar-in { max-width: 896px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; font-size: 12px; color: rgba(255, 255, 255, .5); }
+  .s-theme { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .s-theme button { font: inherit; font-size: 12px; color: rgba(255, 255, 255, .7); background: rgba(255, 255, 255, .05); border: 1px solid rgba(255, 255, 255, .12); border-radius: 999px; padding: 3px 10px 3px 4px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+  .s-theme button:hover { color: #fff; border-color: rgba(197, 160, 78, .5); }
+  .s-theme button[aria-pressed="true"] { color: var(--s-gold); border-color: var(--s-gold); background: rgba(197, 160, 78, .12); }
+  .s-theme button:focus-visible { outline: 2px solid var(--s-gold); outline-offset: 2px; }
+  .sw { width: 22px; height: 14px; border-radius: 999px; display: block; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .15); }
+  .sw-golden { background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .4)), url("../../../public/static/field-1.webp") 50% 62% / 280% auto; }
+  .sw-fields { background: linear-gradient(100deg, #3e7334 0 25%, #c4945b 25% 50%, #3d6c30 50% 75%, #2f4e79 75%); }
+  .sw-lines { background: radial-gradient(circle, transparent 0 2.3px, rgba(197, 160, 78, .85) 2.6px 3.3px, transparent 3.6px) 1px 0 / 9px 9px, #1e1d1b; }
+  /* Today is the live site, which has no theme switch */
+  [data-hero="photo"] .s-theme { display: none; }
+  @container site (width < 768px) { .s-foot-in { grid-template-columns: minmax(0, 1fr); } }
+
+  /* Pages: Home, Field Rentals or FAQ. Script sets data-band="on" when a subpage shows its header band */
+  .pg-rentals, .pg-faq, .s-band-text, .bt { display: none; }
+  .site:not([data-page="home"]) .pg-home, .site:not([data-page="home"]) .s-hero-text { display: none; }
+  [data-page="rentals"] .pg-rentals, [data-page="faq"] .pg-faq { display: block; }
+  .site:not([data-page="home"]) .s-col { padding-top: 32px; }
+  .site:not([data-page="home"])[data-band="off"] .s-hero { display: none; }
+  [data-band="on"] .s-hero { padding: 36px 28px 52px; }
+  [data-band="on"] .s-band-text { display: block; position: relative; z-index: 2; }
+  [data-page="rentals"] .bt-rentals, [data-page="faq"] .bt-faq { display: inline; }
+  [data-band="on"] .r-title { display: none; }
+  .s-band-title { font-family: var(--serif); font-weight: 700; font-size: 34px; line-height: 1.2; text-wrap: balance; text-shadow: 0 1px 2px rgba(0, 0, 0, .6); }
+  .s-band-rule { margin: 10px auto 0; }
+  [data-page="rentals"] .s-links .nl-rentals, [data-page="faq"] .s-links .nl-faq { background: rgba(197, 160, 78, .15); color: var(--s-gold); border-radius: 6px; }
+  /* Band art is set per page, not by the visitor's theme: the ballfield photo for Field Rentals, line art everywhere else */
+  [data-band="on"] .art { display: none; }
+  [data-band="on"][data-page="rentals"] .art-golden, [data-band="on"][data-page="faq"] .art-lines { display: block; }
+  /* The theme only changes the homepage hero, so the switch only shows in the homepage footer */
+  .site:not([data-page="home"]) .s-theme { display: none; }
+  /* Phones: a shorter band */
+  @container site (width < 768px) {
+    [data-band="on"] .s-hero { padding: 22px 16px 34px; }
+    .s-band-title { font-size: 24px; }
+    .s-band-rule { margin-top: 8px; }
+  }
+
+  /* FAQ, as on the live site */
+  .f-q { border: 1px solid var(--s-gold2); border-radius: 9px; padding: 16px; margin-bottom: 8px; }
+  .f-row { display: flex; justify-content: space-between; gap: 8px; font-size: 16px; font-weight: 600; }
+  .f-row i { font-style: normal; font-weight: 400; color: rgba(26, 26, 26, .3); }
+  .f-a { font-size: 14px; color: rgba(26, 26, 26, .5); line-height: 1.625; margin-top: 10px; background: #fafaf8; border-radius: 5px; padding: 8px; }
+  .f-sh { font-weight: 700; color: var(--s-gold2); text-transform: uppercase; font-size: 18px; letter-spacing: .025em; margin: 10px 0 2px; }
+  .f-sh:first-child { margin-top: 0; }
+  .f-note { margin-top: 6px; font-size: 11px; }
+
+  .r-p { font-size: 17px; color: rgba(26, 26, 26, .7); line-height: 1.625; margin: 0 0 12px; }
+  .r-photo { position: relative; border-radius: 12px; overflow: hidden; margin: 16px 0; border: 1px solid var(--s-line); }
+  .r-photo img { width: 100%; display: block; max-height: 420px; object-fit: cover; }
+  .r-tag { position: absolute; transform: translate(-50%, -50%); background: rgba(0, 0, 0, .7); color: #fff; padding: 4px 14px; border-radius: 6px; font-size: 13px; font-weight: 700; letter-spacing: .05em; border: 1px solid var(--s-gold); }
+  .r-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .r-card { background: #fff; border: 1px solid var(--s-line); border-radius: 10px; padding: 20px; }
+  .r-card .t { font-family: var(--serif); font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+  .r-card p { font-size: 14px; color: rgba(26, 26, 26, .5); line-height: 1.625; margin: 0; }
+  .r-h2 { font-family: var(--serif); font-weight: 700; font-size: 20px; margin-bottom: 12px; }
+  .r-rates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: calc(50% - 6px); }
+  .r-rate { background: #fff; border: 1px solid var(--s-line); border-radius: 8px; padding: 16px; text-align: center; }
+  .r-rate .l { font-size: 12px; font-weight: 600; color: rgba(26, 26, 26, .5); margin-bottom: 4px; }
+  .r-rate .v { font-family: var(--serif); font-size: 26px; color: var(--s-gold2); }
+  .r-rate .v span { font-size: 14px; font-weight: 400; }
+  .r-rate .n { font-size: 11px; color: rgba(26, 26, 26, .3); margin-top: 2px; }
+  .r-small { font-size: 13px; color: rgba(26, 26, 26, .5); margin: 12px 0 0; overflow-wrap: anywhere; }
+  @container site (width < 768px) { .r-cards { grid-template-columns: minmax(0, 1fr); } .r-rates { max-width: none; } }
+
+  /* ---------- Notes ---------- */
+  .section { margin-top: 56px; }
+  .section > h2 { font-family: var(--serif); font-size: 28px; line-height: 1.2; margin: 0 0 6px; }
+  .section > .sub { color: var(--muted); margin: 0 0 20px; max-width: 70ch; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+  .opt { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .opt .tag { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .opt h3 { font-family: var(--serif); font-size: 22px; margin: 0; line-height: 1.2; }
+  .opt .pitch { margin: 0; color: var(--muted); }
+  .opt dl { margin: 0; display: grid; gap: 10px; }
+  .opt dt { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .opt dd { margin: 2px 0 0; }
+  .effort { display: inline-block; font-size: 13px; font-weight: 600; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); margin-right: 6px; }
+  .btn { margin-top: auto; align-self: flex-start; font: inherit; font-size: 14px; font-weight: 600; color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+  .btn:hover { border-color: var(--accent); }
+
+  .ideas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; }
+  .idea { border-top: 3px solid var(--accent); padding-top: 12px; min-width: 0; }
+  .idea h3 { font-family: var(--serif); font-size: 19px; margin: 0 0 6px; }
+  .idea p { margin: 0 0 8px; }
+  .idea .fine { color: var(--muted); font-size: 15px; }
+  .callout { margin-top: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 20px; max-width: 90ch; }
+  .callout p { margin: 0; }
+
+  .build { display: grid; gap: 10px; max-width: 90ch; padding-left: 20px; margin: 0; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <div class="eyebrow">Meadow Athletic Association · design options</div>
+    <h1>Three looks for the homepage</h1>
+    <p>Same layout, colors, fonts and copy. Each direction only changes the hero background, the edge where the hero meets the page, and the tan background. Any hero also works with any background, so you can mix them below. The preview's footer has a theme switch, as visitors would see it, and the Page buttons show subpages.</p>
+  </header>
+
+  <div class="bar">
+    <div class="group" role="group" aria-label="Direction">
+      <button class="chip" type="button" data-preset="today" aria-pressed="true">Today</button>
+      <button class="chip" type="button" data-preset="a" aria-pressed="false"><span class="k">A</span>Curved Photo</button>
+      <button class="chip" type="button" data-preset="b" aria-pressed="false"><span class="k">B</span>Four Fields</button>
+      <button class="chip" type="button" data-preset="c" aria-pressed="false"><span class="k">C</span>Gold Line Art</button>
+    </div>
+    <div class="bar-right">
+      <div class="group view" role="group" aria-label="Page">
+        <button class="chip" type="button" data-page-btn="home" aria-pressed="true">Home</button>
+        <button class="chip" type="button" data-page-btn="rentals" aria-pressed="false">Field Rentals</button>
+        <button class="chip" type="button" data-page-btn="faq" aria-pressed="false">FAQ</button>
+      </div>
+      <div class="group view" role="group" aria-label="Preview width">
+        <button class="chip" type="button" data-view="desktop" aria-pressed="true">Desktop</button>
+        <button class="chip" type="button" data-view="phone" aria-pressed="false">Phone</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="caption" id="caption" aria-live="polite"></p>
+
+  <div class="mix">
+    <fieldset class="seg">
+      <legend>Hero</legend>
+      <input type="radio" name="hero" id="hero-photo" value="photo" checked><label for="hero-photo">Today's photo</label>
+      <input type="radio" name="hero" id="hero-golden" value="golden"><label for="hero-golden">Curved photo</label>
+      <input type="radio" name="hero" id="hero-fields" value="fields"><label for="hero-fields">Four fields</label>
+      <input type="radio" name="hero" id="hero-lines" value="lines"><label for="hero-lines">Gold line art</label>
+    </fieldset>
+    <fieldset class="seg">
+      <legend>Background</legend>
+      <input type="radio" name="bg" id="bg-plain" value="plain" checked><label for="bg-plain">Plain tan</label>
+      <input type="radio" name="bg" id="bg-grain" value="grain"><label for="bg-grain">Paper grain</label>
+      <input type="radio" name="bg" id="bg-stripes" value="stripes"><label for="bg-stripes">Mowing stripes</label>
+      <input type="radio" name="bg" id="bg-balls" value="balls"><label for="bg-balls">Ball pattern</label>
+    </fieldset>
+    <fieldset class="seg">
+      <legend>Subpage header</legend>
+      <input type="radio" name="sub" id="sub-band" value="band" checked><label for="sub-band">Band</label>
+      <input type="radio" name="sub" id="sub-plain" value="plain"><label for="sub-plain">Plain, as today</label>
+    </fieldset>
+  </div>
+
+  <div class="frame" id="frame">
+    <div class="site" id="site" data-hero="photo" data-bg="plain" data-page="home" data-sub="band" data-band="off">
+      <div class="s-pattern" aria-hidden="true"></div>
+      <div class="s-nav">
+        <div class="s-brand"><img src="../../../public/static/maa-large.jpg" alt="MAA logo"><span class="s-maa">MAA</span><span class="s-full">Meadow Athletic Association</span></div>
+        <div class="s-links" aria-hidden="true">
+          <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>About</span>
+          <span class="nl-faq"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg>FAQ</span>
+          <span class="nl-rentals"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4zM8 2v16M16 6v16"/></svg>Field Rentals</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>Sponsorship</span>
+        </div>
+        <span class="s-burger" aria-hidden="true"><i></i><i></i><i></i></span>
+      </div>
+
+      <div class="s-hero">
+        <div class="art art-photo"></div>
+        <div class="art art-golden"></div>
+        <div class="art art-fields">
+          <div class="panels">
+            <!-- Soccer: half pitch from above at 4.8 units per metre -->
+            <div class="panel"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+              <rect width="400" height="500" fill="#3e7334"/>
+              <g fill="#36682b"><rect y="0" width="400" height="40"/><rect y="80" width="400" height="40"/><rect y="160" width="400" height="40"/><rect y="240" width="400" height="40"/><rect y="320" width="400" height="40"/><rect y="400" width="400" height="40"/><rect y="480" width="400" height="40"/></g>
+              <g stroke="#f2efe6" stroke-width="3.5" fill="none">
+                <path d="M37 0V470H363V0"/>
+                <path d="M37 218H363"/>
+                <circle cx="200" cy="218" r="44"/>
+                <rect x="103.3" y="390.8" width="193.4" height="79.2"/>
+                <rect x="156" y="443.6" width="88" height="26.4"/>
+                <path d="M164.8 390.8A44 44 0 0 1 235.2 390.8"/>
+                <path d="M37 465.2A4.8 4.8 0 0 1 41.8 470M358.2 470A4.8 4.8 0 0 1 363 465.2"/>
+              </g>
+              <rect x="182.4" y="470" width="35.2" height="10" fill="#1f2a1c" stroke="#f2efe6" stroke-width="2.5"/>
+              <g fill="#f2efe6"><circle cx="200" cy="218" r="3.5"/><circle cx="200" cy="417.2" r="3"/></g>
+            </svg></div>
+            <!-- Basketball half court, turned 180° so the hoop sits at the top -->
+            <div class="panel"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+              <defs>
+                <!-- Narrow maple strips with staggered butt joints; shared with the volleyball court -->
+                <pattern id="wood" width="36" height="144" patternUnits="userSpaceOnUse">
+                  <rect width="36" height="144" fill="#c4945b"/>
+                  <rect x="6" width="6" height="144" fill="#bf8e55"/><rect x="18" width="6" height="144" fill="#c99b63"/><rect x="30" width="6" height="144" fill="#c08f56"/>
+                  <g fill="#a87a45"><rect width=".7" height="144"/><rect x="6" width=".7" height="144"/><rect x="12" width=".7" height="144"/><rect x="18" width=".7" height="144"/><rect x="24" width=".7" height="144"/><rect x="30" width=".7" height="144"/></g>
+                  <g fill="#a47543"><rect y="19" width="6" height=".7"/><rect y="101" width="6" height=".7"/><rect x="6" y="26" width="6" height=".7"/><rect x="6" y="89" width="6" height=".7"/><rect x="12" y="50" width="6" height=".7"/><rect x="12" y="129" width="6" height=".7"/><rect x="18" y="57" width="6" height=".7"/><rect x="18" y="120" width="6" height=".7"/><rect x="24" y="10" width="6" height=".7"/><rect x="24" y="82" width="6" height=".7"/><rect x="30" y="74" width="6" height=".7"/><rect x="30" y="137" width="6" height=".7"/></g>
+                </pattern>
+              </defs>
+              <rect width="400" height="500" fill="url(#wood)"/>
+              <g transform="rotate(180 200 250)">
+                <rect x="140" y="300" width="120" height="175" fill="#94742e" fill-opacity=".88"/>
+                <g stroke="#f4ede0" stroke-width="4" fill="none">
+                  <path d="M0 475H400M0 20H400"/>
+                  <rect x="140" y="300" width="120" height="175"/>
+                  <path d="M140 300A60 60 0 0 1 260 300"/>
+                  <path d="M140 300A60 60 0 0 0 260 300" stroke-dasharray="0.1 9" stroke-linecap="round"/>
+                  <!-- 3-point line: straight corners, then an arc that just touches the free-throw circle -->
+                  <path d="M30 475V391A171.2 171.2 0 0 1 370 391V475"/>
+                  <path d="M140 20A60 60 0 0 0 260 20"/>
+                  <!-- Lane hash marks for free-throw positions -->
+                  <path d="M140 406H131M140 377H131M140 350H131M140 321H131M260 406H269M260 377H269M260 350H269M260 321H269" stroke-linecap="round"/>
+                  <path d="M170 452H230" stroke-width="5"/>
+                </g>
+                <circle cx="200" cy="438" r="9" fill="none" stroke="#d9622b" stroke-width="3"/>
+              </g>
+            </svg></div>
+            <!-- Baseball / softball diamond, shifted up so home plate clears the Welcome card -->
+            <div class="panel"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <!-- Straight vertical mowing stripes, one centered on home plate -->
+                <pattern id="mow" x="188" width="48" height="10" patternUnits="userSpaceOnUse">
+                  <rect width="48" height="10" fill="#3f6e32"/>
+                  <rect width="24" height="10" fill="#335d28"/>
+                </pattern>
+              </defs>
+              <rect width="400" height="500" fill="url(#mow)"/>
+              <g transform="translate(0 -170)">
+                <path d="M412 258A300 300 0 0 0 -12 258" fill="none" stroke="#8f5634" stroke-width="16"/>
+                <!-- Infield dirt: arc centered on the pitcher's rubber -->
+                <path d="M200 470L320.6 349.4A127 127 0 1 0 79.4 349.4Z" fill="#a8633a"/>
+                <path d="M140 520A80 80 0 0 0 260 520" fill="none" stroke="#25391f" stroke-width="5"/>
+                <path d="M200 448L264 385L200 322L136 385Z" fill="url(#mow)"/>
+                <circle cx="200" cy="467" r="38" fill="#a8633a"/>
+                <circle cx="200" cy="389" r="13" fill="#a8633a"/>
+                <circle cx="279" cy="386" r="12" fill="#a8633a"/><circle cx="200" cy="300" r="12" fill="#a8633a"/><circle cx="121" cy="386" r="12" fill="#a8633a"/>
+                <g stroke="#efe9dc" stroke-width="3" fill="none">
+                  <!-- Foul lines start where they leave the batter's boxes -->
+                  <path d="M214 456L440 230M186 456L-40 230"/>
+                  <rect x="178" y="456" width="14" height="26"/><rect x="208" y="456" width="14" height="26"/>
+                  <!-- Catcher's box: side lines just outside the batter's boxes' inner lines -->
+                  <path d="M188 482V502H212V482"/>
+                </g>
+                <g fill="#f4efe4">
+                  <!-- 1st and 3rd sit in fair territory, outer edge on the outer edge of the foul line -->
+                  <rect x="274" y="381.1" width="10" height="10" transform="rotate(45 279 386.1)"/>
+                  <rect x="195" y="295" width="10" height="10" transform="rotate(45 200 300)"/>
+                  <rect x="116" y="381.1" width="10" height="10" transform="rotate(45 121 386.1)"/>
+                  <path d="M194 466h12v5l-6 5-6-5z"/>
+                  <rect x="196" y="387" width="8" height="3"/>
+                </g>
+              </g>
+            </svg></div>
+            <!-- Volleyball: full court at 16 units per metre, shifted left to sit in the visible part of
+                 this slanted, right-edge panel; the blue free zone runs wide on the left so little gym floor shows -->
+            <div class="panel"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="400" height="500" fill="url(#wood)"/>
+              <rect x="20" y="58" width="280" height="384" fill="#2f4e79"/>
+              <rect x="104" y="106" width="144" height="288" fill="url(#wood)"/>
+              <g stroke="#f4efe6" stroke-width="3.5" fill="none"><rect x="104" y="106" width="144" height="288"/><path d="M104 202H248M104 298H248"/></g>
+              <rect x="88" y="247" width="176" height="6" fill="#1d1d1d"/>
+              <path d="M88 247H264" stroke="#ece8de" stroke-width="2"/>
+              <g fill="#dedad0"><circle cx="88" cy="250" r="5"/><circle cx="264" cy="250" r="5"/></g>
+            </svg></div>
+          </div>
+          <div class="fields-shade"></div>
+          <div class="seams" aria-hidden="true"><div></div><div></div><div></div><div></div></div>
+        </div>
+        <div class="art art-lines"></div>
+
+        <div class="s-hero-text">
+          <div class="s-h1"><span>M</span>eadow <span>A</span>thletic <span>A</span>ssociation</div>
+          <p>Youth recreational sports for the Meadow community. Building character, teamwork, and lifelong memories.</p>
+        </div>
+        <div class="s-band-text">
+          <div class="s-band-title"><span class="bt bt-rentals">Field Rentals</span><span class="bt bt-faq">Frequently Asked Questions</span></div>
+          <div class="s-rule s-band-rule"></div>
+        </div>
+      </div>
+
+      <div class="s-page">
+        <div class="s-col">
+          <div class="pg-home">
+          <div class="s-welcome">
+            <div class="t">Welcome</div>
+            <p>MAA has served the Meadow, NC community since 1976. Whether your child is just starting out or chasing a championship, we have a program for every age and season.</p>
+          </div>
+
+          <div class="s-h2">What We Offer</div>
+          <div class="s-rule"></div>
+          <p class="s-lede">Youth sports across three seasons.</p>
+          <div class="s-grid">
+            <div>
+              <div class="s-season">Spring</div>
+              <div class="s-card"><div class="n">T-Ball</div><div class="s-badges"><span>3–4</span></div></div>
+              <div class="s-card"><div class="n">T-Shirt</div><div class="s-badges"><span>5–6</span></div></div>
+              <div class="s-card"><div class="n">Baseball</div><div class="s-badges"><span>8U</span><span>10U</span><span>12U</span></div></div>
+              <div class="s-card"><div class="n">Softball</div><div class="s-badges"><span>8U</span><span>10U</span><span>12U</span></div></div>
+            </div>
+            <div>
+              <div class="s-season">Fall</div>
+              <div class="s-card"><div class="n">Soccer</div><div class="s-badges"><span>6U</span><span>8U</span></div></div>
+              <div class="s-card"><div class="n">Baseball</div><div class="s-badges"><span>8U</span><span>10U</span><span>12U</span></div></div>
+              <div class="s-card"><div class="n">Softball</div><div class="s-badges"><span>8U</span><span>10U</span><span>12U</span></div></div>
+              <div class="s-card"><div class="n">Volleyball</div><div class="s-badges"><span>10U</span><span>12U</span></div></div>
+            </div>
+            <div>
+              <div class="s-season">Winter</div>
+              <div class="s-card"><div class="n">Basketball</div><div class="s-badges"><span>6U</span><span>8U</span><span>10U</span><span>12U</span><span>15U</span></div></div>
+            </div>
+          </div>
+
+          <div class="s-teasers">
+            <div class="s-teaser">
+              <img src="../../../public/static/fields-aerial.webp" alt="Aerial view of the MAA fields">
+              <div class="b"><div class="t">Book a Field</div><p>Day rentals on the Meadow ballfields for parties, practices, and tournaments.</p><span class="cta">View rental info →</span></div>
+            </div>
+            <div class="s-teaser">
+              <img class="contain" src="../../../public/static/sports-balls.jpg" alt="Baseball, basketball, soccer ball, and volleyball">
+              <div class="b"><div class="t">Become a Sponsor</div><p>Support local youth sports and reach families across Meadow. There are several ways to get involved.</p><span class="cta">See sponsorship tiers →</span></div>
+            </div>
+          </div>
+          </div>
+
+          <!-- Field Rentals, as on the live site; its title moves into the theme band when that's on -->
+          <div class="pg-rentals">
+            <div class="r-title"><div class="s-h2">Field Rentals</div><div class="s-rule"></div></div>
+            <p class="r-p">MAA has two fields available for rental when not in use for games or practices.</p>
+            <div class="r-photo">
+              <img src="../../../public/static/fields-aerial.webp" alt="Aerial view of MAA fields">
+              <span class="r-tag" style="left: 38%; top: 49%">Field 1</span>
+              <span class="r-tag" style="left: 61%; top: 76%">Field 2</span>
+            </div>
+            <div class="r-cards">
+              <div class="r-card"><div class="t">MAA Field 1</div><p>Supports T-Ball, T-Shirt, 8U, 10U, and 12U baseball and softball.</p></div>
+              <div class="r-card"><div class="t">MAA Field 2</div><p>Supports T-Ball, T-Shirt, 8U and 10U baseball, and 8U, 10U, and 12U softball.</p></div>
+            </div>
+            <div class="r-h2">Rental Rates</div>
+            <div class="r-rates">
+              <div class="r-rate"><div class="l">Without Lights</div><div class="v">$15<span>/hr</span></div></div>
+              <div class="r-rate"><div class="l">With Lights</div><div class="v">$35<span>/hr</span></div><div class="n">+$20/hr for lights</div></div>
+            </div>
+            <p class="r-small">Example: 1 hr without lights + 1 hr with lights = $15 + $35 = $50</p>
+            <p class="r-small">To reserve, contact meadowathleticassociation@gmail.com.</p>
+          </div>
+
+          <!-- FAQ, as on the live site, with the registration answer open -->
+          <div class="pg-faq">
+            <div class="r-title"><div class="s-h2">Frequently Asked Questions</div><div class="s-rule"></div></div>
+            <div class="f-q"><div class="f-row"><span>What sports does MAA typically offer?</span><i>▸</i></div></div>
+            <div class="f-q"><div class="f-row"><span>When does registration open?</span><i>▾</i></div>
+              <div class="f-a">
+                <div class="f-sh">Spring</div>Typically opens mid-January and runs through February.
+                <div class="f-sh">Fall</div>Opens early July through early August.
+                <div class="f-sh">Winter</div>Opens early October through early November.
+                <div class="f-note">Deadlines may close earlier if an age group fills.</div>
+              </div>
+            </div>
+            <div class="f-q"><div class="f-row"><span>When does each season start?</span><i>▸</i></div></div>
+            <div class="f-q"><div class="f-row"><span>When are games scheduled?</span><i>▸</i></div></div>
+            <div class="f-q"><div class="f-row"><span>How do I volunteer to coach?</span><i>▸</i></div></div>
+            <div class="f-q"><div class="f-row"><span>How do coaches communicate with families?</span><i>▸</i></div></div>
+            <div class="f-q"><div class="f-row"><span>How do I become a sponsor?</span><i>▸</i></div></div>
+            <div class="f-q"><div class="f-row"><span>Is MAA a non-profit?</span><i>▸</i></div></div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="s-foot">
+        <div class="s-foot-in">
+          <div>
+            <div class="s-foot-brand"><span>M</span>eadow <span>A</span>thletic <span>A</span>ssociation</div>
+            <p>Youth sports for the Meadow, NC community since 1976.</p>
+          </div>
+          <div>
+            <div class="s-foot-h">Site</div>
+            <ul><li>About</li><li>FAQ</li><li>Field Rentals</li><li>Sponsorship</li></ul>
+          </div>
+          <div>
+            <div class="s-foot-h">Contact</div>
+            <ul><li>meadowathleticassociation@gmail.com</li><li>Facebook</li></ul>
+          </div>
+        </div>
+        <div class="s-foot-bar">
+          <div class="s-foot-bar-in">
+            <span>© 2026 Meadow Athletic Association</span>
+            <div class="s-theme" role="group" aria-label="Homepage theme">
+              <span class="s-theme-l">Theme</span>
+              <button type="button" data-theme-preset="a" aria-pressed="false"><i class="sw sw-golden"></i>Home Plate</button>
+              <button type="button" data-theme-preset="b" aria-pressed="false"><i class="sw sw-fields"></i>Four Fields</button>
+              <button type="button" data-theme-preset="c" aria-pressed="false"><i class="sw sw-lines"></i>Gold Lines</button>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <section class="section" aria-labelledby="dirs">
+    <h2 id="dirs">The three directions</h2>
+    <p class="sub">Listed from smallest change to biggest. None of them touch the nav, cards, fonts or copy.</p>
+    <div class="cards">
+      <article class="opt">
+        <div class="tag">Direction A</div>
+        <h3>Curved Photo</h3>
+        <p class="pitch">Today's hero with the Four Fields curve. The safest step up from today.</p>
+        <dl>
+          <div><dt>Hero</dt><dd>Today's baseball photo and dark overlay, unchanged.</dd></div>
+          <div><dt>Edge</dt><dd>The curved bottom edge with a gold rim, the same as B and C.</dd></div>
+          <div><dt>Background</dt><dd>Fine paper grain in the margins only. It stops at the content column with a thin gold edge.</dd></div>
+          <div><dt>All four sports?</dt><dd>Not by itself. Swap in one of the photo ideas below if you want one.</dd></div>
+          <div><dt>Effort</dt><dd><span class="effort">Small</span>No new images. The curve is a clip-path in <code>Hero.tsx</code>; the grain is a few lines of inline SVG in <code>index.css</code>.</dd></div>
+        </dl>
+        <button class="btn" type="button" data-show="a">Show A in the preview</button>
+      </article>
+      <article class="opt">
+        <div class="tag">Direction B</div>
+        <h3>Four Fields</h3>
+        <p class="pitch">Every sport gets a slice of the hero, shown as its playing surface from above.</p>
+        <dl>
+          <div><dt>Hero</dt><dd>Four slanted panels: a soccer pitch, a basketball court, the baseball diamond and a volleyball court, with thin gold seams. One dark gradient over all four keeps the name easy to read.</dd></div>
+          <div><dt>Edge</dt><dd>The bottom of the hero curves like the edge of an infield, with a gold rim.</dd></div>
+          <div><dt>Background</dt><dd>Paper grain in the margins, the same as A.</dd></div>
+          <div><dt>All four sports?</dt><dd>Yes. The same layout also takes four real photos later, one per sport.</dd></div>
+          <div><dt>Effort</dt><dd><span class="effort">Medium</span>New hero markup plus four small SVGs (or photos) in <code>public/static</code>.</dd></div>
+        </dl>
+        <button class="btn" type="button" data-show="b">Show B in the preview</button>
+      </article>
+      <article class="opt">
+        <div class="tag">Direction C</div>
+        <h3>Gold Line Art</h3>
+        <p class="pitch">No photo at all. The four balls become a black-and-gold pattern that matches the logo.</p>
+        <dl>
+          <div><dt>Hero</dt><dd>A charcoal-to-black gradient with a slightly denser repeating pattern of the baseball, basketball, soccer ball and volleyball drawn in thin gold lines, and a soft glow behind the name.</dd></div>
+          <div><dt>Edge</dt><dd>The same curved edge with a gold rim as A and B.</dd></div>
+          <div><dt>Background</dt><dd>Paper grain in the margins, the same as A and B.</dd></div>
+          <div><dt>All four sports?</dt><dd>Yes, and it never needs a new photo. It also loads faster than a photo.</dd></div>
+          <div><dt>Effort</dt><dd><span class="effort">Small–medium</span>One pattern SVG in <code>public/static</code>, used by the hero.</dd></div>
+        </dl>
+        <button class="btn" type="button" data-show="c">Show C in the preview</button>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="themes">
+    <h2 id="themes">Visitor theme switch</h2>
+    <p class="sub">Scroll to the bottom of the preview. The footer has a Theme switch with the three curved heroes. It shows on A, B and C; Today is the live site, which doesn't have one.</p>
+    <ul class="build">
+      <li>Visitors pick the homepage hero: Home Plate (A), Four Fields (B) or Gold Lines (C). All three use paper grain in the margins. The choice is saved in their browser, so it sticks between visits on that device. First-time visitors see whichever theme you set as the default.</li>
+      <li>Subpages get a short header band with the page title instead of a hero. The band's art is set per page, not by the visitor's theme: Field Rentals uses the ballfield photo, and every other subpage uses Gold Line Art. Four Fields is too busy at that height. Use the Page buttons to see Field Rentals and FAQ.</li>
+      <li>Since subpages don't follow the theme, the switch only shows in the homepage footer.</li>
+      <li>On phones the band is about a third shorter, with a smaller title.</li>
+      <li>Each theme is one entry in a short list: a name, a swatch and a hero. A sport-specific theme later is one more entry plus its image.</li>
+      <li>The theme list and hero live in <code>src/pages/home/</code> and the switch in <code>src/components/Footer.tsx</code>, both shared with maa-prototype. The band would be a small shared header component; each subpage passes it its title and which art to use.</li>
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="photo">
+    <h2 id="photo">A single photo that shows every sport</h2>
+    <p class="sub">If you'd rather keep a real photo in the hero, here are three ways to get one. Any of them drops straight into the Curved Photo hero.</p>
+    <div class="ideas">
+      <div class="idea">
+        <h3>Shoot it at the Meadow fields</h3>
+        <p>Line up a baseball, softball, basketball, soccer ball and volleyball on home plate or along the first-base chalk line. Shoot low from the dirt in late-afternoon light, wide and in landscape.</p>
+        <p class="fine">Free, local, and no other league has it. A phone camera is enough at this darkness level.</p>
+      </div>
+      <div class="idea">
+        <h3>Use your own season photos</h3>
+        <p>One action shot per sport from coaches or parents, placed in the four Four Fields panels instead of the drawings.</p>
+        <p class="fine">Use shots where kids can't be identified, or get a parent's OK for each photo.</p>
+      </div>
+      <div class="idea">
+        <h3>Free stock photos</h3>
+        <p>Unsplash and Pexels allow free use on a site like this. Try searches like “sports balls on grass”, “sports equipment flat lay” or “assorted sports balls”.</p>
+        <p class="fine">Pick a landscape photo at least 2000px wide.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <p><b>What makes a photo work in this hero:</b> the name sits top-center and the Welcome card covers the bottom-center. Look for a photo whose subject sits toward the sides, or that reads as an even texture across the frame. Busy detail right behind the name fights the gold letters.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="build">
+    <h2 id="build">Building it in both repos</h2>
+    <p class="sub">Whichever you pick goes into maa-frontend first, then maa-prototype.</p>
+    <ul class="build">
+      <li><code>src/pages/home/Hero.tsx</code> and <code>public/</code> are on the shared list, so they copy across unchanged.</li>
+      <li><code>src/index.css</code> isn't byte-identical (the prototype adds table styles), so a background change there is the same edit made in both files.</li>
+      <li>The margin textures (grain, stripes, ball pattern) are a texture on <code>body</code> plus a plain <code>bg-base-200</code> and thin gold edge on each page's <code>max-w-4xl</code> wrapper. Those page folders are shared; <code>home/index.tsx</code> is not, so it gets edited in both repos.</li>
+      <li>Margin textures only show on screens wider than about 900px. On phones the content fills the width, so the background is plain tan there.</li>
+      <li>At the top, the content column's background tucks up under the curved hero so its edges meet the curve cleanly.</li>
+      <li>The content column should run all the way down to the footer. Otherwise the gap above the footer shows a band of texture across the full width, which looks like a mistake on phones.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+(function () {
+  // Inline SVG textures, built once and exposed as CSS custom properties.
+  const root = document.documentElement.style;
+  const uri = (svg) => `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+  const f = (n) => n.toFixed(1);
+
+  function grain(rgb, slope, offset) {
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180"><filter id="n" x="0" y="0"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 ${rgb[0]} 0 0 0 0 ${rgb[1]} 0 0 0 0 ${rgb[2]} 0 0 0 ${slope} ${offset}"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>`;
+  }
+
+  const bez = (p, t) => { const u = 1 - t; return [0, 1].map(i => u*u*u*p[0][i] + 3*u*u*t*p[1][i] + 3*u*t*t*p[2][i] + t*t*t*p[3][i]); };
+  const bezTan = (p, t) => { const u = 1 - t; return [0, 1].map(i => 3*u*u*(p[1][i]-p[0][i]) + 6*u*t*(p[2][i]-p[1][i]) + 3*t*t*(p[3][i]-p[2][i])); };
+
+  function baseball() {
+    const seam = [[31, 21], [43, 37], [43, 63], [31, 79]];
+    let d = '<circle cx="50" cy="50" r="34"/>';
+    for (const s of [seam, seam.map(([x, y]) => [100 - x, y])]) {
+      d += `<path d="M${s.map(p => f(p[0]) + ' ' + f(p[1])).join(' ').replace(/^(\S+ \S+) /, '$1 C')}"/>`;
+      for (let i = 1; i < 8; i++) {
+        const t = i / 8, [x, y] = bez(s, t);
+        let [tx, ty] = bezTan(s, t); const L = Math.hypot(tx, ty); tx /= L; ty /= L;
+        const nx = -ty, ny = tx;
+        d += `<path d="M${f(x - nx*4.5 + tx*2)} ${f(y - ny*4.5 + ty*2)}L${f(x)} ${f(y)}L${f(x + nx*4.5 + tx*2)} ${f(y + ny*4.5 + ty*2)}"/>`;
+      }
+    }
+    return d;
+  }
+  const basketball = () => '<circle cx="50" cy="50" r="34"/><path d="M50 16V84M16 50H84M27 23C41 37 41 63 27 77M73 23C59 37 59 63 73 77"/>';
+  function soccer(color, op) {
+    const rad = (deg) => deg * Math.PI / 180, at = (r, a) => [50 + r * Math.cos(rad(a)), 50 + r * Math.sin(rad(a))];
+    let d = '<circle cx="50" cy="50" r="34"/>';
+    d += `<path fill="${color}" fill-opacity="${op}" d="M${[0, 1, 2, 3, 4].map(k => at(11, -90 + 72*k).map(f).join(' ')).join('L')}Z"/>`;
+    for (let k = 0; k < 5; k++) {
+      const a = -90 + 72*k, i = at(11, a), m = at(22, a), l = at(34, a - 26), r = at(34, a + 26);
+      d += `<path d="M${f(i[0])} ${f(i[1])}L${f(m[0])} ${f(m[1])}M${f(l[0])} ${f(l[1])}L${f(m[0])} ${f(m[1])}L${f(r[0])} ${f(r[1])}"/>`;
+    }
+    return d;
+  }
+  const volleyball = () => '<circle cx="50" cy="50" r="34"/>' + [0, 120, 240].map(r => `<g transform="rotate(${r} 50 50)"><path d="M50 50C52 36 58 26 68 20"/><path d="M41 45C43 32 48 22 55 17"/></g>`).join('');
+
+  // Four balls per square tile. Positions are laid out on a 240 grid and scaled to the tile;
+  // size is the drawn box of each ball in px (the ball itself is about two-thirds of that).
+  function balls(color, op, sw, tile, size) {
+    const k = tile / 240;
+    const placed = [[baseball(), 24, 22, -14], [basketball(), 140, 38, 12], [soccer(color, op), 36, 146, 6], [volleyball(), 150, 158, -20]];
+    const g = placed.map(([b, x, y, r]) => `<g transform="translate(${f(x * k)} ${f(y * k)}) scale(${size / 100}) rotate(${r} 50 50)">${b}</g>`).join('');
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${tile}" height="${tile}"><g fill="none" stroke="${color}" stroke-opacity="${op}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">${g}</g></svg>`;
+  }
+
+  root.setProperty('--grain-light', uri(grain([.32, .25, .12], .6, -.22)));
+  root.setProperty('--grain-dark', uri(grain([1, 1, 1], .28, -.1)));
+  root.setProperty('--balls-hero', uri(balls('#c5a04e', .2, 3, 180, 48)));
+  root.setProperty('--balls-page', uri(balls('#a68636', .17, 3.2, 150, 42)));
+
+  // Option state
+  const site = document.getElementById('site');
+  const frame = document.getElementById('frame');
+  const caption = document.getElementById('caption');
+  const presets = {
+    today: { hero: 'photo', bg: 'plain', text: '<b>Today.</b> The baseball infield photo under a flat black overlay, on a plain tan page.' },
+    a: { hero: 'golden', bg: 'grain', text: '<b>A · Curved Photo.</b> Today’s photo and overlay with the curved, gold-rimmed edge from Four Fields, and paper grain in the margins only.' },
+    b: { hero: 'fields', bg: 'grain', text: '<b>B · Four Fields.</b> Four playing surfaces from above (soccer pitch, basketball court, baseball diamond, volleyball court), a curved bottom edge, and paper grain in the margins.' },
+    c: { hero: 'lines', bg: 'grain', text: '<b>C · Gold Line Art.</b> No photo. A pattern of the four balls in thin gold lines on charcoal, the same curved edge, and paper grain in the margins.' },
+  };
+  const heroLabel = { photo: "today's photo", golden: 'curved photo', fields: 'four fields', lines: 'gold line art' };
+  const bgLabel = { plain: 'plain tan', grain: 'paper grain', stripes: 'mowing stripes', balls: 'ball pattern' };
+
+  function apply(hero, bg) {
+    site.dataset.hero = hero;
+    site.dataset.bg = bg;
+    document.getElementById('hero-' + hero).checked = true;
+    document.getElementById('bg-' + bg).checked = true;
+    document.querySelectorAll('[data-theme-preset]').forEach(b => b.setAttribute('aria-pressed', String(presets[b.dataset.themePreset].hero === hero)));
+    syncBand();
+    let match = null;
+    for (const [k, p] of Object.entries(presets)) {
+      const on = p.hero === hero && p.bg === bg;
+      if (on) match = k;
+      document.querySelector(`[data-preset="${k}"]`).setAttribute('aria-pressed', String(on));
+    }
+    caption.innerHTML = match ? presets[match].text : `<b>Your mix.</b> The ${heroLabel[hero]} hero with the ${bgLabel[bg]} background.`;
+  }
+
+  document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener('click', () => { const p = presets[b.dataset.preset]; apply(p.hero, p.bg); }));
+  document.querySelectorAll('input[name="hero"], input[name="bg"]').forEach(i => i.addEventListener('change', () => {
+    apply(document.querySelector('input[name="hero"]:checked').value, document.querySelector('input[name="bg"]:checked').value);
+  }));
+  document.querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => {
+    frame.classList.toggle('phone', b.dataset.view === 'phone');
+    document.querySelectorAll('[data-view]').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+  }));
+  // The footer theme switch sets a whole theme (hero and margin texture), the way a visitor's pick would
+  document.querySelectorAll('[data-theme-preset]').forEach(b => b.addEventListener('click', () => { const p = presets[b.dataset.themePreset]; apply(p.hero, p.bg); }));
+
+  // Subpages show a header band (unless set to plain) for the curved themes; Today is the live site, which has none
+  function syncBand() {
+    const on = site.dataset.page !== 'home' && site.dataset.sub !== 'plain' && site.dataset.hero !== 'photo';
+    site.dataset.band = on ? 'on' : 'off';
+  }
+  document.querySelectorAll('[data-page-btn]').forEach(b => b.addEventListener('click', () => {
+    site.dataset.page = b.dataset.pageBtn;
+    document.querySelectorAll('[data-page-btn]').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+    syncBand();
+  }));
+  document.querySelectorAll('input[name="sub"]').forEach(i => i.addEventListener('change', () => { site.dataset.sub = i.value; syncBand(); }));
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-show]').forEach(b => b.addEventListener('click', () => {
+    const p = presets[b.dataset.show]; apply(p.hero, p.bg);
+    document.querySelector('.bar').scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+  }));
+
+  apply('photo', 'plain');
+})();
+</script>
