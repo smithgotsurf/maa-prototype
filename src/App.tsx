@@ -116,7 +116,7 @@ export default function App() {
           Josh S.
         </button>
       </nav>
-      <main className="flex-1">
+      <main className="flex flex-1 flex-col">
         <Outlet />
       </main>
       <Footer />

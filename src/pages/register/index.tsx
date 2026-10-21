@@ -14,6 +14,7 @@ import {
 } from '../../utils';
 import { useAppContext } from '../../context/AppContext';
 import type { Player, Program } from '../../types';
+import PageColumn from '../../components/PageColumn';
 
 function AddModal({ onAdd, onClose }: { onAdd: (p: Player) => void; onClose: () => void }) {
   const [f, sF] = useState({ fn: '', mn: '', ln: '', dob: '', g: '' });
@@ -252,14 +253,14 @@ export default function RegPage() {
   const [priContact, setPriContact] = useState('');
   if (!activeSeason)
     return (
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <PageColumn>
         <div className="card bg-white border border-base-300 p-8 text-center">
           <h2 className="text-xl font-bold">Registration Not Open</h2>
           <p className="text-base-content/50">
             There is no active season at this time. Check back soon!
           </p>
         </div>
-      </div>
+      </PageColumn>
     );
   const rec = pl ? recommended(pl, activeSeason.programs) : [];
   const other = pl ? otherPrograms(pl, activeSeason.programs) : [];
@@ -323,7 +324,7 @@ export default function RegPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6">
+    <PageColumn className="pt-6 pb-18">
       <div className="flex items-center gap-2 mb-4 md:hidden">
         <div
           className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${step > 0 ? 'bg-primary text-primary-content' : 'bg-base-300'}`}
@@ -1042,6 +1043,6 @@ export default function RegPage() {
           )}
         </div>
       </div>
-    </div>
+    </PageColumn>
   );
 }

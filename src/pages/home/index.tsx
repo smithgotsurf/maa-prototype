@@ -1,5 +1,6 @@
 import { usePageTitle } from '../../utils';
 import { useAppContext } from '../../context/AppContext';
+import PageColumn from '../../components/PageColumn';
 import Hero from './Hero';
 import Intro from './Intro';
 import ProgramsOffered from './ProgramsOffered';
@@ -11,9 +12,9 @@ export default function HomePage() {
   usePageTitle();
   const { activeSeason } = useAppContext();
   return (
-    <div>
+    <>
       <Hero />
-      <div className="max-w-4xl mx-auto px-4 py-6">
+      <PageColumn className="pt-6 pb-18">
         {activeSeason ? (
           <OpenSeason season={activeSeason} />
         ) : (
@@ -24,7 +25,7 @@ export default function HomePage() {
         )}
         <MoreOnTheSite />
         <GetInvolved />
-      </div>
-    </div>
+      </PageColumn>
+    </>
   );
 }
