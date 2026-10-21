@@ -62,34 +62,44 @@ function FourFields() {
 
 /** The art behind a CurvedBand: the infield photo, the four playing surfaces, or the gold ball pattern. */
 export default function HeroArt({ art }: { art: HeroArtId }) {
-  if (art === 'photo') {
-    return (
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          clipPath: ART_CLIP,
-          backgroundImage: `linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.78)),url('${B_URL}static/field-1.webp')`,
-        }}
-      />
-    );
+  switch (art) {
+    case 'photo':
+      return (
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            clipPath: ART_CLIP,
+            backgroundImage: `linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.78)),url('${B_URL}static/field-1.webp')`,
+          }}
+        />
+      );
+    case 'lines':
+      return (
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            clipPath: ART_CLIP,
+            backgroundImage: `radial-gradient(ellipse 46% 60% at 50% 26%, rgba(197,160,78,.2), rgba(197,160,78,0) 72%), url('${B_URL}static/ball-pattern.svg'), linear-gradient(180deg, #282521 0%, #151514 100%)`,
+            backgroundSize: 'auto, 180px 180px, auto',
+          }}
+        />
+      );
+    case 'fields':
+      return (
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-neutral"
+          style={{ clipPath: ART_CLIP }}
+        >
+          <FourFields />
+        </div>
+      );
+    default: {
+      // A new HeroArtId without a case here is a compile error rather than the wrong art
+      const unhandled: never = art;
+      return unhandled;
+    }
   }
-  if (art === 'lines') {
-    return (
-      <div
-        aria-hidden="true"
-        className="absolute inset-0"
-        style={{
-          clipPath: ART_CLIP,
-          backgroundImage: `radial-gradient(ellipse 46% 60% at 50% 26%, rgba(197,160,78,.2), rgba(197,160,78,0) 72%), url('${B_URL}static/ball-pattern.svg'), linear-gradient(180deg, #282521 0%, #151514 100%)`,
-          backgroundSize: 'auto, 180px 180px, auto',
-        }}
-      />
-    );
-  }
-  return (
-    <div aria-hidden="true" className="absolute inset-0 bg-neutral" style={{ clipPath: ART_CLIP }}>
-      <FourFields />
-    </div>
-  );
 }

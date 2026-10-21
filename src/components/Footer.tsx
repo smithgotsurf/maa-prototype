@@ -1,11 +1,12 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useMatch } from 'react-router-dom';
 import { Ic, icons, PAGE_PATHS } from '../utils';
 import { contactEmail, facebookUrl } from '../content';
 import ThemeSwitch from './ThemeSwitch';
 
 export default function Footer() {
-  // Only the homepage hero follows the theme, so the switch lives in the homepage footer
-  const isHome = useLocation().pathname === PAGE_PATHS.home;
+  // Only the homepage hero follows the theme, so the switch lives in the homepage footer.
+  // useMatch uses the router's own matching, so it agrees with the route that rendered.
+  const isHome = useMatch(PAGE_PATHS.home) !== null;
   return (
     <footer className="bg-neutral text-neutral-content">
       <div className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">

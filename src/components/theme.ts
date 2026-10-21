@@ -1,14 +1,16 @@
 import { useSyncExternalStore } from 'react';
 
 export type HeroArtId = 'photo' | 'fields' | 'lines';
-export type ThemeId = 'home-plate' | 'four-fields' | 'gold-lines';
-export type Theme = { id: ThemeId; label: string; art: HeroArtId };
 
-export const THEMES: Theme[] = [
+// Theme ids come from this list, so removing a theme is a compile error wherever its id is still used
+export const THEMES = [
   { id: 'home-plate', label: 'Home Plate', art: 'photo' },
   { id: 'four-fields', label: 'Four Fields', art: 'fields' },
   { id: 'gold-lines', label: 'Gold Lines', art: 'lines' },
-];
+] as const satisfies readonly { id: string; label: string; art: HeroArtId }[];
+
+export type Theme = (typeof THEMES)[number];
+export type ThemeId = Theme['id'];
 
 export const DEFAULT_THEME: ThemeId = 'four-fields';
 
@@ -33,7 +35,7 @@ function subscribe(listener: () => void) {
 }
 
 function getSnapshot(): Theme {
-  return THEMES.find((t) => t.id === current)!;
+  return THEMES.find((t) => t.id === current) ?? THEMES[0];
 }
 
 export function setTheme(id: ThemeId): void {

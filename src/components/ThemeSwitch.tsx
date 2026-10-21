@@ -21,7 +21,7 @@ export default function ThemeSwitch() {
           type="button"
           aria-pressed={t.id === theme.id}
           onClick={() => setTheme(t.id)}
-          className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-white/12 bg-white/5 py-[3px] pl-1 pr-2.5 text-xs text-neutral-content/70 hover:border-primary/50 hover:text-neutral-content aria-pressed:border-primary aria-pressed:bg-primary/12 aria-pressed:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-white/12 bg-white/5 py-[3px] pl-1 pr-2.5 text-xs text-neutral-content/70 hover:border-primary/50 hover:text-neutral-content aria-pressed:border-primary aria-pressed:bg-primary/12 aria-pressed:text-primary forced-colors:aria-pressed:border-[Highlight] forced-colors:aria-pressed:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           <span
             aria-hidden="true"
