@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SEASON, HATS, JERSEYS, COACH_SHIRTS, CURRENT_USER } from '../../data';
 import {
@@ -222,6 +222,9 @@ export default function RegPage() {
   const { players, addPlayer, addToCart, activeSeason } = useAppContext();
   const navigate = useNavigate();
   const [step, sStep] = useState(1);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step]);
   const [pl, sPl] = useState<Player | null>(null);
   const [pr, sPr] = useState<Program | null>(null);
   const [wv, sWv] = useState<Partial<Record<string, string>>>({});
