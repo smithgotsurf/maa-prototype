@@ -272,7 +272,7 @@ export default function AdminPage() {
   const vis = (id: string) => visCols.includes(id);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[190px_1fr] min-h-[calc(100vh-56px)]">
+    <div className="grid grid-cols-1 md:grid-cols-[190px_1fr] min-h-[calc(100vh-56px)] bg-base-200">
       <aside className="hidden md:block bg-white border-r border-base-300 py-4.5 px-0">
         <div className="text-[11px] font-semibold text-base-content/50 uppercase tracking-wider mb-2 px-4.5">
           Management
@@ -292,7 +292,7 @@ export default function AdminPage() {
           </button>
         ))}
       </aside>
-      <div className="p-6">
+      <div className="p-6 pb-18">
         <div role="tablist" className="tabs tabs-bordered mb-4 md:hidden">
           {['dash', 'seasons', 'users'].map((t) => (
             <button

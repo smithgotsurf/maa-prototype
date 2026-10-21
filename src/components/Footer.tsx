@@ -1,10 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, useMatch } from 'react-router-dom';
 import { Ic, icons, PAGE_PATHS } from '../utils';
 import { contactEmail, facebookUrl } from '../content';
+import ThemeSwitch from './ThemeSwitch';
 
 export default function Footer() {
+  // Only the homepage hero follows the theme, so the switch lives in the homepage footer.
+  // useMatch uses the router's own matching, so it agrees with the route that rendered.
+  const isHome = useMatch(PAGE_PATHS.home) !== null;
   return (
-    <footer className="bg-neutral text-neutral-content mt-12">
+    <footer className="bg-neutral text-neutral-content">
       <div className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <div className="font-serif text-[19px]">
@@ -65,8 +69,9 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="max-w-4xl mx-auto px-6 py-3 text-xs text-neutral-content/50">
-          © {new Date().getFullYear()} Meadow Athletic Association
+        <div className="max-w-4xl mx-auto px-6 py-3 text-xs text-neutral-content/50 flex flex-wrap items-center justify-between gap-x-4 gap-y-2.5">
+          <span>© {new Date().getFullYear()} Meadow Athletic Association</span>
+          {isHome && <ThemeSwitch />}
         </div>
       </div>
     </footer>

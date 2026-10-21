@@ -39,6 +39,12 @@ src/
   components/
     Footer.tsx
     ContactSection.tsx
+    theme.ts        — homepage theme ids, theme list, default, stored-theme hook (useTheme/setTheme)
+    HeroArt.tsx     — the art layer for 'photo', 'fields' or 'lines'
+    CurvedBand.tsx  — the curved, gold-rimmed container used by the hero and the page bands
+    PageBand.tsx    — subpage header band (page title on a CurvedBand)
+    PageColumn.tsx  — the tan content column every page except Admin wraps its content in
+    ThemeSwitch.tsx — the homepage footer's theme buttons
   pages/
     home/      — index.tsx (composition) + one file per section + OpenSeason.tsx + copy.ts + programs.ts
     about/     — index.tsx + copy.ts + board.ts
@@ -50,7 +56,7 @@ src/
     cart/      — index.tsx
     admin/     — index.tsx
   waivers/          — HTML waiver content (imported via ?raw)
-public/static/       — images (photos as WebP; field-1.jpg kept for og:image), logo, sponsorship PDF
+public/static/       — images (photos as WebP; field-1.jpg kept for og:image), logo, sponsorship PDF, hero art SVGs
 ```
 
 Each page is a folder with `index.tsx` (default-exported component) plus sibling files for copy/data. Keep page-specific content in those siblings; only put genuinely shared content in `src/content.ts`.
@@ -115,13 +121,24 @@ Check the shared paths from the repo root, with `../maa-frontend` on an up-to-da
 for p in src/content.ts src/components src/pages/about src/pages/faq src/pages/fields src/pages/sponsors src/pages/not-found public .github/workflows/deploy.yml .nvmrc .prettierrc tsconfig.json tsconfig.app.json eslint.config.js; do diff -rq -x .DS_Store "../maa-frontend/$p" "$p" >/dev/null 2>&1 || printf 'DIFFERS: %s\n' "$p"; done; diff -rq -x .DS_Store -x index.tsx -x OpenSeason.tsx ../maa-frontend/src/pages/home src/pages/home >/dev/null 2>&1 || printf 'DIFFERS: src/pages/home\n'
 ```
 
+## Themes
+
+- The homepage hero has visitor-selectable themes: `THEMES` in `src/components/theme.ts` (Home Plate, Four Fields, Gold Lines). The default is `DEFAULT_THEME` (`four-fields`)
+- The visitor's pick is stored in `localStorage` under `maa_theme`; an unknown or unreadable value falls back to the default. The footer switch shows on the homepage only
+- Subpage bands don't follow the theme; each page picks its band art
+- Adding a theme: one `THEMES` entry (its id becomes a `ThemeId` automatically). If it needs new art, add the art id to `HeroArtId`; TypeScript then flags the two places that need it, a `case` in `HeroArt.tsx` and a swatch in `ThemeSwitch.tsx`
+- Design and plans: `docs/plans/homepage-themes/`
+
 ## Styling
 
 - DaisyUI custom theme "maa" defined in `src/index.css`
 - Brand colors: primary (Vegas Gold `#C5A04E`), secondary (dark gold `#A68636`), neutral (black `#1A1A1A`)
 - `text-primary` for brand gold; `text-secondary` for darker gold (prices, links)
 - Fonts: Playfair Display (headings via `font-serif`) + Source Sans 3 (body via `font-sans`). Both loaded from Google Fonts in `index.html` — ensure needed weights are included when using new weights
-- Body background overridden to `base-200` (`#F5F4F0`) in `index.css`; use `bg-white` for cards/containers that need to stand out from the page
+- Body background overridden to `base-200` (`#F5F4F0`) with a fine paper grain in `index.css`; use `bg-white` for cards/containers that need to stand out from the page
+- Every page except Admin wraps its content in `PageColumn` (plain tan over the grain, a thin gold edge, runs down to the footer); the homepage and the Register step flow pass `className="pt-6 pb-18"`
+- Every marketing subpage starts with `<PageBand title="…" />`, which renders the page's `h1`. Only Field Rentals uses `art="photo"`; the rest use the default line art. Register and Cart have no band
+- Admin keeps its full-width sidebar layout instead of `PageColumn`: its root has `bg-base-200` so the grain doesn't show behind it, and its content cell has `pb-18` for the space above the footer
 - Antialiased font smoothing set on body in `index.css`
 - No custom CSS files — all styling via Tailwind utilities + DaisyUI components (the only custom rules are the theme and the admin `.table` styles in `index.css`)
 - DaisyUI `btn` class overrides font-size/weight/color — when matching specific designs, set these explicitly on btn elements

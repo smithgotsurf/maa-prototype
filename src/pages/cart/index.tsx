@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fullName, Ic, icons, usePageTitle } from '../../utils';
 import { useAppContext } from '../../context/AppContext';
+import PageColumn from '../../components/PageColumn';
 
 export default function CartPage() {
   usePageTitle('Cart');
@@ -11,7 +12,7 @@ export default function CartPage() {
   const [done, sDone] = useState(false);
   if (done)
     return (
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <PageColumn>
         <div className="card bg-success/10 border border-success p-8 text-center">
           <div className="w-14 h-14 rounded-full bg-primary text-primary-content flex items-center justify-center mx-auto mb-4">
             <Ic d={icons.chk} s={28} />
@@ -32,10 +33,10 @@ export default function CartPage() {
             Return Home
           </button>
         </div>
-      </div>
+      </PageColumn>
     );
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <PageColumn>
       <div className="max-w-2xl mx-auto">
         <h2 className="text-[21px] font-serif font-bold mb-0.5">Your Cart</h2>
         <p className="text-sm text-base-content/50 mb-5">
@@ -90,6 +91,6 @@ export default function CartPage() {
           </div>
         )}
       </div>
-    </div>
+    </PageColumn>
   );
 }
